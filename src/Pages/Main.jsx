@@ -14,6 +14,13 @@ const Main = () => {
       >
         리스트로 가자
       </Button>
+      <Button
+        onClick={() => {
+          navigate("/estarlogin");
+        }}
+      >
+        회원가입
+      </Button>
     </>
   );
 };

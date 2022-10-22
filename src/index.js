@@ -7,8 +7,8 @@ import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  // 스토어 연결
   <Provider store={store}>
-    {/* 최상위 index.js에 PRovider에 스토어를 주입을 해줘야한다 */}
     <App />
   </Provider>
 );

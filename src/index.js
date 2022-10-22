@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 
 // 내가 추가해준 부분 -> import store
 import { Provider } from "react-redux";
-import store from "./redux/config/configStore";
+import store from "./redux/config/configstore";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

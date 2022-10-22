@@ -1,71 +1,51 @@
 {
-  "userlogin": [
-    {
-      "password": "3123",
-      "loginId": "412",
-      "id": 1
-    },
-    {
-      "password": "12312",
-      "loginId": "4123",
-      "id": 2
-    },
-    {
-      "password": "",
-      "loginId": "",
-      "id": 3
-    },
-    {
-      "password": "",
-      "loginId": "",
-      "id": 4
-    }
-  ],
-  "signup": [
-    {
-      "loginId": "412",
-      "nickname": "312",
-      "password": "34",
-      "passwordconfirmed": "12312",
-      "id": 1
-    },
-    {
-      "loginId": "4123",
-      "nickname": "123",
-      "password": "123123",
-      "passwordconfirmed": "",
-      "id": 2
-    }
-  ],
-
   "posts": [
     {
-      "postId": 1,
-      "title": "1번",
-      "images": "1번이미지",
-      "content": "1번글",
-      "like": "",
-      "dislike": ""
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
     },
     {
-      "postId": 2,
-      "title": "2번",
-      "images": "2번이미지",
-      "content": "2번글",
-      "like": "",
-      "dislike": ""
+      "loginId": "12345@",
+      "nickname": "12341234",
+      "password": "12341234@",
+      "passwordconfirmed": "12341234@",
+      "id": 2
     }
   ],
   "comments": [
     {
-      "commentId": 1,
-      "comment": ""
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
     }
   ],
-  "likes": [
+  "signup": [
     {
-      "like": "true"
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "loginId": "12345@",
+      "nickname": "12341234",
+      "password": "12341234@",
+      "passwordconfirmed": "12341234@",
+      "id": 2
+    },
+    {
+      "loginId": "12345@",
+      "nickname": "123",
+      "password": "12345@123",
+      "passwordconfirmed": "12345@123",
+      "id": 3
     }
   ],
-  "dislikes": [{ "dislike": "true" }]
+  "loginId": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ]
 }

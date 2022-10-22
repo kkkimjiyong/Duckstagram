@@ -25,6 +25,12 @@ const Signup = () => {
   const [Signup, SetSignup] = useState(initialstate);
   const [isEdit, SetisEdit] = useState(false);
 
+  //비밀번호 8자리+ 특수문자 1개
+  const specialLetter = Signup.password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+  const isValidPassword = Signup.password.length >= 8 && specialLetter >= 1;
+  //아이디는 5자리 + 특수문자 1개
+  const isValidloginId = Signup.loginId.length >= 5 && specialLetter >= 1;
+
   const onChangehandler = (e) => {
     const { name, value } = e.target;
     console.log(Signup);
@@ -48,7 +54,7 @@ const Signup = () => {
       //로그인 조건을 걸어야할듯?
     }
   };
-  console.log(login);
+  console.log(isValidPassword);
   if (isLoading) {
     <div>로딩중입니당</div>;
   } else if (error) {
@@ -88,6 +94,7 @@ const Signup = () => {
                   value={Signup.password}
                   name="password"
                   onChange={onChangehandler}
+                  placeholder="8자리이상, 특수문자 1개이상"
                 />
               </AddTodoBox>
               <AddTodoBox>
@@ -105,6 +112,9 @@ const Signup = () => {
             </AddTodoCtnArea>
             <BtnSet>
               <PostBtn
+                disabled={
+                  !isValidPassword || !isValidloginId ? "disabled" : false
+                }
                 type="submit"
                 style={{ margin: "auto" }}
                 onClick={() => {
@@ -114,6 +124,9 @@ const Signup = () => {
                 {isEdit ? "가입완료" : "로그인"}
               </PostBtn>
               <PostBtn
+                disabled={
+                  isValidPassword || isValidloginId ? "disabled" : false
+                }
                 type="submit"
                 style={{ margin: "auto" }}
                 onClick={() => {

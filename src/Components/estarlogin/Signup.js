@@ -11,7 +11,7 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  const { error, isLoading, login } = useSelector((state) => state.login);
+  const { error, isLoading, login } = useSelector((state) => state.login); //state.login 에서 변경
 
   //이 페이지에서 유저정보들을 get해와서 대조해야하나?
 

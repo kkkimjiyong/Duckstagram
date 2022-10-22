@@ -16,9 +16,17 @@
   "posts": [
     {
       "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "",
+      "title": "1번",
+      "images": "1번이미지",
+      "content": "1번글",
+      "like": "",
+      "dislike": ""
+    },
+    {
+      "postId": 2,
+      "title": "2번",
+      "images": "2번이미지",
+      "content": "2번글",
       "like": "",
       "dislike": ""
     }
@@ -36,8 +44,3 @@
   ],
   "dislikes": [{ "dislike": "true" }]
 }
-
-//comments에 postId?
-// 이미지가 여러장이면 객체로 가는지?
-// like를 posts안에 안넣어도되는지? likes 안에 postId가 잇어야되는데 없어도되는지?
-// commentId가 필요없는지?

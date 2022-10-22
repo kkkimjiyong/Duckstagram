@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import List from "../Components/estarlist/list";
 
 const EstarList = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const EstarList = () => {
       >
         작성하기
       </button>
+      <List />
     </div>
   );
 };

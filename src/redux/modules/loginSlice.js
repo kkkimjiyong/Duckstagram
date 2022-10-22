@@ -8,7 +8,7 @@ export const __postUserid = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post("http://13.124.143.112/api/users", payload);
-      return thunkAPI.fulfillWithValue(data.data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -21,9 +21,12 @@ export const __postLoginid = createAsyncThunk(
     try {
       const data = await axios.post(
         "http://13.124.143.112/api/users/login",
-        payload
+        payload,
+        {
+          withCredentials: true,
+        }
       );
-      console.log(payload);
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -48,6 +51,7 @@ const loginSlice = createSlice({
     },
     [__postUserid.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
+      console.log(action.payload);
       state.todos = action.payload; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
     },
     [__postUserid.rejected]: (state, action) => {

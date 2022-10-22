@@ -9,11 +9,13 @@ const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const globalposts = useSelector((state) => state.posts.posts);
-  console.log(globalposts);
+  const error = useSelector((state) => state.posts.error);
+  console.log(error);
 
   useEffect(() => {
     dispatch(__getLists());
   }, [dispatch]);
+
   return (
     <>
       <div>E스타그램</div>

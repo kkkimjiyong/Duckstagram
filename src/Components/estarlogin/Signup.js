@@ -4,22 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
 import RandomApi from "../../mytools/RandomApi";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const Signup = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.
   // const word = RandomApi();
   const dispatch = useDispatch();
-
+  const [cookies, setCookie] = useCookies(["HangHae99"]);
   const navigate = useNavigate();
   const { error, isLoading, login } = useSelector((state) => state.login);
-
+  console.log(cookies);
   //이 페이지에서 유저정보들을 get해와서 대조해야하나?
 
   const initialstate = {
     loginId: "",
     nickname: "",
     password: "",
-    passwordconfirmed: "",
+    confirm: "",
   };
 
   const [Signup, SetSignup] = useState(initialstate);
@@ -62,13 +63,18 @@ const Signup = () => {
       window.location.replace("/estarlogin");
   } else {
     if (login) {
-      if (window.confirm("성공적인 로그인~")) window.location.replace("/");
+      window.confirm("성공적인 로그인~");
+      // window.location.replace("/");
     } else {
       return (
         <>
           <AddTodoCtn>
             <AddTodoCtnArea>
               <AddTodoBox>
+                {/* <img
+                  src="http://13.124.143.112/public/images/default_img.jpeg"
+                  alt="/"
+                ></img> */}
                 <AddTodoTitle>아이디</AddTodoTitle>
                 <AddTodoTextarea
                   value={Signup.loginId}
@@ -102,8 +108,8 @@ const Signup = () => {
                   <>
                     <AddTodoTitle>비밀번호 재확인</AddTodoTitle>
                     <AddTodoTextarea
-                      value={Signup.passwordconfirmed}
-                      name="passwordconfirmed"
+                      value={Signup.confirm}
+                      name="confirm"
                       onChange={onChangehandler}
                     />
                   </>

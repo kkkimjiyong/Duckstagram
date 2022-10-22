@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import usePost from "../hooks/usePost";
 import { __addEstar } from "../../redux/modules/PostSlice";
 
 const PostPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.estar);
   const [value, onChange] = usePost();
-
+  console.log(error);
   const [preview, setPreview] = useState("");
   // const [image, setImage] = useState();
   // const [content, setContent] = useState("");
@@ -59,7 +60,6 @@ const PostPage = () => {
   }; */
 
   const onSubmit = () => {
-    // event.preventDefault();
     if (value.content.trim() === "") return alert("내용을 입력해주세요");
     // else if (value.images === "") return alert("사진을 업로드 해주세요");
 
@@ -85,8 +85,9 @@ const PostPage = () => {
  */
 
     //Post dispatch
+
     dispatch(__addEstar(value));
-    navigate("/estarlist");
+    // navigate("/estarlist");
     // }
   };
 
@@ -98,53 +99,57 @@ const PostPage = () => {
   //   const response = await apiClient.post("/brand/logo_image", formData);
   //   //response.data.location이 업로드한 파일의 url
   // };
-
-  return (
-    <BigCard>
-      <BackButton
-        onClick={() => {
-          navigate("/estarlist");
-        }}
-      >
-        Back
-      </BackButton>
-
-      <Card>
-        <Photo>
-          <Preview>{preview && <img src={preview} alt="미리보기" />}</Preview>
-          <Upload>
-            <UploadInput
-              type="file"
-              // name="images"
-              // value={value.images}
-              accept="image/*"
-              // onChange={onChange}
-              //   onChange={(e) => {
-              //     handleImagePreview(e.target.files[0]);}
-
-              // }
-            ></UploadInput>
-          </Upload>
-        </Photo>
-        <Half>
-          <Info>프로필사진 + 닉네임</Info>
-          <Write
-            name="content"
-            value={value.content}
-            placeholder="텍스트를 적는 공간"
-            onChange={onChange}
-          ></Write>
-        </Half>
-        <UploadButton
+  if (error) {
+    if (window.confirm("회원이아닙니다."))
+      window.location.replace("/estarpost");
+  } else {
+    return (
+      <BigCard>
+        <BackButton
           onClick={() => {
-            onSubmit(value);
+            navigate("/estarlist");
           }}
         >
-          업로드버튼
-        </UploadButton>
-      </Card>
-    </BigCard>
-  );
+          Back
+        </BackButton>
+
+        <Card>
+          <Photo>
+            {/* <Preview>{preview && <img src={preview} alt="미리보기" />}</Preview> */}
+            <Upload>
+              <UploadInput
+                type="file"
+                // name="images"
+                // value={value.images}
+                accept="image/*"
+                // onChange={onChange}
+                //   onChange={(e) => {
+                //     handleImagePreview(e.target.files[0]);}
+
+                // }
+              ></UploadInput>
+            </Upload>
+          </Photo>
+          <Half>
+            <Info>프로필사진 + 닉네임</Info>
+            <Write
+              name="content"
+              value={value.content}
+              placeholder="텍스트를 적는 공간"
+              onChange={onChange}
+            ></Write>
+          </Half>
+          <UploadButton
+            onClick={() => {
+              onSubmit(value);
+            }}
+          >
+            업로드버튼
+          </UploadButton>
+        </Card>
+      </BigCard>
+    );
+  }
 };
 
 export default PostPage;
@@ -170,7 +175,7 @@ const BackButton = styled.button`
   right: 5%;
 `;
 
-const Card = styled.form`
+const Card = styled.div`
   width: 90%;
   height: 80%;
   margin: 60px auto 20px auto;

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import estar from "../modules/estarSlice";
+import estar from "../modules/PostSlice";
 
 const store = configureStore({
   reducer: { estar: estar },

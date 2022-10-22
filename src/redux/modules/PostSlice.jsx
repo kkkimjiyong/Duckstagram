@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { postApi } from "../../mytools/instance";
 
 const initialState = {
   posts: [
@@ -22,7 +23,7 @@ export const __addEstar = createAsyncThunk(
   "estar",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post("http://localhost:3001/posts", payload);
+      const { data } = await postApi.postPost(payload);
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import usePost from "../hooks/usePost";
-import { __addEstar } from "../../redux/modules/estarSlice";
+import { __addEstar } from "../../redux/modules/PostSlice";
 
 const PostPage = () => {
   const navigate = useNavigate();

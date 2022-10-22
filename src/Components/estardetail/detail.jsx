@@ -43,7 +43,7 @@ const Detail = () => {
       <MovePage>
         <button
           onClick={() => {
-            navigate("/estarlist");
+            navigate("/estarpost");
           }}
         >
           ✏️

@@ -1,13 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import Layout from "../Components/estarpost/Layout";
+import PostPage from "../Components/estarpost/PostPage";
 
 const EstarPost = () => {
-    const navigate = useNavigate();
-    return (
-        <div>
-            <button onClick={() => { navigate("/estarlist") }}>다시 리스트로 가기</button>
-        </div>
-    );
+  return (
+    <Layout>
+      <PostPage />
+    </Layout>
+  );
 };
 
 export default EstarPost;

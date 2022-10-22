@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LikeApp from "../../mytools/likeApp";
 import { __getLists } from "../../redux/modules/ListSlice";
 // http://localhost:3001/posts?postId=1
 const List = () => {
@@ -31,19 +32,22 @@ const List = () => {
       <Boxes>
         {globalposts.map((post) => {
           return (
-            <div
-              key={post.postId}
-              onClick={() => {
-                navigate(`/estardetail/${post.postId}`);
-              }}
-            >
+            <div>
               <BoxMemo>
-                <Image>{post.images}</Image>
+                <Image
+                  key={post.id}
+                  onClick={() => {
+                    navigate(`/estardetail/${post.id}`);
+                  }}
+                >
+                  {post.images}
+                </Image>
                 <Words>
                   <p>{post.title}</p>
                   <p>{post.content}</p>
                 </Words>
               </BoxMemo>
+              <LikeApp />
             </div>
           );
         })}

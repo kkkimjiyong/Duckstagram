@@ -1,61 +1,39 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "안뇽! 잘되라ㅠㅠ\n",
+      "like": "",
+      "dislike": "",
+      "id": 1
     },
     {
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "dfsaf",
+      "content": "우왕\n",
       "like": "",
       "dislike": "",
       "id": 2
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "sfsdfsd",
-      "like": "",
-      "dislike": "",
-      "id": 3
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "gagasgsagsdg",
-      "like": "",
-      "dislike": "",
-      "id": 4
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "agasdg",
-      "like": "",
-      "dislike": "",
-      "id": 5
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "안뇽\n",
-      "like": "",
-      "dislike": "",
-      "id": 6
     }
   ],
   "comments": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "comment": "안녕",
+      "commentId": 1,
+      "id": 1
+    },
+    {
+      "comment": "ㄴㄴ",
+      "commentId": 1,
+      "id": 2
+    },
+    {
+      "comment": "훔",
+      "commentId": 1,
+      "id": 3
     }
   ],
   "profile": {

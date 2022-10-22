@@ -2,30 +2,37 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import LikeApp from "../../mytools/likeApp";
 import {
   __postDetailComment,
   __getDetailComment,
 } from "../../redux/modules/DetailSlice";
 import { __getList } from "../../redux/modules/ListSlice";
+import Comment from "./comments";
 
 const Detail = () => {
   // hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log(id);
+
   const [comment, setComment] = useState({
     commentId: 0,
     comment: "",
   });
-  const { comments } = useSelector((state) => state.comments);
-  console.log(comments);
+
   const globalposts = useSelector((state) => state.posts.posts);
+  const { comments } = useSelector((state) => state.comments);
+  const newglobalposts = comments.filter((comment) => {
+    return comment.commentId === parseInt(id);
+  });
+  console.log(newglobalposts);
+  console.log();
 
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
   const saveCommentHandler = () => {
     if (comment.trim() === "") return;
-    dispatch(__postDetailComment({ comment }));
+    dispatch(__postDetailComment({ comment, commentId: parseInt(id) }));
     setComment({
       commentId: 0,
       comment: "",
@@ -52,7 +59,7 @@ const Detail = () => {
       </MovePage>
       {globalposts.map((post) => {
         return (
-          <DetailBox>
+          <DetailBox key={post.id}>
             <DetailPic>
               게시글 이미지 불러오기❤️
               <p>{post.images}</p>
@@ -63,7 +70,12 @@ const Detail = () => {
                 프로필 이미지{post.title}/ 이름/ ~시간전{post.like}
                 {post.dislike}{" "}
               </Profile>
-              <Mymemo>내가 게시물에 쓴글{post.content}</Mymemo>
+              <Mymemo>
+                내가 게시물에 쓴글{post.content}
+                <div>
+                  <LikeApp />
+                </div>
+              </Mymemo>
               <MoreComments>
                 <form
                   onSubmit={(e) => {
@@ -78,6 +90,11 @@ const Detail = () => {
                   />
                   <button>저장</button>
                 </form>
+                <div>
+                  {newglobalposts.map((comment) => (
+                    <Comment comment={comment} />
+                  ))}
+                </div>
               </MoreComments>
             </DetailComment>
           </DetailBox>

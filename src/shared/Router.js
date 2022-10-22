@@ -14,7 +14,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/estarlist" element={<EstarList />} />
-        <Route path="/estardetail" element={<EstarDetail />} />
+        <Route path="/estardetail/:id" element={<EstarDetail />} />
         <Route path="/estarpost" element={<EstarPost />} />
         <Route path="/estarlogin" element={<EstarLogin />} />
       </Routes>

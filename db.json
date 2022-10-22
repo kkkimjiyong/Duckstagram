@@ -36,5 +36,36 @@
       "passwordconfirmed": "",
       "id": 2
     }
-  ]
+  ],
+
+  "posts": [
+    {
+      "postId": 1,
+      "title": "1번",
+      "images": "1번이미지",
+      "content": "1번글",
+      "like": "",
+      "dislike": ""
+    },
+    {
+      "postId": 2,
+      "title": "2번",
+      "images": "2번이미지",
+      "content": "2번글",
+      "like": "",
+      "dislike": ""
+    }
+  ],
+  "comments": [
+    {
+      "commentId": 1,
+      "comment": ""
+    }
+  ],
+  "likes": [
+    {
+      "like": "true"
+    }
+  ],
+  "dislikes": [{ "dislike": "true" }]
 }

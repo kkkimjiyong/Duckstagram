@@ -8,13 +8,6 @@ const EstarList = () => {
     <div>
       <button
         onClick={() => {
-          navigate("/estardetail");
-        }}
-      >
-        디테일로가는곳
-      </button>
-      <button
-        onClick={() => {
           navigate("/estarpost");
         }}
       >

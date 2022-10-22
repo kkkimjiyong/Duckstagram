@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DetailApi } from "../../mytools/instance";
+import { detailApi } from "../../mytools/instance";
 
 // 게시물별 댓글 post
 export const __postDetailComment = createAsyncThunk(
   "comments/postComment",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await DetailApi.postDetail(payload);
+      const { data } = await detailApi.postDetail(payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -18,7 +18,7 @@ export const __getDetailComment = createAsyncThunk(
   "comments/getComment",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await DetailApi.getDetail(payload);
+      const { data } = await detailApi.getDetail(payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

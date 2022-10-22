@@ -6,11 +6,49 @@
       "author": "typicode"
     },
     {
-      "loginId": "12345@",
-      "nickname": "12341234",
-      "password": "12341234@",
-      "passwordconfirmed": "12341234@",
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "dfsaf",
+      "like": "",
+      "dislike": "",
       "id": 2
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "sfsdfsd",
+      "like": "",
+      "dislike": "",
+      "id": 3
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "gagasgsagsdg",
+      "like": "",
+      "dislike": "",
+      "id": 4
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "agasdg",
+      "like": "",
+      "dislike": "",
+      "id": 5
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "안뇽\n",
+      "like": "",
+      "dislike": "",
+      "id": 6
     }
   ],
   "comments": [
@@ -20,32 +58,7 @@
       "postId": 1
     }
   ],
-  "signup": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    },
-    {
-      "loginId": "12345@",
-      "nickname": "12341234",
-      "password": "12341234@",
-      "passwordconfirmed": "12341234@",
-      "id": 2
-    },
-    {
-      "loginId": "12345@",
-      "nickname": "123",
-      "password": "12345@123",
-      "passwordconfirmed": "12345@123",
-      "id": 3
-    }
-  ],
-  "loginId": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ]
+  "profile": {
+    "name": "typicode"
+  }
 }

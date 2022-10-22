@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
 import RandomApi from "../../mytools/RandomApi";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.
-  const word = RandomApi();
+  // const word = RandomApi();
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+  const { error, isLoading, login } = useSelector((state) => state.login);
 
   //이 페이지에서 유저정보들을 get해와서 대조해야하나?
 
@@ -45,79 +46,89 @@ const Signup = () => {
       SetSignup(initialstate);
       //로그인 성공시, 메인으로 가야함.
       //로그인 조건을 걸어야할듯?
-      navigate("/");
     }
   };
-
-  return (
-    <>
-      <AddTodoCtn>
-        <AddTodoCtnArea>
-          <AddTodoBox>
-            <AddTodoTitle>아이디</AddTodoTitle>
-            <AddTodoTextarea
-              value={Signup.loginId}
-              name="loginId"
-              onChange={onChangehandler}
-            />
-          </AddTodoBox>
-          <AddTodoBox>
-            {isEdit && (
-              <>
-                <AddTodoTitle>닉네임</AddTodoTitle>
-                <AddTodoInput
-                  value={word}
-                  name="nickname"
-                  onChange={onChangehandler}
-                />
-              </>
-            )}
-          </AddTodoBox>
-          <AddTodoBox>
-            <AddTodoTitle>비밀번호</AddTodoTitle>
-            <AddTodoTextarea
-              value={Signup.password}
-              name="password"
-              onChange={onChangehandler}
-            />
-          </AddTodoBox>
-          <AddTodoBox>
-            {isEdit && (
-              <>
-                <AddTodoTitle>비밀번호 재확인</AddTodoTitle>
+  console.log(login);
+  if (isLoading) {
+    <div>로딩중입니당</div>;
+  } else if (error) {
+    if (window.confirm("아이디와 비밀번호를 확인해주세요"))
+      window.location.replace("/estarlogin");
+  } else {
+    if (login) {
+      if (window.confirm("성공적인 로그인~")) window.location.replace("/");
+    } else {
+      return (
+        <>
+          <AddTodoCtn>
+            <AddTodoCtnArea>
+              <AddTodoBox>
+                <AddTodoTitle>아이디</AddTodoTitle>
                 <AddTodoTextarea
-                  value={Signup.passwordconfirmed}
-                  name="passwordconfirmed"
+                  value={Signup.loginId}
+                  name="loginId"
                   onChange={onChangehandler}
                 />
-              </>
-            )}
-          </AddTodoBox>
-        </AddTodoCtnArea>
-        <BtnSet>
-          <PostBtn
-            type="submit"
-            style={{ margin: "auto" }}
-            onClick={() => {
-              onSubmithandler();
-            }}
-          >
-            {isEdit ? "가입완료" : "로그인"}
-          </PostBtn>
-          <PostBtn
-            type="submit"
-            style={{ margin: "auto" }}
-            onClick={() => {
-              SetisEdit(!isEdit);
-              SetSignup(initialstate);
-            }}
-          >
-            {isEdit ? "돌아가기" : "회원가입"}
-          </PostBtn>
-        </BtnSet>
-      </AddTodoCtn>
-    </>
-  );
+              </AddTodoBox>
+              <AddTodoBox>
+                {isEdit && (
+                  <>
+                    <AddTodoTitle>닉네임</AddTodoTitle>
+                    <AddTodoInput
+                      value={Signup.nickname}
+                      name="nickname"
+                      onChange={onChangehandler}
+                    />
+                  </>
+                )}
+              </AddTodoBox>
+              <AddTodoBox>
+                <AddTodoTitle>비밀번호</AddTodoTitle>
+                <AddTodoTextarea
+                  value={Signup.password}
+                  name="password"
+                  onChange={onChangehandler}
+                />
+              </AddTodoBox>
+              <AddTodoBox>
+                {isEdit && (
+                  <>
+                    <AddTodoTitle>비밀번호 재확인</AddTodoTitle>
+                    <AddTodoTextarea
+                      value={Signup.passwordconfirmed}
+                      name="passwordconfirmed"
+                      onChange={onChangehandler}
+                    />
+                  </>
+                )}
+              </AddTodoBox>
+            </AddTodoCtnArea>
+            <BtnSet>
+              <PostBtn
+                type="submit"
+                style={{ margin: "auto" }}
+                onClick={() => {
+                  onSubmithandler();
+                }}
+              >
+                {isEdit ? "가입완료" : "로그인"}
+              </PostBtn>
+              <PostBtn
+                type="submit"
+                style={{ margin: "auto" }}
+                onClick={() => {
+                  SetisEdit(!isEdit);
+                  SetSignup(initialstate);
+                }}
+              >
+                {isEdit ? "돌아가기" : "회원가입"}
+              </PostBtn>
+            </BtnSet>
+          </AddTodoCtn>
+        </>
+      );
+    }
+  }
 };
 
 const AddTodoCtn = styled.div`

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
-import RandomApi from "../../mytools/RandomApi";
-import { Navigate, useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
 
 const Signup = () => {
@@ -117,6 +115,10 @@ const Signup = () => {
                 )}
               </AddTodoBox>
             </AddTodoCtnArea>
+            <Line></Line>
+            <Line></Line>
+            <Line></Line>
+            <Line></Line>
             <BtnSet>
               <PostBtn
                 // disabled={
@@ -128,7 +130,7 @@ const Signup = () => {
                   onSubmithandler();
                 }}
               >
-                {isEdit ? "가입완료" : "로그인"}
+                {isEdit ? "DONE" : "SIGN IN"}
               </PostBtn>
               <PostBtn
                 disabled={
@@ -140,7 +142,7 @@ const Signup = () => {
                   SetSignup(initialstate);
                 }}
               >
-                {isEdit ? "돌아가기" : "회원가입"}
+                {isEdit ? "RETRUN" : "SIGN UP"}
               </PostBtn>
             </BtnSet>
           </AddTodoCtn>
@@ -151,7 +153,7 @@ const Signup = () => {
 };
 
 const AddTodoCtn = styled.div`
-  margin: 20px auto 0 auto;
+  margin: 50px auto 0 auto;
   max-width: 500px;
   max-height: 800px;
   height: calc(100vh - 60px);
@@ -187,15 +189,17 @@ const AddTodoTitle = styled.h3`
   font-weight: 400;
 `;
 const AddTodoInput = styled.input`
+  box-shadow: inset 4px 2px 10px #babebc, inset -5px -5px 12px #fff;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 0 12px;
   height: 46px;
   font-size: 14px;
 `;
-const AddTodoTextarea = styled.textarea`
-  border: 1px solid #ddd;
-  border-radius: 10px;
+const AddTodoTextarea = styled.input`
+  box-shadow: inset 4px 2px 10px #babebc, inset -5px -5px 12px #fff;
+  border-radius: 40px;
+  border: none;
   padding: 12px;
   min-height: 60px;
   font-size: 14px;
@@ -213,6 +217,12 @@ const PostBtn = styled.button`
   :hover {
     background-color: white;
   }
+`;
+
+const Line = styled.div`
+  width: 10%;
+  height: 20px;
+  background: yellow;
 `;
 
 export default Signup;

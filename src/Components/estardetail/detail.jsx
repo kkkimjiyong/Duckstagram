@@ -3,13 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
-import {
-  __postDetailComment,
-  __getDetailComment,
-} from "../../redux/modules/DetailSlice";
+import { __postDetailComment } from "../../redux/modules/DetailSlice";
 import { __getList } from "../../redux/modules/ListSlice";
 import { __deleteEstar, __updateEstar } from "../../redux/modules/ListSlice";
-import Comment from "./comments";
 
 const Detail = () => {
   // hooks
@@ -26,7 +22,7 @@ const Detail = () => {
     content: "",
   });
   // 설렉터
-  const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
+  const globalposts = useSelector((state) => state.estar.posts); //포스트 리스트 가져오기
   console.log(globalposts);
   const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
   console.log(comments);

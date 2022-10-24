@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import { postApi } from "../../mytools/instance";
+import axios from "axios";
 import { getCookie } from "../../Components/estarlogin/cookiehook";
 
 const initialState = {
@@ -30,6 +29,7 @@ export const __addEstar = createAsyncThunk(
         //헤더에 쿠키를 붙여서 보내준다. (Bearer 앞에 붙여주고)
         {
           headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${getCookie("token")}`,
           },
         }
@@ -64,7 +64,6 @@ const estarSlice = createSlice({
   },
 });
 
-export const {} = estarSlice.actions;
 export default estarSlice.reducer;
 
 /* import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";

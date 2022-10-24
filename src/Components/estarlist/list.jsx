@@ -12,7 +12,7 @@ const List = () => {
 
   useEffect(() => {
     dispatch(__getLists());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

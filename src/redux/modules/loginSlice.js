@@ -2,7 +2,7 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getCookiem, setCookie } from "../../Components/estarlogin/cookiehook";
+import { setCookie } from "../../Components/estarlogin/cookiehook";
 
 export const __postUserid = createAsyncThunk(
   "login/postuserid",

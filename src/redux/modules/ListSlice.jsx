@@ -8,7 +8,7 @@ export const __getLists = createAsyncThunk(
     try {
       const { data } = await imageApi.getImages(payload);
       console.log(data);
-      return thunkAPI.fulfillWithValue(data.data); //API에서는 data.data
+      return thunkAPI.fulfillWithValue(data); //실제서버돌릴때는 data.data로 변경하기!!
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -21,7 +21,35 @@ export const __getList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await imageApi.getImage(payload);
-      return thunkAPI.fulfillWithValue(data.data); //API에서는 data.data
+      return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 게시물 삭제 DELET
+export const __deleteEstar = createAsyncThunk(
+  "estar/deleteestar",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await imageApi.deletePost(payload);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 게시물 수정 patch
+export const __updateEstar = createAsyncThunk(
+  "estar/updateeestar",
+  async (payload, thunkAPI) => {
+    try {
+      const { newContent, postID } = payload;
+      await imageApi.patchPost(postID, newContent); // 서버한테 보낸상태
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -30,14 +58,14 @@ export const __getList = createAsyncThunk(
 
 const initialState = {
   posts: [
-    {
-      postId: 1,
-      title: "제목",
-      images: "이미지",
-      content: "나의글",
-      like: "👍",
-      dislike: "👎",
-    },
+    // {
+    //   postId: 1,
+    //   title: "제목",
+    //   images: "이미지",
+    //   content: "나의글",
+    //   like: "👍",
+    //   dislike: "👎",
+    // },
   ],
   isLoading: false,
   error: null,
@@ -67,9 +95,43 @@ const listSlice = createSlice({
     },
     [__getList.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.posts.push(action.payload);
+      console.log(action.payload);
     },
     [__getList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // 게시물 delete
+    [__deleteEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteEstar.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      let delpost = state.posts.filter((post) => action.payload !== post.id);
+      state.posts = delpost;
+    },
+    [__deleteEstar.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // PATCH 게시물 수정하기!!!
+    [__updateEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateEstar.fulfilled]: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.id !== action.payload.postID) {
+          return post;
+        } else {
+          console.log(post);
+          return { ...post, content: action.payload.newContent };
+        }
+      });
+      // state.posts = newNewContent;
+      state.isLoading = false;
+    },
+    [__updateEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

@@ -1,5 +1,4 @@
 import React from "react";
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
 import styled from "styled-components";
 
 const Layout = (props) => {

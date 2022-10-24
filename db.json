@@ -26,6 +26,24 @@
       "like": "",
       "dislike": "",
       "id": 4
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "테스트",
+      "like": "",
+      "dislike": "",
+      "id": 5
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "ㅊㅌㅍㅌㅊㅍ",
+      "like": "",
+      "dislike": "",
+      "id": 6
     }
   ],
   "comments": [
@@ -40,7 +58,7 @@
       "id": 2
     },
     {
-      "comment": "남기기",
+      "comment": "ㅇㄴㅇ",
       "commentId": 2,
       "id": 5
     },
@@ -113,6 +131,11 @@
       "comment": "헤",
       "commentId": 4,
       "id": 26
+    },
+    {
+      "comment": "ㅌㄾㅊ",
+      "commentId": 2,
+      "id": 27
     }
   ],
   "profile": {

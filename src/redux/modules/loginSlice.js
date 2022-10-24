@@ -7,7 +7,7 @@ export const __postUserid = createAsyncThunk(
   "login/postuserid",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://13.124.143.112/api/users", payload);
+      const data = await axios.post("http://100.24.45.120/api/users", payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -20,7 +20,7 @@ export const __postLoginid = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(
-        "http://13.124.143.112/api/users/login",
+        "http://100.24.45.120/api/users/login",
         payload,
         {
           withCredentials: true,

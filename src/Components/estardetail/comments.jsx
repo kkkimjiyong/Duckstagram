@@ -75,7 +75,6 @@ const Comment = ({ comment }) => {
           )}
           {!isEditMode && (
             <>
-              <LikeApp />
               <button onClick={() => setIsEditMode(true)}>✏️</button>
               <button onClick={() => commentDeleteHandler(comment.id)}>
                 ❌

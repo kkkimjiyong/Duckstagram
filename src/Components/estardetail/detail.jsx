@@ -8,7 +8,7 @@ import {
   __getDetailComment,
 } from "../../redux/modules/DetailSlice";
 import { __getList } from "../../redux/modules/ListSlice";
-import { __deleteEstar, __updateEstar } from "../../redux/modules/PostSlice";
+import { __deleteEstar, __updateEstar } from "../../redux/modules/ListSlice";
 import Comment from "./comments";
 
 const Detail = () => {
@@ -54,7 +54,8 @@ const Detail = () => {
   const deletepostHandler = (id) => {
     const result = window.confirm("정말 삭제 하시겠습니까?");
     if (result) {
-      return dispatch(__deleteEstar(id));
+      dispatch(__deleteEstar(id));
+      window.location.replace("/estarlist");
     } else {
       return;
     }
@@ -110,7 +111,7 @@ const Detail = () => {
               <Photo>
                 게시글 이미지 불러오기
                 <p>{post.images}</p>
-                <LikeApp />{" "}
+                <LikeApp />
               </Photo>
 
               <Half>
@@ -119,7 +120,7 @@ const Detail = () => {
                   <>
                     <Info>
                       <div>
-                        타이틀: {post.title}
+                        이아이는 제목
                         <button onClick={() => updatePostHandler(post.id)}>
                           🔒
                         </button>
@@ -148,6 +149,7 @@ const Detail = () => {
                       maxLength="15"
                       title="15자 이하로만 입력 가능합니다."
                       placeholder="댓글을 달아주세요"
+                      value={comment.comment}
                       onChange={(e) => setComment(e.target.value)}
                     />
                     <button>저장</button>
@@ -188,8 +190,13 @@ const BackButton = styled.button`
   position: absolute;
   top: 16px;
   right: 5%;
+  &:hover {
+    font-size: x-large;
+  }
 `;
 const PostButton = styled(BackButton)`
+  background-color: transparent;
+  font-size: larger;
   width: 50px;
   left: 5%;
 `;
@@ -198,9 +205,7 @@ const DeleteButton = styled(BackButton)`
   background-color: transparent;
   right: 0%;
 `;
-// const EditSaveButton = styled.button`
-//   /* left: 10%; */
-// `;
+
 const Card = styled.div`
   width: 90%;
   height: 80%;

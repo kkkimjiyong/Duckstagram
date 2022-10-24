@@ -2,16 +2,7 @@
   "posts": [
     {
       "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "안뇽! 잘되라ㅠㅠ\n",
-      "like": "",
-      "dislike": "",
-      "id": 1
-    },
-    {
-      "postId": 1,
-      "title": "",
+      "title": "제목은??",
       "images": "",
       "content": "수정하고 바로바꾸기",
       "like": "",
@@ -22,7 +13,7 @@
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "바로바뀌나?",
+      "content": "바로수정꿋",
       "like": "",
       "dislike": "",
       "id": 3
@@ -31,19 +22,10 @@
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "5555",
+      "content": "수정되나?",
       "like": "",
       "dislike": "",
-      "id": 5
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "ㄹㅇㄹㅇㄹ",
-      "like": "",
-      "dislike": "",
-      "id": 6
+      "id": 4
     }
   ],
   "comments": [
@@ -56,11 +38,6 @@
       "comment": "ㄴㄴ",
       "commentId": 1,
       "id": 2
-    },
-    {
-      "comment": "훔",
-      "commentId": 1,
-      "id": 3
     },
     {
       "comment": "남기기",
@@ -78,39 +55,44 @@
       "id": 7
     },
     {
-      "comment": "ㄴㄴㄴ",
+      "comment": "댓글쓰기",
+      "commentId": 6,
+      "id": 15
+    },
+    {
+      "comment": "하트누르기 저장??",
+      "commentId": 6,
+      "id": 16
+    },
+    {
+      "comment": "댓글쓰기;이마ㅓㅇ",
+      "commentId": 6,
+      "id": 17
+    },
+    {
+      "comment": "으악",
       "commentId": 1,
-      "id": 8
+      "id": 18
     },
     {
-      "comment": "오오",
+      "comment": "되라",
       "commentId": 1,
-      "id": 9
+      "id": 19
     },
     {
-      "comment": "댓글",
-      "commentId": 3,
-      "id": 10
+      "comment": "된다용!!",
+      "commentId": 4,
+      "id": 20
     },
     {
-      "comment": "댓글달기",
+      "comment": "흐아",
       "commentId": 3,
-      "id": 11
+      "id": 21
     },
     {
-      "comment": "댓글을 길게 달면?",
+      "comment": "지용님감사해여ㅠㅠ",
       "commentId": 3,
-      "id": 12
-    },
-    {
-      "comment": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ",
-      "commentId": 3,
-      "id": 13
-    },
-    {
-      "comment": "과연?",
-      "commentId": 3,
-      "id": 14
+      "id": 22
     }
   ],
   "profile": {

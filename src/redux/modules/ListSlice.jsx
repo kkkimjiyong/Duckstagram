@@ -28,6 +28,34 @@ export const __getList = createAsyncThunk(
   }
 );
 
+// 게시물 삭제 DELET
+export const __deleteEstar = createAsyncThunk(
+  "estar/deleteestar",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await imageApi.deletePost(payload);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 게시물 수정 patch
+export const __updateEstar = createAsyncThunk(
+  "estar/updateeestar",
+  async (payload, thunkAPI) => {
+    try {
+      const { newContent, postID } = payload;
+      await imageApi.patchPost(postID, newContent); // 서버한테 보낸상태
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const initialState = {
   posts: [
     {
@@ -70,6 +98,39 @@ const listSlice = createSlice({
       state.posts = action.payload;
     },
     [__getList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // 게시물 delete
+    [__deleteEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteEstar.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      let delpost = state.posts.filter((post) => action.payload !== post.id);
+      state.posts = delpost;
+    },
+    [__deleteEstar.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // PATCH 게시물 수정하기!!!
+    [__updateEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateEstar.fulfilled]: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.id !== action.payload.postID) {
+          return post;
+        } else {
+          console.log(post);
+          return { ...post, content: action.payload.newContent };
+        }
+      });
+      // state.posts = newNewContent;
+      state.isLoading = false;
+    },
+    [__updateEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

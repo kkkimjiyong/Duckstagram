@@ -1,5 +1,5 @@
-import { createStore } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
+// import logger from "redux-logger";
 import posts from "../modules/ListSlice";
 import comments from "../modules/DetailSlice";
 import login from "../modules/loginSlice";
@@ -15,6 +15,7 @@ const store = configureStore({
     comments: comments,
     estar: estar,
   },
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== "production",
 });
 

@@ -9,9 +9,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // 스토어 연결
 
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <CookiesProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </CookiesProvider>
+
 );
 
 //잉 커밋메세지 사라진거 억울해서 주석쓰고 커밋하기 잉

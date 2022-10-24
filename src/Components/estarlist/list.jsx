@@ -77,6 +77,7 @@ const Boxes = styled.div`
     max-width: 300px;
     width: 90%;
     height: 300px;
+    min-width: 80px;
   }
 `;
 

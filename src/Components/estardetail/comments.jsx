@@ -8,9 +8,11 @@ import {
 } from "../../redux/modules/DetailSlice";
 
 const Comment = ({ comment }) => {
-  console.log(comment);
+  // console.log(comment);
+  // hooks
   const dispatch = useDispatch();
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false); // 수정하기/댓글보기 모드
+  // 수정 댓글 입력창
   const [newComment, setNewComment] = useState({
     comment: "",
   });

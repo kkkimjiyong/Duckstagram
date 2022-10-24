@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
 import RandomApi from "../../mytools/RandomApi";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 const Signup = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.
   // const word = RandomApi();
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(["HangHae99"]);
+  // const [cookies, setCookie] = useCookies(["HangHae99"]);
   const navigate = useNavigate();
   const { error, isLoading, login } = useSelector((state) => state.login);
-  console.log(cookies);
+  // console.log(cookies);
   //이 페이지에서 유저정보들을 get해와서 대조해야하나?
 
   const initialstate = {

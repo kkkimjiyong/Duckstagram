@@ -15,24 +15,24 @@ const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  // 인풋박스 훅
   const [comment, setComment] = useState({
     commentId: 0,
     comment: "",
   });
-
-  const globalposts = useSelector((state) => state.posts.posts);
-  const { comments } = useSelector((state) => state.comments);
+  // 설렉터
+  const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
+  const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
+  // 댓글 리스트들 중 파람아이디에 일치하는 것만 필더해주기
   const newglobalposts = comments.filter((comment) => {
     return comment.commentId === parseInt(id);
   });
-  console.log(newglobalposts);
-  console.log();
+  // console.log(newglobalposts);
 
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
   const saveCommentHandler = () => {
     if (comment.trim() === "") return;
-    dispatch(__postDetailComment({ comment, commentId: parseInt(id) }));
+    dispatch(__postDetailComment({ comment, commentId: parseInt(id) })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
     setComment({
       commentId: 0,
       comment: "",
@@ -57,18 +57,18 @@ const Detail = () => {
         </button>
         <button>🔙익명게시판</button>
       </MovePage>
-      {globalposts.map((post) => {
+      {globalposts?.map((post) => {
         return (
           <DetailBox key={post.id}>
             <DetailPic>
-              게시글 이미지 불러오기❤️
+              게시글 이미지 불러오기
               <p>{post.images}</p>
             </DetailPic>
             <DetailComment>
               사진옆쪽 박스
               <Profile>
                 프로필 이미지{post.title}/ 이름/ ~시간전{post.like}
-                {post.dislike}{" "}
+                {post.dislike}
               </Profile>
               <Mymemo>
                 내가 게시물에 쓴글{post.content}
@@ -91,7 +91,7 @@ const Detail = () => {
                   <button>저장</button>
                 </form>
                 <div>
-                  {newglobalposts.map((comment) => (
+                  {newglobalposts?.map((comment) => (
                     <Comment comment={comment} />
                   ))}
                 </div>
@@ -143,6 +143,7 @@ const Mymemo = styled(Profile)`
 `;
 const MoreComments = styled(Mymemo)`
   height: 280px;
+  overflow: scroll;
   form {
     display: flex;
     justify-content: space-between;

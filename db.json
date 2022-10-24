@@ -17,6 +17,46 @@
       "like": "",
       "dislike": "",
       "id": 2
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "댓글남기기\n",
+      "like": "",
+      "dislike": "",
+      "apiId": "star",
+      "id": 3
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "댓글남기기\n",
+      "like": "",
+      "dislike": "",
+      "apiId": "star",
+      "id": 4
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "댓글남기기\n",
+      "like": "",
+      "dislike": "",
+      "apiId": "star",
+      "id": 5
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "댓글남기기\n",
+      "like": "",
+      "dislike": "",
+      "apiId": "star",
+      "id": 6
     }
   ],
   "comments": [
@@ -34,6 +74,31 @@
       "comment": "훔",
       "commentId": 1,
       "id": 3
+    },
+    {
+      "comment": "남기기",
+      "commentId": 2,
+      "id": 5
+    },
+    {
+      "comment": "글씨왜안지워졍",
+      "commentId": 2,
+      "id": 6
+    },
+    {
+      "comment": "2번게시물",
+      "commentId": 2,
+      "id": 7
+    },
+    {
+      "comment": "ㄴㄴㄴ",
+      "commentId": 1,
+      "id": 8
+    },
+    {
+      "comment": "오오",
+      "commentId": 1,
+      "id": 9
     }
   ],
   "profile": {

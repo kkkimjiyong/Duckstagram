@@ -75,6 +75,7 @@ const Boxes = styled.div`
   justify-content: space-around;
   align-items: center;
   margin-top: 50px;
+
   div {
     border: 1px solid black;
     max-width: 300px;

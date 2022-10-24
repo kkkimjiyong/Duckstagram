@@ -43,8 +43,9 @@ const Comment = ({ comment }) => {
             <input
               type="text"
               required
+              maxLength="15"
+              title="15자 이하로만 입력 가능합니다."
               placeholder={comment.comment}
-              value={newComment.comment}
               onChange={(ev) => {
                 setNewComment(ev.target.value);
               }}
@@ -53,7 +54,6 @@ const Comment = ({ comment }) => {
             // 댓글보여주기
             <>
               <p>{comment.comment}</p>
-              <LikeApp />
             </>
           )}
         </div>
@@ -75,6 +75,7 @@ const Comment = ({ comment }) => {
           )}
           {!isEditMode && (
             <>
+              <LikeApp />
               <button onClick={() => setIsEditMode(true)}>✏️</button>
               <button onClick={() => commentDeleteHandler(comment.id)}>
                 ❌
@@ -92,5 +93,5 @@ export default Comment;
 const LineComment = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 20px;
+  margin: 15px 5px;
 `;

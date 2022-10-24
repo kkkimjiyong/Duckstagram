@@ -9,8 +9,6 @@ const LikeApp = () => {
   ]);
 
   const changeLike = (isLike, index) => {
-    console.log(isLike);
-    console.log(index);
     const filterArray = likeList.map((likeItem, arrayIndex) => {
       if (arrayIndex === index) {
         return isLike

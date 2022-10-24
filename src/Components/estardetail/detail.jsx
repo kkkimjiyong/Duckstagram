@@ -8,6 +8,7 @@ import {
   __getDetailComment,
 } from "../../redux/modules/DetailSlice";
 import { __getList } from "../../redux/modules/ListSlice";
+import { __deleteEstar, __updateEstar } from "../../redux/modules/PostSlice";
 import Comment from "./comments";
 
 const Detail = () => {
@@ -19,6 +20,10 @@ const Detail = () => {
   const [comment, setComment] = useState({
     commentId: 0,
     comment: "",
+  });
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [newContent, setNewContent] = useState({
+    content: "",
   });
   // 설렉터
   const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
@@ -42,96 +47,202 @@ const Detail = () => {
   useEffect(() => {
     dispatch(__getList(id));
     dispatch(__getDetailComment());
+    // navigate("/estarlist");
   }, [dispatch, id]);
+
+  // 게시물 삭제 Delete!!
+  const deletepostHandler = (id) => {
+    const result = window.confirm("정말 삭제 하시겠습니까?");
+    if (result) {
+      return dispatch(__deleteEstar(id));
+    } else {
+      return;
+    }
+  };
+  // 게시물 수정 patch!!
+  const updatePostHandler = (postID) => {
+    dispatch(__updateEstar({ postID, newContent }));
+    setIsEditMode(false);
+    setNewContent({
+      content: "",
+    });
+  };
+
   return (
     <>
-      <div>E스타그램</div>
-      디테일 페이지입니당!!!
-      <MovePage>
-        <button
+      <BigCard>
+        {!isEditMode && (
+          <PostButton onClick={() => setIsEditMode(true)}>✏️</PostButton>
+        )}
+        {isEditMode && (
+          <>
+            <PostButton
+              onClick={() => {
+                setIsEditMode(false);
+              }}
+            >
+              🔙
+            </PostButton>
+          </>
+        )}
+
+        <BackButton
           onClick={() => {
-            navigate("/estarpost");
+            navigate("/estarlist");
           }}
         >
-          ✏️
-        </button>
-        <button>🔙익명게시판</button>
-      </MovePage>
-      {globalposts?.map((post) => {
-        return (
-          <DetailBox key={post.id}>
-            <DetailPic>
-              게시글 이미지 불러오기
-              <p>{post.images}</p>
-            </DetailPic>
-            <DetailComment>
-              사진옆쪽 박스
-              <Profile>
-                프로필 이미지{post.title}/ 이름/ ~시간전{post.like}
-                {post.dislike}
-              </Profile>
-              <Mymemo>
-                내가 게시물에 쓴글{post.content}
-                <div>
-                  <LikeApp />
-                </div>
-              </Mymemo>
-              <MoreComments>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    saveCommentHandler(comment);
-                  }}
-                >
-                  <input
-                    type="text"
-                    placeholder="댓글을 달아주세요"
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                  <button>저장</button>
-                </form>
-                <div>
-                  {newglobalposts?.map((comment) => (
-                    <Comment comment={comment} />
-                  ))}
-                </div>
-              </MoreComments>
-            </DetailComment>
-          </DetailBox>
-        );
-      })}
+          Back
+        </BackButton>
+        {globalposts?.map((post) => {
+          return (
+            <DeleteButton
+              key={post.id}
+              onClick={() => deletepostHandler(post.id)}
+            >
+              ❌
+            </DeleteButton>
+          );
+        })}
+
+        {globalposts?.map((post) => {
+          return (
+            <Card key={post.id}>
+              <Photo>
+                게시글 이미지 불러오기
+                <p>{post.images}</p>
+                <LikeApp />{" "}
+              </Photo>
+
+              <Half>
+                {!isEditMode && <Info>내가쓴글: {post.content}</Info>}
+                {isEditMode && (
+                  <>
+                    <Info>
+                      <div>
+                        타이틀: {post.title}
+                        <button onClick={() => updatePostHandler(post.id)}>
+                          🔒
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        required
+                        placeholder={post.content}
+                        value={post.newContent}
+                        onChange={(e) => setNewContent(e.target.value)}
+                      />
+                    </Info>
+                  </>
+                )}
+
+                <MoreComments>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      saveCommentHandler(comment);
+                    }}
+                  >
+                    <input
+                      type="text"
+                      required
+                      maxLength="15"
+                      title="15자 이하로만 입력 가능합니다."
+                      placeholder="댓글을 달아주세요"
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <button>저장</button>
+                  </form>
+                  <div>
+                    {newglobalposts?.map((comment) => (
+                      <Comment comment={comment} />
+                    ))}
+                  </div>
+                </MoreComments>
+              </Half>
+            </Card>
+          );
+        })}
+      </BigCard>
     </>
   );
 };
 
 export default Detail;
 
-const MovePage = styled.div`
-  float: right;
-  margin-right: 40px;
-  font-size: x-large;
-  button {
-    margin-left: 10px;
-    background-color: #dde7f0;
+const BigCard = styled.div`
+  width: 90%;
+  height: 500px;
+  background-color: lightgray;
+  border: 1px solid black;
+  box-shadow: 5px 5px gray;
+  border-radius: 20px;
+  margin: 100px auto;
+  position: relative;
+`;
+
+const BackButton = styled.button`
+  width: 120px;
+  height: 34px;
+  text-align: center;
+  background-color: white;
+  position: absolute;
+  top: 16px;
+  right: 5%;
+`;
+const PostButton = styled(BackButton)`
+  width: 50px;
+  left: 5%;
+`;
+const DeleteButton = styled(BackButton)`
+  width: 50px;
+  background-color: transparent;
+  right: 0%;
+`;
+// const EditSaveButton = styled.button`
+//   /* left: 10%; */
+// `;
+const Card = styled.div`
+  width: 90%;
+  height: 80%;
+  margin: 60px auto 20px auto;
+  text-align: center;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 10px;
+`;
+const Photo = styled.div`
+  background-color: lightcoral;
+  width: 49%;
+`;
+
+const Half = styled.div`
+  width: 49%;
+  background-color: lightblue;
+`;
+const Info = styled.div`
+  background-color: #8bb6db;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  vertical-align: middle;
+  div {
+    display: flex;
+    justify-content: space-between;
+    line-height: 50px;
+    margin: auto 25px;
+  }
+
+  input {
+    width: 90%;
+    height: 30px;
+    vertical-align: top;
+    padding: 5px;
+    background-color: #afcae0;
   }
 `;
-const DetailBox = styled.div`
-  height: 600px;
-  width: 1000px;
-  border: 1px solid black;
-  margin: 50px auto;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-`;
-const DetailPic = styled.div`
-  height: 550px;
-  width: 450px;
-  border: 1px solid black;
-`;
-const DetailComment = styled(DetailPic)``;
 const Profile = styled.div`
   height: 100px;
   width: 410px;
@@ -142,17 +253,31 @@ const Mymemo = styled(Profile)`
   margin-top: 10px;
 `;
 const MoreComments = styled(Mymemo)`
-  height: 280px;
+  background-color: pink;
+  width: 100%;
+  height: 270px;
+  padding: 16px;
+  resize: none;
   overflow: scroll;
   form {
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    /* margin: 10px; */
     input {
-      border: 1px solid black;
+      background-color: #fcd6dc;
+      width: 85%;
+      padding: 5px;
     }
     button {
-      border: 1px solid black;
+      border: 3px solid #8f5053;
+      border-radius: 20px;
+      padding: 5px;
+      color: white;
+      background-color: #da777c;
+      &:hover {
+        font-weight: 700;
+        border: 5px solid #8f5053;
+      }
     }
   }
 `;

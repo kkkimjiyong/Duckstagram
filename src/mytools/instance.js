@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { getToken } from "./utils";
 
 const instance = axios.create({
   baseURL: "http://localhost:3001",
@@ -31,32 +30,10 @@ export const detailApi = {
 
 //  E스타그램 Post 페이지
 export const postApi = {
-  postPost: (post) => instance.post("/api/star/posts/", post),
+  // postPost: (post) => instance.post("/api/star/posts/", post),
+
+  postPost: (post) => instance.post("/posts", post), //POST
+  deletePost: (postID) => instance.delete(`/posts/${postID}`), //DELET
+  patchPost: (postID, edit) =>
+    instance.patch(`/posts/${postID}`, { content: edit }), //PATCH
 };
-
-// //┏----------interceptor를 통한 header 설정----------┓
-// instance.interceptors.request.use(async (config) => {
-//   config.headers["content-type"] = "application/json; charset=utf-8";
-//   config.headers["X-Requested-With"] = "XMLHttpRequest";
-//   config.headers["Accept"] = "*/*";
-//   //getToken는 로컬 스토리지에 토큰이 있다면 반환한다 없다면 null 값 반환
-//   config.headers["authorization"] = await getToken();
-//   return config;
-// });
-
-// // ┏----------interceptor를 통한 response 설정----------┓
-// instance.interceptors.response.use(async (response) => {
-//   if (response.data.message === "new token") {
-//     const { config } = response;
-//     const originalRequest = config;
-
-//     const newAccessToken = response.data.myNewToken;
-//     localStorage.setItem("token", newAccessToken);
-
-//     axios.defaults.headers.common.authorization = `Bearer ${newAccessToken}`;
-//     originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
-//     return axios(originalRequest);
-//   }
-
-//   return response;
-// });

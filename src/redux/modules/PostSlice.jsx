@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+
 import { postApi } from "../../mytools/instance";
 
 const initialState = {
@@ -32,6 +32,34 @@ export const __addEstar = createAsyncThunk(
   }
 );
 
+// 게시물 삭제 DELET
+export const __deleteEstar = createAsyncThunk(
+  "estar/deleteestar",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await postApi.deletePost(payload);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 게시물 수정 patch
+export const __updateEstar = createAsyncThunk(
+  "estar/updateeestar",
+  async (payload, thunkAPI) => {
+    try {
+      const { newContent, postID } = payload;
+      await postApi.patchPost(postID, newContent); // 서버한테 보낸상태
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const estarSlice = createSlice({
   name: "estar",
   initialState,
@@ -50,6 +78,40 @@ const estarSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
       state.error = "아아";
+    },
+    // 게시물 delete
+    [__deleteEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteEstar.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      let delpost = state.posts.filter((post) => action.payload !== post.id);
+      state.posts = delpost;
+      alert("삭제 완료 되었습니다.");
+      window.location.replace("/estarlist");
+    },
+    [__deleteEstar.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // PATCH 게시물별 댓글!!! 게시물별 댓글 수정하기!!!
+    [__deleteEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteEstar.fulfilled]: (state, action) => {
+      let newNewContent = state.posts.map((post) => {
+        if (post.id !== action.payload.postID) {
+          return post;
+        } else {
+          return { ...post, content: action.payload.newContent };
+        }
+      });
+      state.post = newNewContent;
+      state.isLoading = false;
+    },
+    [__deleteEstar.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });

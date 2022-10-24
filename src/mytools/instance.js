@@ -1,12 +1,13 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://13.124.143.112/",
+  baseURL: "http://3.90.29.60",
+  // baseURL: "http://13.124.143.112/",
 });
 
 // E스타그램 첫 페이지 (전체리스트 가져오기 - GET)
 export const imageApi = {
-  getImages: () => instance.get("/api/star/posts/"),
+  getImages: () => instance.get("/api/star/posts/"), ///api/star/posts/
   getImage: (id) => instance.get(`/api/star/posts/${id}`),
 };
 
@@ -18,5 +19,5 @@ export const detailApi = {
 };
 
 export const postApi = {
-  postPost: (post) => instance.post("/api/star/posts/", post),
+  postPost: (post) => instance.post("/api/star/posts/", post), ///api/star/posts/
 };

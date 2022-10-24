@@ -10,7 +10,6 @@ const List = () => {
   const navigate = useNavigate();
   const globalposts = useSelector((state) => state.posts.posts);
   const error = useSelector((state) => state.posts.error);
-  console.log(error);
 
   useEffect(() => {
     dispatch(__getLists());

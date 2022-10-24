@@ -23,9 +23,10 @@ export const __addEstar = createAsyncThunk(
   "estar",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await postApi.postPost(payload);
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data);
+      const response = await postApi.postPost(payload);
+      console.log(response);
+      alert("업로드가 완료되었습니다");
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -48,8 +49,8 @@ const estarSlice = createSlice({
     },
     [__addEstar.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
-      state.error = "아아";
+      console.log("오류낫슈", action.payload);
+      state.error = action.payload;
     },
   },
 });

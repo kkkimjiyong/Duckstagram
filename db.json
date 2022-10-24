@@ -26,6 +26,81 @@
       "like": "",
       "dislike": "",
       "id": 4
+<<<<<<< HEAD
+=======
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "agasdg",
+      "like": "",
+      "dislike": "",
+      "id": 5
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "안뇽\n",
+      "like": "",
+      "dislike": "",
+      "id": 6
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 7
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 8
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 9
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 10
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 11
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 12
+>>>>>>> main2
     }
   ],
   "comments": [

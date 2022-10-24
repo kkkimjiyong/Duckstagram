@@ -21,7 +21,7 @@ export const __getList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await imageApi.getImage(payload);
-      return thunkAPI.fulfillWithValue(data); //실제서버돌릴때는 data.data로 변경하기!!
+      return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -58,14 +58,14 @@ export const __updateEstar = createAsyncThunk(
 
 const initialState = {
   posts: [
-    {
-      postId: 1,
-      title: "제목",
-      images: "이미지",
-      content: "나의글",
-      like: "👍",
-      dislike: "👎",
-    },
+    // {
+    //   postId: 1,
+    //   title: "제목",
+    //   images: "이미지",
+    //   content: "나의글",
+    //   like: "👍",
+    //   dislike: "👎",
+    // },
   ],
   isLoading: false,
   error: null,
@@ -95,7 +95,8 @@ const listSlice = createSlice({
     },
     [__getList.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.posts.push(action.payload);
+      console.log(action.payload);
     },
     [__getList.rejected]: (state, action) => {
       state.isLoading = false;

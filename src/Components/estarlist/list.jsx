@@ -8,7 +8,7 @@ import { __getLists } from "../../redux/modules/ListSlice";
 const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const globalposts = useSelector((state) => state.posts.posts);
+  const globalposts = useSelector((state) => state.posts.posts.data);
 
   useEffect(() => {
     dispatch(__getLists());
@@ -26,12 +26,12 @@ const List = () => {
         </button>
       </MovePage>
       <Boxes>
-        {globalposts.map((post) => {
+        {globalposts?.map((post) => {
           return (
-            <BoxMemo key={post.id}>
+            <BoxMemo key={post.PostId}>
               <Image
                 onClick={() => {
-                  navigate(`/estardetail/${post.id}`);
+                  navigate(`/estardetail/${post.PostId}`);
                 }}
               >
                 {post.images}
@@ -69,7 +69,14 @@ const Boxes = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin: 50px;
+  margin-top: 50px;
+  div {
+    border: 1px solid black;
+    max-width: 300px;
+    width: 90%;
+    height: 300px;
+    min-width: 80px;
+  }
 `;
 const BoxMemo = styled.div`
   width: 100%;

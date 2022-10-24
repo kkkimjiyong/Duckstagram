@@ -21,6 +21,13 @@ const Main = () => {
       >
         회원가입
       </Button>
+      <Button
+        onClick={() => {
+          navigate("/realchat");
+        }}
+      >
+        채팅방입장
+      </Button>
     </>
   );
 };

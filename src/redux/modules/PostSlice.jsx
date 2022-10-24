@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { postApi } from "../../mytools/instance";
+import { getCookie } from "../../Components/estarlogin/cookiehook";
 
 const initialState = {
   posts: [
@@ -23,8 +24,17 @@ export const __addEstar = createAsyncThunk(
   "estar",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await postApi.postPost(payload);
-      console.log(data);
+      const { data } = await axios.post(
+        "http://3.90.29.60/api/star/posts",
+        payload,
+        //헤더에 쿠키를 붙여서 보내준다. (Bearer 앞에 붙여주고)
+        {
+          headers: {
+            Authorization: `Bearer ${getCookie("token")}`,
+          },
+        }
+      );
+      console.log(payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

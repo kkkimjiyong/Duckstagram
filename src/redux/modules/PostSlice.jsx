@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+
 import { postApi } from "../../mytools/instance";
 import { getCookie } from "../../Components/estarlogin/cookiehook";
 

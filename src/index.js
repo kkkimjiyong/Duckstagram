@@ -9,6 +9,7 @@ import CookiesProvider from "react-cookie/cjs/CookiesProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // 스토어 연결
+
   <CookiesProvider>
     <Provider store={store}>
       <App />

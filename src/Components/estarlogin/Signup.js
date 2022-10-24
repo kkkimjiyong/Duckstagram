@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
 import RandomApi from "../../mytools/RandomApi";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import useInput from "../hooks/useInput";
 
 const Signup = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.

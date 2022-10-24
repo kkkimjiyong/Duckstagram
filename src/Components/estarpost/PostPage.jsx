@@ -99,63 +99,57 @@ const PostPage = () => {
   //   const response = await apiClient.post("/brand/logo_image", formData);
   //   //response.data.location이 업로드한 파일의 url
   // };
-  // if (error) {
-  //   if (window.confirm("회원이아닙니다."))
-  //     window.location.replace("/estarpost");
-  // } else {
-
-  // let formData = new FormData();
-  // formData.append("image", "Chris");
-
-  // console.log(formData);
-
-  return (
-    <BigCard id="myForm">
-      <BackButton
-        onClick={() => {
-          navigate("/estarlist");
-        }}
-      >
-        Back
-      </BackButton>
-
-      <Card>
-        <Photo>
-          {/* <Preview>{preview && <img src={preview} alt="미리보기" />}</Preview> */}
-          <Upload>
-            <UploadInput
-              type="file"
-              name="images"
-              value={value.images}
-              accept="image/*"
-              // onChange={onChange}
-              //   onChange={(e) => {
-              //     handleImagePreview(e.target.files[0]);}
-
-              // }
-            ></UploadInput>
-          </Upload>
-        </Photo>
-        <Half>
-          <Info>프로필사진 + 닉네임</Info>
-          <Write
-            name="content"
-            value={value.content}
-            placeholder="텍스트를 적는 공간"
-            onChange={onChange}
-          ></Write>
-        </Half>
-        <UploadButton
+  if (error) {
+    if (window.confirm("회원이아닙니다."))
+      window.location.replace("/estarpost");
+  } else {
+    return (
+      <BigCard id="myForm">
+        <BackButton
           onClick={() => {
-            onSubmit(value);
+            navigate("/estarlist");
           }}
         >
-          업로드버튼
-        </UploadButton>
-      </Card>
-    </BigCard>
-  );
-  // }
+          Back
+        </BackButton>
+
+        <Card>
+          <Photo>
+            {/* <Preview>{preview && <img src={preview} alt="미리보기" />}</Preview> */}
+            <Upload>
+              <UploadInput
+                type="file"
+                name="images"
+                value={value.images}
+                accept="image/*"
+                // onChange={onChange}
+                //   onChange={(e) => {
+                //     handleImagePreview(e.target.files[0]);}
+
+                // }
+              ></UploadInput>
+            </Upload>
+          </Photo>
+          <Half>
+            <Info>프로필사진 + 닉네임</Info>
+            <Write
+              name="content"
+              value={value.content}
+              placeholder="텍스트를 적는 공간"
+              onChange={onChange}
+            ></Write>
+          </Half>
+          <UploadButton
+            onClick={() => {
+              onSubmit(value);
+            }}
+          >
+            업로드버튼
+          </UploadButton>
+        </Card>
+      </BigCard>
+    );
+  }
 };
 
 export default PostPage;

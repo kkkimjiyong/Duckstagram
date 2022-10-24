@@ -11,8 +11,8 @@ export const imageApi = {
   getImages: () => instance.get("/api/star/posts/"),
   getImage: (id) => instance.get(`/api/star/posts/${id}`),
   deletePost: (postID) => instance.delete(`api/star/posts/${postID}`), //DELET
-  patchPost: (postID, edit) =>
-    instance.patch(`api/star/posts/${postID}`, { content: edit }), //PATCH
+  putPost: (Editpost) =>
+    instance.put(`api/star/posts/${Editpost.PostId}`, Editpost), //PATCH
 
   // getImages: () => instance.get("/posts"), //GET---> 전체 포스트들을 가져옴
   // getImage: (id) => instance.get(`/posts?id=${id}`), //GET---> 디테일페이지에 알맞은 포스트를 가져옴

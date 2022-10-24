@@ -9,8 +9,6 @@ const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const globalposts = useSelector((state) => state.posts.posts);
-  const error = useSelector((state) => state.posts.error);
-  console.log(error);
 
   useEffect(() => {
     dispatch(__getLists());
@@ -30,9 +28,8 @@ const List = () => {
       <Boxes>
         {globalposts.map((post) => {
           return (
-            <BoxMemo>
+            <BoxMemo key={post.id}>
               <Image
-                key={post.id}
                 onClick={() => {
                   navigate(`/estardetail/${post.id}`);
                 }}

@@ -111,11 +111,14 @@ const Detail = () => {
               <Photo>
                 게시글 이미지 불러오기
                 <p>{post.images}</p>
-                <LikeApp />
-              </Photo>
-
-              <Half>
-                {!isEditMode && <Info>내가쓴글: {post.content}</Info>}
+                {!isEditMode && (
+                  <Info>
+                    <div>
+                      내가쓴글: {post.content}
+                      <LikeApp />
+                    </div>
+                  </Info>
+                )}
                 {isEditMode && (
                   <>
                     <Info>
@@ -135,7 +138,9 @@ const Detail = () => {
                     </Info>
                   </>
                 )}
+              </Photo>
 
+              <Half>
                 <MoreComments>
                   <form
                     onSubmit={(e) => {
@@ -220,6 +225,7 @@ const Card = styled.div`
 const Photo = styled.div`
   background-color: lightcoral;
   width: 49%;
+  height: 100%;
 `;
 
 const Half = styled.div`
@@ -229,41 +235,36 @@ const Half = styled.div`
 const Info = styled.div`
   background-color: #8bb6db;
   width: 100%;
-  height: 100px;
-  line-height: 100px;
-  vertical-align: middle;
+  height: 30%;
+  line-height: 50px;
+  position: sticky;
+  top: 70%;
+  word-break: break-all;
+  line-height: normal;
+  padding: 10px;
   div {
     display: flex;
     justify-content: space-between;
-    line-height: 50px;
-    margin: auto 25px;
+    margin: 10px 20px;
   }
 
   input {
     width: 90%;
     height: 30px;
     vertical-align: top;
-    padding: 5px;
+    padding: 10px;
+
     background-color: #afcae0;
   }
 `;
 
-const Profile = styled.div`
-  height: 100px;
-  width: 410px;
-  border: 1px solid black;
-  margin: auto;
-`;
-const Mymemo = styled(Profile)`
-  margin-top: 10px;
-`;
-const MoreComments = styled(Mymemo)`
+const MoreComments = styled.div`
   background-color: pink;
   width: 100%;
-  height: 270px;
+  height: 100%;
   padding: 16px;
   resize: none;
-  overflow: scroll;
+  overflow-y: scroll;
   form {
     display: flex;
     justify-content: space-between;
@@ -274,6 +275,7 @@ const MoreComments = styled(Mymemo)`
       padding: 5px;
     }
     button {
+      width: 10%;
       border: 3px solid #8f5053;
       border-radius: 20px;
       padding: 5px;

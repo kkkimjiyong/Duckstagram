@@ -22,7 +22,9 @@ const Detail = () => {
     content: "",
   });
   // 설렉터
-  const globalposts = useSelector((state) => state.estar.posts); //포스트 리스트 가져오기
+  const globalposts = useSelector((state) => state.posts.posts.data);
+  // => console.log(state.posts));
+  //  state.estar.posts); //포스트 리스트 가져오기
   console.log(globalposts);
   const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
   console.log(comments);

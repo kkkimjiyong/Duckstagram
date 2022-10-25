@@ -68,7 +68,7 @@ const List = () => {
                 <Words>
                   <div>내용: {post.content}</div>
 
-                  <LikeApp />
+                  {/* <LikeApp post={post}/> */}
                 </Words>
               </BoxBtm>
             </BoxMemo>

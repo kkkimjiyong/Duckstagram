@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -9,6 +9,13 @@ const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const globalposts = useSelector((state) => state.posts.posts.data);
+  const sendFD = new FormData();
+
+  sendFD.get("images");
+
+  for (let a of sendFD.entries()) {
+    console.log("sendFD출력", a);
+  }
 
   useEffect(() => {
     dispatch(__getLists());
@@ -34,7 +41,7 @@ const List = () => {
                   navigate(`/estardetail/${post.PostId}`);
                 }}
               >
-                {post.images}
+                <img alt="" src="{post.images}" />
               </Image>
               <Words>
                 <div>

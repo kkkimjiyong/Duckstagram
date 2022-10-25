@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import { __addEstar } from "../../redux/modules/PostSlice";
 const PostPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, posts } = useSelector((state) => state.estar);
+  const { error } = useSelector((state) => state.estar);
   // const [value, onChange] = usePost();
   console.log(error);
   const [preview, setPreview] = useState([]);

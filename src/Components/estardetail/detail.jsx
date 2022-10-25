@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
-import { __postDetailComment } from "../../redux/modules/DetailSlice";
+import {
+  __getDetailComment,
+  __postDetailComment,
+} from "../../redux/modules/DetailSlice";
 import { __getList } from "../../redux/modules/ListSlice";
 import { __deleteEstar, __updateEstar } from "../../redux/modules/ListSlice";
 
@@ -22,13 +25,19 @@ const Detail = () => {
     content: "",
   });
   // 설렉터
-  const globalposts = useSelector((state) => state.estar.posts); //포스트 리스트 가져오기
+  const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
   console.log(globalposts);
-  const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
-  console.log(comments);
+  // const myglobalposts = globalposts.filter(
+  //   (globalpost) => globalpost.PostId === parseInt(id)
+  // );
+  // console.log(myglobalposts);
+  //  console.log(state.posts));
+  const globalComments = useSelector((state) => console.log(state.comments));
+  // state.comments.comments); // 댓글 리스트 가져오기
+  // console.log(globalComments);
   // 댓글 리스트들 중 파람아이디에 일치하는 것만 필더해주기
-  const newglobalposts = comments.filter((comment) => {
-    return comment.commentId === parseInt(id);
+  const newglobalposts = globalComments.filter((comment) => {
+    return comment.commentId === globalposts.PostId;
   });
   console.log(newglobalposts);
 
@@ -44,7 +53,7 @@ const Detail = () => {
   // 게시물에 달린 댓글 가져오기 GET
   useEffect(() => {
     dispatch(__getList(id));
-    // dispatch(__getDetailComment());
+    dispatch(__getDetailComment(id));
     // navigate("/estarlist");
   }, [dispatch, id]);
 

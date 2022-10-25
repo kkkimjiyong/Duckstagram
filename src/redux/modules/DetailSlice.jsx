@@ -55,8 +55,8 @@ export const __updateDetailComment = createAsyncThunk(
 const initialState = {
   comments: [
     {
-      commentId: 0,
-      comment: "",
+      commentId: 1,
+      comment: "댓글예시",
     },
   ],
   isLoading: false,
@@ -74,6 +74,7 @@ const detailSlice = createSlice({
     [__postDetailComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.comments.push(action.payload);
+      console.log(action.payload);
     },
     [__postDetailComment.rejected]: (state, action) => {
       state.isLoading = false;

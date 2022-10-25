@@ -10,7 +10,7 @@ const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const globalposts = useSelector((state) => state.posts.postlist);
+  const globalposts = useSelector((state) => state.posts.posts);
 
   useEffect(() => {
     dispatch(__getLists());
@@ -74,7 +74,6 @@ const List = () => {
                   {/* <LikeApp post={post}/> */}
                 </Words>
               </BoxBtm>
-
             </BoxMemo>
           );
         })}
@@ -86,7 +85,6 @@ const List = () => {
 
 export default List;
 const BoxCtn = styled.div``;
-
 
 const MainImg = styled.div`
   width: 100%;
@@ -100,11 +98,9 @@ const Boxes = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-
 `;
 
 const BoxMemo = styled.div`
-
   border: none;
   padding: 10px;
   border-radius: 20px;
@@ -122,6 +118,12 @@ const Image = styled.div`
   background-color: antiquewhite;
   box-shadow: 0px 3px 3px 0px gray;
   border-radius: 10px;
+  img {
+    object-fit: cover;
+    width: 330px;
+    height: 250px;
+    border-radius: 10px;
+  }
 `;
 
 const BoxBtm = styled.div`

@@ -26,12 +26,11 @@ const Detail = () => {
   const [newContent, setNewContent] = useState({ content: "" });
 
   // 설렉터
-  const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
+  const globalposts = useSelector((state) => state.posts.postlist); //포스트 리스트 가져오기
 
+  const globalComments = useSelector((state) => state.comments.comments); // 댓글 리스트 가져오기
+  console.log(globalComments);
 
-  const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
-
->>>>>>> jinyoung4
   // 댓글 리스트들 중 파람아이디에 일치하는 것만 필더해주기
   const newglobalposts = globalComments.filter((comment) => {
     return comment.postId === parseInt(id);
@@ -41,17 +40,11 @@ const Detail = () => {
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
   console.log(comment);
   const saveCommentHandler = () => {
-    if (comment.comment.trim() === "") return;
-    dispatch(
-      __postDetailComment({
-        comment: "안녕하세요",
-      })
-    ); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
-    console.log(id);
-    // setComment({
-    //   commentId: 0,
-    //   comment: "",
-    // });
+    if (comment.trim() === "") return;
+    dispatch(__postDetailComment({ comment, id })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
+    setComment({
+      comment: "",
+    });
   };
   // 게시물에 달린 댓글 가져오기 GET
   useEffect(() => {
@@ -106,70 +99,63 @@ const Detail = () => {
           Back
         </BackButton>
 
-
-        {globalposts?.map((post) => {
-          if (post.PostId === +id)
-            return (
-              <Card key={post.postId}>
-                <Photo>
-                  <div>
-                    <img src={post.imgUrl}></img>
-                  </div>
-                </Photo>
-                <Half>
-                  {!isEditMode && (
-                    <Info>
-                      <Title>{post.title}</Title>
-                      <Content>{post.content}</Content>
-                      {/* <div>
+        <Card key={globalposts.postId}>
+          <Photo>
+            <div>
+              <img src={globalposts.imgUrl}></img>
+            </div>
+          </Photo>
+          <Half>
+            {!isEditMode && (
+              <Info>
+                <Title>{globalposts.title}</Title>
+                <Content>{globalposts.content}</Content>
+                {/* <div>
                         내가쓴글: {post.content}
                         <LikeApp />
                       </div> */}
-                    </Info>
-                  )}
-                  {isEditMode && (
-                    <Info>
-                      <Title>{post.title}</Title>
-                      <textarea
-                        value={post.content}
-                        onChange={(e) =>
-                          setNewContent({ ...post, content: e.target.value })
-                        }
-                      />
-                      <button onClick={() => updatePostHandler(post.PostId)}>
-                        🔒
-                      </button>
-                    </Info>
-                  )}
-                </Half>
-                <MoreComments>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      saveCommentHandler(comment);
-                    }}
-                  >
-                    <input
-                      type="text"
-                      required
-                      maxLength="15"
-                      title="15자 이하로만 입력 가능합니다."
-                      placeholder="댓글을 달아주세요"
-                      value={comment.comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    />
-                    <button>저장</button>
-                  </form>
-                  {/* <div>
+              </Info>
+            )}
+            {isEditMode && (
+              <Info>
+                <Title>{globalposts.title}</Title>
+                <textarea
+                  value={globalposts.content}
+                  onChange={(e) =>
+                    setNewContent({ ...globalposts, content: e.target.value })
+                  }
+                />
+                <button onClick={() => updatePostHandler(globalposts.PostId)}>
+                  🔒
+                </button>
+              </Info>
+            )}
+          </Half>
+          <MoreComments>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                saveCommentHandler(comment);
+              }}
+            >
+              <input
+                type="text"
+                required
+                maxLength="15"
+                title="15자 이하로만 입력 가능합니다."
+                placeholder="댓글을 달아주세요"
+                value={comment.comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <button>저장</button>
+            </form>
+            {/* <div>
                     {newglobalposts?.map((comment) => (
                       <Comment comment={comment} />
                     ))}
                   </div> */}
-                </MoreComments>
-              </Card>
-            );
-        })}
-
+          </MoreComments>
+        </Card>
       </BigCard>
     </>
   );

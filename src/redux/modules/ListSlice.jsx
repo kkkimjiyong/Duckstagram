@@ -96,7 +96,7 @@ const listSlice = createSlice({
     [__getList.fulfilled]: (state, action) => {
       state.isLoading = false;
       console.log(action.payload);
-      state.posts = action.payload;
+      state.postlist = action.payload;
     },
     [__getList.rejected]: (state, action) => {
       state.isLoading = false;

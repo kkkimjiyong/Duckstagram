@@ -38,5 +38,11 @@ export const detailApi = {
 
 //  E스타그램 Post 페이지
 export const postApi = {
-  postPost: (post) => instance.post("/api/star/posts", post),
+  postPost: (post) =>
+    instance.post("/api/star/posts/", post, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        withCredentials: true,
+      },
+    }), ///api/star/posts/
 };

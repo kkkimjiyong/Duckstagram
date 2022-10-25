@@ -161,11 +161,11 @@ const Detail = () => {
                     />
                     <button>저장</button>
                   </form>
-                  {/* <div>
+                  <div>
                     {newglobalposts?.map((comment) => (
                       <Comment comment={comment} />
                     ))}
-                  </div> */}
+                  </div>
                 </MoreComments>
               </Half>
             </Card>

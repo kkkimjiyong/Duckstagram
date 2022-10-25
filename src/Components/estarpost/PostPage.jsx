@@ -24,7 +24,7 @@ const PostPage = () => {
     setImg(null);
     setPreview([]);
     console.log(file.target.files);
-    setImg(file.target.files);
+    // setImg(file.target.files);
     // file.target.files.length < 4
     //   ? setImg(file.target.files)
     //   : alert("사진은 최대 4개까지만 추가 가능합니다");
@@ -36,6 +36,8 @@ const PostPage = () => {
       reader.readAsDataURL(file.target.files[0]);
 
       reader.onloadend = () => {
+        setImg(file.target.files[0]);
+
         //.onloadend : 읽기가 완료 되었을 때
         const base64 = reader.result;
         if (base64) {
@@ -52,7 +54,8 @@ const PostPage = () => {
     setPreview([]);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     if (comment.trim() === "") return alert("내용을 입력해주세요");
     // else if (img === null) return alert("사진을 업로드 해주세요");
 
@@ -60,9 +63,10 @@ const PostPage = () => {
 
     // Object.values(img).forEach((file) => sendFD.append("images", file));
 
+    // sendFD.append("images", img);
     sendFD.append("images", img);
-    // sendFD.append("content", comment); // 넣고싶은 데이터는 이렇게 넣으면 됨
-    // sendFD.append("postId", posts.postId);
+
+    sendFD.append("content", JSON.stringify(comment)); // 넣고싶은 데이터는 이렇게 넣으면 됨
 
     //sendFD 콘솔에서 확인방법
     for (let a of sendFD.entries()) {
@@ -70,7 +74,7 @@ const PostPage = () => {
     }
 
     //Post dispatch
-    dispatch(__addEstar([sendFD, comment]));
+    dispatch(__addEstar(sendFD));
     // dispatch(__addEstar(comment));
     // window.location.replace("/estarlist");
   };
@@ -92,7 +96,7 @@ const PostPage = () => {
         Back
       </BackButton>
 
-      <Card>
+      <Card enctype="multipart/form-data" onSubmit={onSubmit}>
         <Photo>
           <Preview>
             {preview.length > 0 ? (
@@ -142,6 +146,7 @@ const PostPage = () => {
         <Half>
           <Info>프로필사진 + 닉네임 Get 하기</Info>
           <Write
+            enctype="application/x-www-form-urlencoded"
             name="content"
             value={comment}
             placeholder="텍스트를 적는 공간"
@@ -150,9 +155,9 @@ const PostPage = () => {
         </Half>
 
         <UploadButton
-          onClick={() => {
-            onSubmit();
-          }}
+        // onClick={() => {
+        //   onSubmit();
+        // }}
         >
           업로드 하기
         </UploadButton>

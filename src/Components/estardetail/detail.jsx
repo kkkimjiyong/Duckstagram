@@ -59,7 +59,7 @@ const Detail = () => {
     const result = window.confirm("정말 삭제 하시겠습니까?");
     if (result) {
       await dispatch(__deleteEstar(id));
-      window.location.replace("/estarlist");
+      // window.location.replace("/estarlist");
     } else {
       return;
     }

@@ -1,9 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const [removeCookie] = useCookies();
   return (
     <TopCtn>
       <Homebtn
@@ -31,7 +34,8 @@ const Header = () => {
       </PostBtn>
       <PostBtn
         onClick={() => {
-          navigate("/estarprofile");
+          if (window.confirm("로그아웃하시겠습니까?!?!?!?!"))
+            removeCookie("token");
         }}
       >
         Logout

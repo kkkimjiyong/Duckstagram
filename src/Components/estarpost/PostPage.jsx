@@ -69,9 +69,6 @@ const PostPage = () => {
     // e.preventDefault();
 
     const sendFD = new FormData();
-
-    // Object.values(img).forEach((file) => sendFD.append("images", file));
-
     sendFD.append("images", img);
     sendFD.append("content", JSON.stringify(comment)); // 넣고싶은 데이터는 이렇게 넣으면 됨
     sendFD.append("title", JSON.stringify(title));

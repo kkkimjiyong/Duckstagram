@@ -115,10 +115,6 @@ const Signup = () => {
                 )}
               </AddTodoBox>
             </AddTodoCtnArea>
-            <Line></Line>
-            <Line></Line>
-            <Line></Line>
-            <Line></Line>
             <BtnSet>
               <PostBtn
                 // disabled={
@@ -146,6 +142,7 @@ const Signup = () => {
               </PostBtn>
             </BtnSet>
           </AddTodoCtn>
+          {/* <Line></Line> */}
         </>
       );
     }
@@ -160,13 +157,16 @@ const AddTodoCtn = styled.div`
   box-sizing: border-box;
   padding: 20px;
   display: flex;
-  gap: 20px;
   flex-direction: column;
-  background: #ebecf0;
+  background: rgb(255, 110, 64);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 110, 64, 1) 0%,
+    rgba(255, 255, 255, 0) 59%
+  );
   justify-content: space-between;
   border-radius: 10px;
-  box-shadow: -5px -5px 10px #fff, 5px 5px 10px #babebc;
-
+  box-shadow: 5px 5px 10px #babebc;
   width: 768px;
   min-height: 480px;
 `;
@@ -210,19 +210,25 @@ const BtnSet = styled.div`
 `;
 
 const PostBtn = styled.button`
-  box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
+  box-shadow: 5px 5px 8px #babebc;
   border-radius: 10px;
+  background-color: white;
   height: 60px;
   width: 120px;
   :hover {
+    transform: scale(1.1);
     background-color: white;
+    box-shadow: 0px 3px 3px 0px gray;
   }
 `;
 
-const Line = styled.div`
-  width: 10%;
-  height: 20px;
-  background: yellow;
-`;
+// const Line = styled.div`
+//   position: absolute;
+//   width: 1200px;
+//   bottom: 400px;
+//   height: 300px;
+//   background: #ff6f00;
+//   z-index: -1;
+// `;
 
 export default Signup;

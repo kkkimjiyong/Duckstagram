@@ -4,8 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
 import { __postDetailComment } from "../../redux/modules/DetailSlice";
-import { __getLists } from "../../redux/modules/ListSlice";
+import { __getList, __getLists } from "../../redux/modules/ListSlice";
 import { __deleteEstar, __updateEstar } from "../../redux/modules/ListSlice";
+import Comment from "./comments";
 
 const Detail = () => {
   // hooks
@@ -20,7 +21,7 @@ const Detail = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [newContent, setNewContent] = useState({ content: "" });
   // 설렉터
-  const globalposts = useSelector((state) => state.posts.posts.data); //포스트 리스트 가져오기
+  const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
   console.log(globalposts);
   const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
   console.log(comments);
@@ -32,7 +33,8 @@ const Detail = () => {
 
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
   const saveCommentHandler = () => {
-    if (comment.trim() === "") return;
+    if (comment.comment.trim() === "") return;
+
     dispatch(__postDetailComment({ comment, commentId: parseInt(id) })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
     setComment({
       commentId: 0,
@@ -44,7 +46,7 @@ const Detail = () => {
     dispatch(__getLists());
     // dispatch(__getDetailComment());
     // navigate("/estarlist");
-  }, [dispatch, id]);
+  }, []);
 
   // 게시물 삭제 Delete!!
   const deletepostHandler = async (id) => {
@@ -157,15 +159,17 @@ const Detail = () => {
                         title="15자 이하로만 입력 가능합니다."
                         placeholder="댓글을 달아주세요"
                         value={comment.comment}
-                        onChange={(e) => setComment(e.target.value)}
+                        onChange={(e) =>
+                          setComment({ comment: e.target.value })
+                        }
                       />
                       <button>저장</button>
                     </form>
-                    {/* <div>
-                    {newglobalposts?.map((comment) => (
-                      <Comment comment={comment} />
-                    ))}
-                  </div> */}
+                    <div>
+                      {newglobalposts?.map((comment) => (
+                        <Comment comment={comment} />
+                      ))}
+                    </div>
                   </MoreComments>
                 </Half>
               </Card>

@@ -1,23 +1,59 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
 import { __getLists } from "../../redux/modules/ListSlice";
+import Detail from "../estardetail/detail";
 
 const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const globalposts = useSelector((state) => state.posts.posts);
-
+  const globalposts = useSelector((state) => state.posts.postlist);
   useEffect(() => {
     dispatch(__getLists());
   }, [dispatch]);
 
+  // //무한스크롤구현
+  // const [posts, Setposts] = useState([]);
+  // const [hasNextPage, setHasNextPage] = useState(true);
+  // const page = useRef(1);
+
+  // //json에서 5개씩 끊어서 가져오기
+  // const fetch = useCallback(async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `http://3.90.29.60/api/star/posts?page=${page.current}&pageSize=6`
+  //     );
+  //     Setposts((prevPosts) => [...prevPosts, ...data]);
+  //     setHasNextPage(data.length == 6);
+  //     if (data.length) {
+  //       page.current += 1;
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
+
+  // //ref를 타겟으로 지정하고, 타겟이 뷰에 보이면 inView의 값이 True로
+  // const [ref, inView] = useInView();
+
+  // useEffect(() => {
+  //   if (inView && hasNextPage) {
+  //     fetch();
+  //   }
+  // }, [fetch, hasNextPage, inView]);
+
   return (
-    <>
-      <MainImg />
+    <BoxCtn>
       <Boxes>
+        <MainImg href="https://imgbb.com/">
+          <img
+            src="https://i.ibb.co/KWzZrpg/Estargram-Logo-removebg-preview.png"
+            alt="Estargram-Logo-removebg-preview"
+            border="0"
+          />
+        </MainImg>
         {globalposts?.map((post) => {
           return (
             <BoxMemo key={post.PostId}>
@@ -28,66 +64,65 @@ const List = () => {
               >
                 {post.images}
               </Image>
-              <Words>
-                <div>
-                  <div>
-                    제목: {post.title}
-                    <br></br>
-                    내용: {post.content}
-                  </div>
+              <BoxBtm>
+                <Words>
+                  <div>내용: {post.content}</div>
 
                   <LikeApp />
-                </div>
-              </Words>
+                </Words>
+              </BoxBtm>
             </BoxMemo>
           );
         })}
       </Boxes>
-    </>
+      {/* <div ref={ref} style={{ position: "absolute", bottom: "0px" }} /> */}
+    </BoxCtn>
   );
 };
 
 export default List;
+const BoxCtn = styled.div``;
 
 const MainImg = styled.div`
-  float: right;
-  margin-top: 10px;
-  margin-right: 50px;
-  font-size: x-large;
-
-  button {
-    margin: 10px;
-    &:hover {
-      font-size: larger;
-    }
-  }
+  width: 100%;
+  height: 300px;
+  object-fit: scale-down;
+  display: flex;
+  justify-content: center;
 `;
 
 const Boxes = styled.div`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin: 50px;
+  gap: 20px;
 `;
 
 const BoxMemo = styled.div`
-  width: 300px;
+  border: none;
   padding: 10px;
+  border-radius: 20px;
+  width: 350px;
+  height: 350px;
+  margin: auto;
+  box-shadow: 0px 3px 3px 0px gray;
+  :hover {
+    transform: scale(1.05);
+  }
+`;
+const Image = styled.div`
+  width: 330px;
+  height: 250px;
+  background-color: antiquewhite;
+  box-shadow: 0px 3px 3px 0px gray;
   border-radius: 10px;
 `;
-const Image = styled(BoxMemo)`
-  border: 1px solid black;
-  height: 300px;
-  box-shadow: 0 0 0.5em 0 gray;
-`;
-const Words = styled(BoxMemo)`
-  border: 1px solid black;
-  box-shadow: 0 0 0.5em 0 gray;
 
-  div {
-    display: flex;
-    justify-content: space-between;
-  }
+const BoxBtm = styled.div`
+  width: 330px;
+  height: 60px;
+  margin-top: 15px;
+`;
+const Words = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

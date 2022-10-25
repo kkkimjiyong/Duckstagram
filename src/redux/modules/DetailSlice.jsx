@@ -7,7 +7,7 @@ export const __postDetailComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await detailApi.postDetail(payload);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -19,7 +19,7 @@ export const __getDetailComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await detailApi.getDetail(payload);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -73,6 +73,7 @@ const detailSlice = createSlice({
     },
     [__postDetailComment.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(action.payload);
       state.comments.push(action.payload);
     },
     [__postDetailComment.rejected]: (state, action) => {

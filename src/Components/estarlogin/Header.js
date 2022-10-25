@@ -24,10 +24,17 @@ const Header = () => {
 
       <PostBtn
         onClick={() => {
-          navigate("/estarpost");
+          navigate("/estarprofile");
         }}
       >
         Profile
+      </PostBtn>
+      <PostBtn
+        onClick={() => {
+          navigate("/estarprofile");
+        }}
+      >
+        Logout
       </PostBtn>
     </TopCtn>
   );
@@ -37,7 +44,7 @@ const TopCtn = styled.div`
   position: sticky;
   padding: 15px;
   top: 0px;
-  width: 100vh;
+  width: 100%;
   z-index: 999;
   display: flex;
   justify-content: space-evenly;
@@ -46,12 +53,26 @@ const Homebtn = styled.button`
   box-shadow: 0px 3px 3px 0px black;
   width: 40px;
   height: 40px;
+  border-radius: 10px;
+  background-color: #ff8f00;
+  :hover {
+    background-color: #ef6c00;
+    color: white;
+    transform: scale(1.1);
+  }
 `;
 
 const PostBtn = styled.button`
   box-shadow: 0px 3px 3px 0px black;
   width: 40px;
   height: 40px;
+  border-radius: 10px;
+  background-color: #ff8f00;
+  :hover {
+    background-color: #ef6c00;
+    color: white;
+    transform: scale(1.1);
+  }
 `;
 
 export default Header;

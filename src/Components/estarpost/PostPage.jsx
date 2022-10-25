@@ -79,7 +79,7 @@ const PostPage = () => {
     //Post dispatch
     dispatch(__addEstar(sendFD));
     // dispatch(__addEstar(comment));
-    // window.location.replace("/estarlist");
+    window.location.replace("/estarlist");
   };
 
   console.log("preview출력", preview);

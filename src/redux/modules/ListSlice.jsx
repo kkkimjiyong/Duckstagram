@@ -67,6 +67,7 @@ const initialState = {
     //   dislike: "👎",
     // },
   ],
+  postlist: [],
   isLoading: false,
   error: null,
 };
@@ -82,7 +83,7 @@ const listSlice = createSlice({
     },
     [__getLists.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.postlist = action.payload;
       // console.log("fulfilled 상태", action.payload);
     },
     [__getLists.rejected]: (state, action) => {
@@ -95,8 +96,8 @@ const listSlice = createSlice({
     },
     [__getList.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts.push(action.payload);
       console.log(action.payload);
+      state.posts = action.payload;
     },
     [__getList.rejected]: (state, action) => {
       state.isLoading = false;
@@ -121,14 +122,7 @@ const listSlice = createSlice({
       state.isLoading = true;
     },
     [__updateEstar.fulfilled]: (state, action) => {
-      state.posts = state.posts.map((post) => {
-        if (post.id !== action.payload.PostId) {
-          return post;
-        } else {
-          console.log(post);
-          return { ...post, content: action.payload.newContent };
-        }
-      });
+      state.posts = action.payload;
       // state.posts = newNewContent;
       state.isLoading = false;
     },

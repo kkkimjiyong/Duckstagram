@@ -21,6 +21,7 @@ export const imageApi = {
   putPost: (Editpost) =>
     instance.put(`api/star/posts/${Editpost.PostId}`, Editpost, {
       headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("token")}`,
       },
     }), //PATCH
@@ -37,26 +38,19 @@ export const detailApi = {
   getDetail: (postId) =>
     instance.get(`/api/star/comments/${postId}`, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("token")}`,
       },
     }), //GET
   postDetail: (payload) =>
     // console.log(comment),
-    instance.post(
-      `/api/star/comments/${payload.id}`,
-      { comment: payload.comment },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${getCookie("token")}`,
-        },
-      }
-    ), //POST
+    instance.post(`/api/star/comments/${payload.id}`, payload.comment, {
+      headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+    }), //POST
   deleteDetail: (delComId) =>
     instance.delete(`/api/star/comments/${delComId}`, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("token")}`,
       },
     }), //DELET
@@ -66,7 +60,6 @@ export const detailApi = {
       { comment: edit },
       {
         headers: {
-          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${getCookie("token")}`,
         },
       }

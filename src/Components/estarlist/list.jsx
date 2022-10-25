@@ -4,10 +4,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
 import { __getLists } from "../../redux/modules/ListSlice";
-import { useState } from "react";
-import { useRef, useCallback } from "react";
-import axios from "axios";
-import { useInView } from "react-intersection-observer";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -53,7 +49,7 @@ const List = () => {
 
 export default List;
 
-const MovePage = styled.div`
+const MainImg = styled.div`
   float: right;
   margin-top: 10px;
   margin-right: 50px;

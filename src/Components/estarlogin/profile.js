@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
 import useInput from "../hooks/useInput";
 
-const Signup = () => {
+const Profile = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.
   // const word = RandomApi();
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ const Signup = () => {
           <AddTodoCtn>
             <AddTodoCtnArea>
               <AddTodoBox>
-                <AddTodoTitle>아이디</AddTodoTitle>
+                <AddTodoTitle>닉네임</AddTodoTitle>
                 <AddTodoTextarea
                   value={Signup.loginId}
                   name="loginId"
@@ -231,4 +231,4 @@ const PostBtn = styled.button`
 //   z-index: -1;
 // `;
 
-export default Signup;
+export default Profile;

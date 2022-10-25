@@ -10,22 +10,69 @@ const Header = () => {
         onClick={() => {
           navigate("/");
         }}
-      ></Homebtn>
+      >
+        Main
+      </Homebtn>
+
+      <PostBtn
+        onClick={() => {
+          navigate("/estarpost");
+        }}
+      >
+        Post
+      </PostBtn>
+
+      <PostBtn
+        onClick={() => {
+          navigate("/estarprofile");
+        }}
+      >
+        Profile
+      </PostBtn>
+      <PostBtn
+        onClick={() => {
+          navigate("/estarprofile");
+        }}
+      >
+        Logout
+      </PostBtn>
     </TopCtn>
   );
 };
-
+const TopCtn = styled.div`
+  background-color: #ff6e40;
+  position: sticky;
+  padding: 15px;
+  top: 0px;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: space-evenly;
+`;
 const Homebtn = styled.button`
-  border: 3px solid black;
+  box-shadow: 0px 3px 3px 0px black;
   width: 40px;
   height: 40px;
+  border-radius: 10px;
+  background-color: #ff8f00;
+  :hover {
+    background-color: #ef6c00;
+    color: white;
+    transform: scale(1.1);
+  }
 `;
-const TopCtn = styled.div`
-  background-color: aliceblue;
-  position: sticky;
-  padding-top: 30px;
-  top: -20px;
-  width: 100vh;
+
+const PostBtn = styled.button`
+  box-shadow: 0px 3px 3px 0px black;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #ff8f00;
+  :hover {
+    background-color: #ef6c00;
+    color: white;
+    transform: scale(1.1);
+  }
 `;
 
 export default Header;

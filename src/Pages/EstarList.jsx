@@ -1,20 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import List from "../Components/estarlist/list";
+import Header from "../Components/estarlogin/Header";
+import Layout from "../Components/estarlogin/Layout";
 
 const EstarList = () => {
   const navigate = useNavigate();
   return (
-    <div>
-      <button
-        onClick={() => {
-          navigate("/estarpost");
-        }}
-      >
-        작성하기
-      </button>
+    <Layout>
+      <Header />
       <List />
-    </div>
+    </Layout>
   );
 };
 

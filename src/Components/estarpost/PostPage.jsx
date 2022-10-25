@@ -11,13 +11,18 @@ const PostPage = () => {
   const dispatch = useDispatch();
   const { error, posts } = useSelector((state) => state.estar);
   // const [value, onChange] = usePost();
-  console.log(error);
+  console.log("에러메세지", error);
   const [preview, setPreview] = useState([]);
   const [img, setImg] = useState(null);
   const [comment, setComment] = useState("");
+  const [title, setTitle] = useState("");
 
   const onCommentChange = (e) => {
     setComment(e.target.value);
+  };
+
+  const onTitleChange = (e) => {
+    setTitle(e.target.value);
   };
 
   const handleImagePreview = (file) => {
@@ -52,12 +57,16 @@ const PostPage = () => {
   const onPhotoDelete = () => {
     setImg(null);
     setPreview([]);
+    setComment("");
+    setTitle("");
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (comment.trim() === "") return alert("내용을 입력해주세요");
-    // else if (img === null) return alert("사진을 업로드 해주세요");
+    if (comment.trim() === "" || title.trim() === "")
+      // else if (img === null) return alert("사진을 업로드 해주세요");
+      return alert("내용을 입력해주세요");
+    // e.preventDefault();
 
     const sendFD = new FormData();
 
@@ -65,11 +74,7 @@ const PostPage = () => {
 
     sendFD.append("images", img);
     sendFD.append("content", JSON.stringify(comment)); // 넣고싶은 데이터는 이렇게 넣으면 됨
-    sendFD.append("title", JSON.stringify("제목입니당2"));
-    // sendFD.append(
-    //   "content",
-    //   new Blob([JSON.stringify(comment)], { type: "application/json" })
-    // );
+    sendFD.append("title", JSON.stringify(title));
 
     //sendFD 콘솔에서 확인방법
     for (let a of sendFD.entries()) {
@@ -78,12 +83,14 @@ const PostPage = () => {
 
     //Post dispatch
     dispatch(__addEstar(sendFD));
-    // dispatch(__addEstar(comment));
-    // window.location.replace("/estarlist");
+
+    alert("게시글이 작성되었습니다 !");
   };
 
   console.log("preview출력", preview);
   console.log("img출력", img);
+  console.log("제목출력", title);
+  console.log("내용출력", comment);
 
   // if (error) {
   //   if (window.confirm("회원이아닙니다."))
@@ -99,7 +106,7 @@ const PostPage = () => {
         Back
       </BackButton>
 
-      <Card enctype="multipart/form-data" onSubmit={onSubmit}>
+      <Card enctype="multipart/form-data">
         <Photo>
           <Preview>
             {preview.length > 0 ? (
@@ -142,12 +149,17 @@ const PostPage = () => {
                 onPhotoDelete();
               }}
             >
-              사진 파일 리셋
+              내용 다시 쓰기
             </PhotoResetButton>
           </Upload>
         </Photo>
         <Half>
-          <Info>프로필사진 + 닉네임 Get 하기</Info>
+          <Title
+            name="title"
+            value={title}
+            placeholder="제목 적어죠"
+            onChange={onTitleChange}
+          />
           <Write
             name="content"
             value={comment}
@@ -156,13 +168,7 @@ const PostPage = () => {
           ></Write>
         </Half>
 
-        <UploadButton
-        // onClick={() => {
-        //   onSubmit();
-        // }}
-        >
-          업로드 하기
-        </UploadButton>
+        <UploadButton onClick={onSubmit}>업로드 하기</UploadButton>
       </Card>
     </BigCard>
   );
@@ -282,15 +288,16 @@ const Upload = styled.div`
   }
 `;
 
-const Info = styled.div``;
+const Title = styled.input``;
 const Write = styled.textarea``;
 const Half = styled.div`
   width: 45%;
   height: 300px;
   background-color: lightblue;
-  ${Info} {
+  ${Title} {
     width: 100%;
     height: 100px;
+    padding: 15px;
     line-height: 100px;
     vertical-align: middle;
   }

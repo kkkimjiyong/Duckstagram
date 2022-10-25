@@ -55,6 +55,7 @@ const estarSlice = createSlice({
       state.isLoading = false;
       state.posts.push(action.payload);
       console.log("fulfilled 상태", state, action);
+      window.location.replace("/estarlist");
     },
     [__addEstar.rejected]: (state, action) => {
       state.isLoading = false;

@@ -7,7 +7,6 @@ export const __getLists = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await imageApi.getImages(payload);
-      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -83,8 +82,8 @@ const listSlice = createSlice({
     },
     [__getLists.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.postlist = action.payload;
-      // console.log("fulfilled 상태", action.payload);
+      state.posts = action.payload;
+      console.log("getLists fulfilled 상태", action.payload);
     },
     [__getLists.rejected]: (state, action) => {
       state.isLoading = false;

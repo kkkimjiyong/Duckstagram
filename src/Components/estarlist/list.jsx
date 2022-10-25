@@ -9,7 +9,9 @@ import Detail from "../estardetail/detail";
 const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const globalposts = useSelector((state) => state.posts.postlist);
+
   useEffect(() => {
     dispatch(__getLists());
   }, [dispatch]);
@@ -62,8 +64,9 @@ const List = () => {
                   navigate(`/estardetail/${post.PostId}`);
                 }}
               >
-                {post.images}
+                <img src={post.imgUrl}></img>
               </Image>
+
               <BoxBtm>
                 <Words>
                   <div>내용: {post.content}</div>
@@ -71,6 +74,7 @@ const List = () => {
                   {/* <LikeApp post={post}/> */}
                 </Words>
               </BoxBtm>
+
             </BoxMemo>
           );
         })}
@@ -82,6 +86,7 @@ const List = () => {
 
 export default List;
 const BoxCtn = styled.div``;
+
 
 const MainImg = styled.div`
   width: 100%;
@@ -95,9 +100,11 @@ const Boxes = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+
 `;
 
 const BoxMemo = styled.div`
+
   border: none;
   padding: 10px;
   border-radius: 20px;

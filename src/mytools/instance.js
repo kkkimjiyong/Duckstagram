@@ -21,7 +21,6 @@ export const imageApi = {
   putPost: (Editpost) =>
     instance.put(`api/star/posts/${Editpost.PostId}`, Editpost, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("token")}`,
       },
     }), //PATCH

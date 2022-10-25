@@ -1,25 +1,21 @@
-import { data } from "autoprefixer";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LikeApp from "../../mytools/likeApp";
 import { __getLists } from "../../redux/modules/ListSlice";
-// http://localhost:3001/posts?postId=1
+
 const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const globalposts = useSelector((state) => state.posts.posts);
-  const error = useSelector((state) => state.posts.error);
-  console.log(error);
+  const globalposts = useSelector((state) => state.posts.posts.data);
 
   useEffect(() => {
     dispatch(__getLists());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
-      <div>E스타그램</div>
-      {/* <img src={`http://localhost:3001/${posts.images}`} /> */}
       <MovePage>
         <button
           onClick={() => {
@@ -28,25 +24,28 @@ const List = () => {
         >
           ✏️
         </button>
-        <button>🔙익명게시판</button>
       </MovePage>
       <Boxes>
-        {globalposts.map((post) => {
+        {globalposts?.map((post) => {
           return (
-            <div
-              key={post.postId}
-              onClick={() => {
-                navigate(`/estardetail/${post.postId}`);
-              }}
-            >
-              <BoxMemo>
-                <Image>{post.images}</Image>
-                <Words>
-                  <p>{post.title}</p>
-                  <p>{post.content}</p>
-                </Words>
-              </BoxMemo>
-            </div>
+            <BoxMemo key={post.PostId}>
+              <Image
+                onClick={() => {
+                  navigate(`/estardetail/${post.PostId}`);
+                }}
+              >
+                {post.images}
+              </Image>
+              <Words>
+                <div>
+                  제목: {post.title}
+                  <p>내용: {post.content}</p>
+                </div>
+                <div>
+                  <LikeApp />
+                </div>
+              </Words>
+            </BoxMemo>
           );
         })}
       </Boxes>
@@ -61,8 +60,7 @@ const MovePage = styled.div`
   margin-right: 40px;
   font-size: x-large;
   button {
-    margin-left: 10px;
-    background-color: #dde7f0;
+    margin: 10px;
   }
 `;
 
@@ -77,25 +75,19 @@ const Boxes = styled.div`
     max-width: 300px;
     width: 90%;
     height: 300px;
+    min-width: 80px;
   }
 `;
-
 const BoxMemo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  padding: 10px;
+  /* max-width: 500px; */
 `;
 const Image = styled(BoxMemo)`
   border: 1px solid black;
-  max-width: 250px;
-  width: 90%;
-  height: 150px;
+  height: 300px;
 `;
 const Words = styled(BoxMemo)`
   border: 1px solid black;
-  max-width: 250px;
-  width: 90%;
-  height: 10px;
-  margin-top: 10px;
+  justify-content: space-between;
 `;

@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
-import RandomApi from "../../mytools/RandomApi";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import useInput from "../hooks/useInput";
 
 const Signup = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.
   // const word = RandomApi();
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(["HangHae99"]);
-  const navigate = useNavigate();
+
   const { error, isLoading, login } = useSelector((state) => state.login);
-  console.log(cookies);
   //이 페이지에서 유저정보들을 get해와서 대조해야하나?
 
   const initialstate = {
@@ -23,7 +19,10 @@ const Signup = () => {
     confirm: "",
   };
 
-  const [Signup, SetSignup] = useState(initialstate);
+  // const { token } = useSelector((state) => state.login.token);
+
+  const [Signup, SetSignup, onChangehandler] = useInput(initialstate);
+
   const [isEdit, SetisEdit] = useState(false);
 
   //비밀번호 8자리+ 특수문자 1개
@@ -32,11 +31,13 @@ const Signup = () => {
   //아이디는 5자리 + 특수문자 1개
   const isValidloginId = Signup.loginId.length >= 5 && specialLetter >= 1;
 
-  const onChangehandler = (e) => {
-    const { name, value } = e.target;
-    console.log(Signup);
-    SetSignup({ ...Signup, [name]: value });
-  };
+  //커스텀훅으로 빼자.
+  // const onChangehandler = (e) => {
+  //   const { name, value } = e.target;
+  //   console.log(Signup);
+  //   SetSignup({ ...Signup, [name]: value });
+  // };
+  // const [Signup, SetSignup] = useState(initialstate);
 
   const onSubmithandler = (e) => {
     //회원가입화면
@@ -49,13 +50,15 @@ const Signup = () => {
       dispatch(
         __postLoginid({ password: Signup.password, loginId: Signup.loginId })
       );
-      console.log({ password: Signup.password, loginId: Signup.loginId });
-      SetSignup(initialstate);
+
+      // dispatch(__postLoginid(getCookie("token")));
+      // console.log({ password: Signup.password, loginId: Signup.loginId });
+      // SetSignup(initialstate);
       //로그인 성공시, 메인으로 가야함.
       //로그인 조건을 걸어야할듯?
     }
   };
-  console.log(isValidPassword);
+
   if (isLoading) {
     <div>로딩중입니당</div>;
   } else if (error) {
@@ -63,18 +66,14 @@ const Signup = () => {
       window.location.replace("/estarlogin");
   } else {
     if (login) {
-      window.confirm("성공적인 로그인~");
-      // window.location.replace("/");
+      window.confirm("로그인 성공! 메인으로 돌아갑니다.");
+      window.location.replace("/");
     } else {
       return (
         <>
           <AddTodoCtn>
             <AddTodoCtnArea>
               <AddTodoBox>
-                {/* <img
-                  src="http://13.124.143.112/public/images/default_img.jpeg"
-                  alt="/"
-                ></img> */}
                 <AddTodoTitle>아이디</AddTodoTitle>
                 <AddTodoTextarea
                   value={Signup.loginId}
@@ -116,31 +115,34 @@ const Signup = () => {
                 )}
               </AddTodoBox>
             </AddTodoCtnArea>
+            <Line></Line>
+            <Line></Line>
+            <Line></Line>
+            <Line></Line>
             <BtnSet>
               <PostBtn
-                disabled={
-                  !isValidPassword || !isValidloginId ? "disabled" : false
-                }
+                // disabled={
+                //   !isValidPassword || !isValidloginId ? "disabled" : false
+                // }
                 type="submit"
                 style={{ margin: "auto" }}
                 onClick={() => {
                   onSubmithandler();
                 }}
               >
-                {isEdit ? "가입완료" : "로그인"}
+                {isEdit ? "DONE" : "SIGN IN"}
               </PostBtn>
               <PostBtn
                 disabled={
                   isValidPassword || isValidloginId ? "disabled" : false
                 }
-                type="submit"
                 style={{ margin: "auto" }}
                 onClick={() => {
                   SetisEdit(!isEdit);
                   SetSignup(initialstate);
                 }}
               >
-                {isEdit ? "돌아가기" : "회원가입"}
+                {isEdit ? "RETRUN" : "SIGN UP"}
               </PostBtn>
             </BtnSet>
           </AddTodoCtn>
@@ -151,8 +153,9 @@ const Signup = () => {
 };
 
 const AddTodoCtn = styled.div`
-  margin: 20px auto 0 auto;
+  margin: 50px auto 0 auto;
   max-width: 500px;
+  max-height: 800px;
   height: calc(100vh - 60px);
   box-sizing: border-box;
   padding: 20px;
@@ -167,7 +170,7 @@ const AddTodoCtn = styled.div`
   width: 768px;
   min-height: 480px;
 `;
-const AddTodoCtnArea = styled.div`
+const AddTodoCtnArea = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -186,15 +189,17 @@ const AddTodoTitle = styled.h3`
   font-weight: 400;
 `;
 const AddTodoInput = styled.input`
+  box-shadow: inset 4px 2px 10px #babebc, inset -5px -5px 12px #fff;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 0 12px;
   height: 46px;
   font-size: 14px;
 `;
-const AddTodoTextarea = styled.textarea`
-  border: 1px solid #ddd;
-  border-radius: 10px;
+const AddTodoTextarea = styled.input`
+  box-shadow: inset 4px 2px 10px #babebc, inset -5px -5px 12px #fff;
+  border-radius: 40px;
+  border: none;
   padding: 12px;
   min-height: 60px;
   font-size: 14px;
@@ -212,6 +217,12 @@ const PostBtn = styled.button`
   :hover {
     background-color: white;
   }
+`;
+
+const Line = styled.div`
+  width: 10%;
+  height: 20px;
+  background: yellow;
 `;
 
 export default Signup;

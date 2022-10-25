@@ -1,15 +1,10 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    },
-    {
       "postId": 1,
-      "title": "",
+      "title": "제목은??",
       "images": "",
-      "content": "dfsaf",
+      "content": "수정하고 바로바꾸기",
       "like": "",
       "dislike": "",
       "id": 2
@@ -18,7 +13,7 @@
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "sfsdfsd",
+      "content": "바로수정꿋",
       "like": "",
       "dislike": "",
       "id": 3
@@ -27,10 +22,12 @@
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "gagasgsagsdg",
+      "content": "ㄴㄴ",
       "like": "",
       "dislike": "",
       "id": 4
+<<<<<<< HEAD
+=======
     },
     {
       "postId": 1,
@@ -49,13 +46,148 @@
       "like": "",
       "dislike": "",
       "id": 6
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 7
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 8
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 9
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 10
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 11
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 12
+>>>>>>> main2
     }
   ],
   "comments": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "comment": "안녕",
+      "commentId": 1,
+      "id": 1
+    },
+    {
+      "comment": "ㄴㄴ",
+      "commentId": 1,
+      "id": 2
+    },
+    {
+      "comment": "남기기",
+      "commentId": 2,
+      "id": 5
+    },
+    {
+      "comment": "글씨왜안지워졍",
+      "commentId": 2,
+      "id": 6
+    },
+    {
+      "comment": "2번게시물",
+      "commentId": 2,
+      "id": 7
+    },
+    {
+      "comment": "댓글쓰기",
+      "commentId": 6,
+      "id": 15
+    },
+    {
+      "comment": "하트누르기 저장??",
+      "commentId": 6,
+      "id": 16
+    },
+    {
+      "comment": "댓글쓰기;이마ㅓㅇ",
+      "commentId": 6,
+      "id": 17
+    },
+    {
+      "comment": "으악",
+      "commentId": 1,
+      "id": 18
+    },
+    {
+      "comment": "되라",
+      "commentId": 1,
+      "id": 19
+    },
+    {
+      "comment": "된다용!!",
+      "commentId": 4,
+      "id": 20
+    },
+    {
+      "comment": "흐아",
+      "commentId": 3,
+      "id": 21
+    },
+    {
+      "comment": "지용님감사해여ㅠㅠ",
+      "commentId": 3,
+      "id": 22
+    },
+    {
+      "comment": "ss",
+      "commentId": 4,
+      "id": 23
+    },
+    {
+      "comment": "으오아아",
+      "commentId": 4,
+      "id": 24
+    },
+    {
+      "comment": "으에에",
+      "commentId": 4,
+      "id": 25
+    },
+    {
+      "comment": "헤",
+      "commentId": 4,
+      "id": 26
     }
   ],
   "profile": {

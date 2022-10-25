@@ -3,153 +3,170 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import usePost from "../hooks/usePost";
+// import usePost from "../hooks/usePost";
 import { __addEstar } from "../../redux/modules/PostSlice";
 
 const PostPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.estar);
-  const [value, onChange] = usePost();
+  const { error, posts } = useSelector((state) => state.estar);
+  // const [value, onChange] = usePost();
   console.log(error);
-  const [preview, setPreview] = useState("");
-  // const [image, setImage] = useState();
-  // const [content, setContent] = useState("");
+  const [preview, setPreview] = useState([]);
+  const [img, setImg] = useState(null);
+  const [comment, setComment] = useState("");
 
-  //참고 링크 https://nukw0n-dev.tistory.com/30 (base64로 인코딩)
-  //https://velog.io/@ckm960411/FileReader-%EB%A1%9C-%EC%97%AC%EB%9F%AC-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%8C%8C%EC%9D%BC-%EB%8F%99%EC%8B%9C%EC%97%90-%EC%B2%A8%EB%B6%80%ED%95%98%EA%B8%B0-NextReact-TypeScript
-
-  // //핸들러를 통해 받은 이미지를 base64로 인코딩한다 (FileReader라는 Web API 이용)
-  // const handleImagePreview = (file) => {
-  //   const reader = new FileReader();
-
-  //   //Formdata로 변환한 URL 를 백엔드로 보내주거나, 내가 서버에 올리고 해당 title, URL을 백엔드로 Post하기
-  //   //Aws (S3) 에 정적데이터 올리는 방식
-  //   // blob으로 압축
-
-  //   //readAsDataURL메서드 : File이나 Blob을 읽은 뒤 base64로 인코딩한 문자열을 FileReader 인스턴스(reader)의 result 라는 속성에 답아줌
-  //   reader.readAsDataURL(file);
-
-  //   //인코딩된 문자열을 state에 넣음으로서 렌더링하여 프리뷰를 보여준다
-  //   return new Promise((resolve) => {
-  //     //.onload : FileReader가 성공적으로 파일을 읽어들였을때 트리거 되는 이벤트 헨들러(메서드)
-  //     //이 핸들러 내부에 우리가 원하는 이미지 프리뷰 로직을 넣어주면 됨
-  //     reader.onload = () => {
-  //       //reader가 인코딩을 성공했다면 reader.result 안에 담긴 문자열을 setImage로 보내주기
-  //       setPreview(reader.result);
-
-  //       // new Promise의 인자 resolve 호출하여 Promise를 이행상태로 만들어주기
-  //       resolve();
-  //     };
-  //   });
-  // };
-
-  //미리보기 핸들러 등등
-  /*   const handleImagePreview = (event: any) => {
-    // event.preventDefault();
-    //set Image
-    setImage(() => event.target.files[0]);
-
-    //set Preview
-    objectURL = URL.createObjectURL(event.target.files[0]);
-    setPreview(objectURL);
+  const onCommentChange = (e) => {
+    setComment(e.target.value);
   };
 
-  const onChange = (event) => {
-    setContent(event.target.value);
-  }; */
+  const handleImagePreview = (file) => {
+    setImg(null);
+    setPreview([]);
+    console.log(file.target.files);
+    // setImg(file.target.files);
+    // file.target.files.length < 4
+    //   ? setImg(file.target.files)
+    //   : alert("사진은 최대 4개까지만 추가 가능합니다");
 
-  const onSubmit = () => {
-    if (value.content.trim() === "") return alert("내용을 입력해주세요");
-    // else if (value.images === "") return alert("사진을 업로드 해주세요");
+    //프리뷰 (핸들러를 통해 받은 이미지를 base64로 인코딩)
+    // for (let i = 0; i < file.target.files.length; i++) {
+    if (file.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file.target.files[0]);
 
-    //여기서부턴 이미지 관련
-    /*     setContent("");
-    document.querySelector(".content").focus();
+      reader.onloadend = () => {
+        setImg(file.target.files[0]);
 
-    if (getItem("user")) {
-      let body;
-      body = new FormData();
-      body.append("content", content);
-      body.append("user", JSON.stringify(getItem("user")));
-
-      if (image) body.append("images", image);
-
-      const response = await dispatch(writeMemo(body));
-
-      if (response.status === 200) {
-        URL.revokeObjectURL(image);
-        setImage("");
-        window.location.href = "/";
-      }
- */
-
-    //Post dispatch
-
-    dispatch(__addEstar(value));
-    // navigate("/estarlist");
+        //.onloadend : 읽기가 완료 되었을 때
+        const base64 = reader.result;
+        if (base64) {
+          const previewSub = base64.toString();
+          setPreview(previewSub);
+        }
+      };
+    }
     // }
   };
 
-  // useEffect(() => {}, [image]);
+  const onPhotoDelete = () => {
+    setImg(null);
+    setPreview([]);
+  };
 
-  // const handleImagePost = async (event: any) => {
-  //   const formData = new FormData();
-  //   formData.append("file", event.target.files[0]);
-  //   const response = await apiClient.post("/brand/logo_image", formData);
-  //   //response.data.location이 업로드한 파일의 url
-  // };
-  if (error) {
-    if (window.confirm("회원이아닙니다."))
-      window.location.replace("/estarpost");
-  } else {
-    return (
-      <BigCard>
-        <BackButton
-          onClick={() => {
-            navigate("/estarlist");
-          }}
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (comment.trim() === "") return alert("내용을 입력해주세요");
+    // else if (img === null) return alert("사진을 업로드 해주세요");
+
+    const sendFD = new FormData();
+
+    // Object.values(img).forEach((file) => sendFD.append("images", file));
+
+    sendFD.append("images", img);
+    sendFD.append("content", JSON.stringify(comment)); // 넣고싶은 데이터는 이렇게 넣으면 됨
+    sendFD.append("title", JSON.stringify("제목입니당2"));
+    // sendFD.append(
+    //   "content",
+    //   new Blob([JSON.stringify(comment)], { type: "application/json" })
+    // );
+
+    //sendFD 콘솔에서 확인방법
+    for (let a of sendFD.entries()) {
+      console.log("sendFD출력", a);
+    }
+
+    //Post dispatch
+    dispatch(__addEstar(sendFD));
+    // dispatch(__addEstar(comment));
+    // window.location.replace("/estarlist");
+  };
+
+  console.log("preview출력", preview);
+  console.log("img출력", img);
+
+  // if (error) {
+  //   if (window.confirm("회원이아닙니다."))
+  //     window.location.replace("/estarpost");
+  // } else {
+  return (
+    <BigCard>
+      <BackButton
+        onClick={() => {
+          navigate("/estarlist");
+        }}
+      >
+        Back
+      </BackButton>
+
+      <Card enctype="multipart/form-data" onSubmit={onSubmit}>
+        <Photo>
+          <Preview>
+            {preview.length > 0 ? (
+              // preview.map((a) => {
+              // return (
+              <img
+                key={1}
+                src={preview}
+                alt="미리보기"
+                style={{
+                  // width: `${100 / preview.length}%`,
+                  // height: `${100 / preview.length}%`,
+                  width: `100%`,
+                  height: `100%`,
+                }}
+              />
+            ) : (
+              // );
+              // })
+              <div>사진을 추가해 주세요</div>
+            )}
+          </Preview>
+          <Upload>
+            <UploadInput
+              id="upload-input"
+              type="file"
+              // name="images"
+              // value={value.images}
+              accept="image/*"
+              onChange={(e) => {
+                handleImagePreview(e);
+              }}
+              multiple="multiple"
+            ></UploadInput>
+            <UploadInputDesign htmlFor="upload-input">
+              사진 추가
+            </UploadInputDesign>
+            <PhotoResetButton
+              onClick={() => {
+                onPhotoDelete();
+              }}
+            >
+              사진 파일 리셋
+            </PhotoResetButton>
+          </Upload>
+        </Photo>
+        <Half>
+          <Info>프로필사진 + 닉네임 Get 하기</Info>
+          <Write
+            name="content"
+            value={comment}
+            placeholder="텍스트를 적는 공간"
+            onChange={onCommentChange}
+          ></Write>
+        </Half>
+
+        <UploadButton
+        // onClick={() => {
+        //   onSubmit();
+        // }}
         >
-          Back
-        </BackButton>
-
-        <Card>
-          <Photo>
-            {/* <Preview>{preview && <img src={preview} alt="미리보기" />}</Preview> */}
-            <Upload>
-              <UploadInput
-                type="file"
-                // name="images"
-                // value={value.images}
-                accept="image/*"
-                // onChange={onChange}
-                //   onChange={(e) => {
-                //     handleImagePreview(e.target.files[0]);}
-
-                // }
-              ></UploadInput>
-            </Upload>
-          </Photo>
-          <Half>
-            <Info>프로필사진 + 닉네임</Info>
-            <Write
-              name="content"
-              value={value.content}
-              placeholder="텍스트를 적는 공간"
-              onChange={onChange}
-            ></Write>
-          </Half>
-          <UploadButton
-            onClick={() => {
-              onSubmit(value);
-            }}
-          >
-            업로드버튼
-          </UploadButton>
-        </Card>
-      </BigCard>
-    );
-  }
+          업로드 하기
+        </UploadButton>
+      </Card>
+    </BigCard>
+  );
+  // }
 };
 
 export default PostPage;
@@ -175,7 +192,8 @@ const BackButton = styled.button`
   right: 5%;
 `;
 
-const Card = styled.div`
+const UploadButton = styled.button``;
+const Card = styled.form`
   width: 90%;
   height: 80%;
   margin: 60px auto 20px auto;
@@ -185,52 +203,103 @@ const Card = styled.div`
   justify-content: space-between;
   position: relative;
   padding: 10px;
+
+  ${UploadButton} {
+    width: 100px;
+    height: 50px;
+    background-color: lightgray;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -50px;
+    margin-bottom: 10px;
+    :hover {
+      background: gray;
+    }
+  }
 `;
 
+const Preview = styled.div``;
 const Photo = styled.div`
   width: 45%;
-`;
-const Preview = styled.div`
-  border: 1px solid black;
-  height: 300px;
-  width: 100%;
-  margin-bottom: 20px;
-  line-height: 300px; //글자를 vertical로 중앙 정렬시 line-height 주고 vertical-align 주기
-  vertical-align: middle;
+
+  ${Preview} {
+    border: 1px solid black;
+    height: 300px;
+    width: 100%;
+    margin-bottom: 20px;
+    line-height: 300px; //글자를 vertical로 중앙 정렬시 line-height 주고 vertical-align 주기
+    vertical-align: middle;
+    display: flex;
+    flex-wrap: wrap;
+    img {
+      //스타일드 컴포넌트내에 있는 태그
+      object-fit: cover;
+      /* border: 1px solid black; */
+    }
+    div {
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
 `;
 
+const UploadInput = styled.input``;
+const UploadInputDesign = styled.label``;
+const PhotoResetButton = styled.button``;
 const Upload = styled.div`
   width: 100%;
-  height: 50px;
-  margin: 0 auto;
-`;
-const UploadInput = styled.input``;
-const UploadButton = styled.button`
-  width: 100px;
-  height: 50px;
-  background-color: gray;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  margin-left: -50px;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-evenly;
+
+  ${UploadInput} {
+    display: none;
+  }
+
+  ${UploadInputDesign} {
+    display: inline-block;
+    width: 130px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    background-color: lightgray;
+    border-radius: 10px;
+    margin-right: 10px;
+    :hover {
+      background: gray;
+    }
+  }
+
+  ${PhotoResetButton} {
+    width: 130px;
+    height: 30px;
+    background-color: lightgray;
+    border-radius: 10px;
+    :hover {
+      background: gray;
+    }
+  }
 `;
 
+const Info = styled.div``;
+const Write = styled.textarea``;
 const Half = styled.div`
   width: 45%;
   height: 300px;
   background-color: lightblue;
-`;
-const Info = styled.div`
-  width: 100%;
-  height: 100px;
-  line-height: 100px;
-  vertical-align: middle;
-`;
-const Write = styled.textarea`
-  background-color: pink;
-  width: 100%;
-  height: 200px;
-  padding: 16px;
-  resize: none;
+  ${Info} {
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    vertical-align: middle;
+  }
+
+  ${Write} {
+    background-color: pink;
+    width: 100%;
+    height: 200px;
+    padding: 16px;
+    resize: none;
+  }
 `;

@@ -5,9 +5,10 @@ import { detailApi } from "../../mytools/instance";
 export const __postDetailComment = createAsyncThunk(
   "comments/postComment",
   async (payload, thunkAPI) => {
+    console.log("댓글저장으로 넘겨준값", payload);
     try {
       const { data } = await detailApi.postDetail(payload);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -19,6 +20,7 @@ export const __getDetailComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await detailApi.getDetail(payload);
+      console.log("너는무슨데이터?", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -43,8 +45,9 @@ export const __updateDetailComment = createAsyncThunk(
   "comments/updateComment",
   async (payload, thunkAPI) => {
     try {
-      const { newComment, newCommentId } = payload;
-      await detailApi.patchDetail(newCommentId, newComment); // 서버한테 보낸상태
+      // const { newComment, newCommentId } = payload;
+      await detailApi.patchDetail(payload); // 서버한테 보낸상태
+      console.log("수정하기payload??", payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -73,7 +76,8 @@ const detailSlice = createSlice({
     },
     [__postDetailComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments.push(action.payload);
+      state.comments.push({ comment: action.payload.comment });
+      console.log("리듀서가받은거!", action.payload);
     },
     [__postDetailComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -85,7 +89,8 @@ const detailSlice = createSlice({
     },
     [__getDetailComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments = action.payload;
+      state.comments = action.payload.data;
+      console.log("겟해줘!", state.comments);
     },
     [__getDetailComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -98,7 +103,7 @@ const detailSlice = createSlice({
     [__deleteDetailComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       let delcomment = state.comments.filter(
-        (comment) => action.payload !== comment.id
+        (comment) => action.payload !== comment.commentId
       );
       state.comments = delcomment;
     },
@@ -112,7 +117,7 @@ const detailSlice = createSlice({
     },
     [__updateDetailComment.fulfilled]: (state, action) => {
       let newComments = state.comments.map((comment) => {
-        if (comment.id !== action.payload.newCommentId) {
+        if (comment.commentId !== action.payload.commentId) {
           return comment;
         } else {
           return { ...comment, comment: action.payload.newComment };

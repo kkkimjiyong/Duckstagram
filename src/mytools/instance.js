@@ -33,12 +33,34 @@ export const imageApi = {
 
 // E스타그램 Detail페이지 댓글
 export const detailApi = {
-  getDetail: () => instance.get("/api/star/comments"), //GET
-  postDetail: (comment) => instance.post("/api/star/comments", comment), //POST
-  deleteDetail: (commentID) =>
-    instance.delete(`/api/star/comments/${commentID}`), //DELET
-  patchDetail: (commentID, edit) =>
-    instance.patch(`/api/star/comments/${commentID}`, { comment: edit }), //PATCH
+  getDetail: (id) => instance.get(`/api/star/comments/${id}`), //GET
+  postDetail: (payload) =>
+    instance.post(
+      `/api/star/comments/${payload.id}`,
+      { comment: payload.comment },
+      {
+        headers: {
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+      }
+    ), //POST
+  deleteDetail: (commentId) =>
+    instance.delete(`/api/star/comments/${commentId}`, {
+      headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+    }), //DELET
+  patchDetail: (payload) =>
+    // console.log(payload)
+    instance.put(
+      `/api/star/comments/${payload.commentId}`,
+      { comment: payload.newComment },
+      {
+        headers: {
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+      }
+    ), //PATCH
   // getDetail: () => instance.get("/comments"), //GET ---> 댓글을 가져옴
   // postDetail: (comment) => instance.post("/comments", comment), //POST
   // deleteDetail: (commentID) => instance.delete(`/comments/${commentID}`), //DELET

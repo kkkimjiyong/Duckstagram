@@ -16,17 +16,17 @@ const Comment = ({ comment }) => {
     comment: "",
   });
   //   게시물별 댓글 삭제 버튼 Delete
-  const commentDeleteHandler = (id) => {
+  const commentDeleteHandler = (commentId) => {
     const result = window.confirm("정말 삭제 하시겠습니까?");
     if (result) {
-      dispatch(__deleteDetailComment(id));
+      dispatch(__deleteDetailComment(commentId));
     } else {
       return;
     }
   };
   // 게시물마다 댓글 수정 저장하기 변경하여 저장 patch
-  const onClickUpdateHandler = (newCommentId) => {
-    dispatch(__updateDetailComment({ newCommentId, newComment }));
+  const onClickUpdateHandler = (commentId) => {
+    dispatch(__updateDetailComment({ commentId, newComment }));
     setIsEditMode(false);
     setNewComment({
       comment: "",
@@ -67,7 +67,7 @@ const Comment = ({ comment }) => {
               >
                 🔙
               </button>
-              <button onClick={() => onClickUpdateHandler(comment.id)}>
+              <button onClick={() => onClickUpdateHandler(comment.commentId)}>
                 🔒
               </button>
             </>
@@ -75,7 +75,7 @@ const Comment = ({ comment }) => {
           {!isEditMode && (
             <>
               <button onClick={() => setIsEditMode(true)}>✏️</button>
-              <button onClick={() => commentDeleteHandler(comment.id)}>
+              <button onClick={() => commentDeleteHandler(comment.commentId)}>
                 ❌
               </button>
             </>

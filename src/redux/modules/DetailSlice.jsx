@@ -5,9 +5,11 @@ import { detailApi } from "../../mytools/instance";
 export const __postDetailComment = createAsyncThunk(
   "comments/postComment",
   async (payload, thunkAPI) => {
+    console.log("여기오나", payload);
     try {
       const { data } = await detailApi.postDetail(payload);
-      return thunkAPI.fulfillWithValue(data);
+      console.log("데이터는?", data);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -19,6 +21,7 @@ export const __getDetailComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await detailApi.getDetail(payload);
+      console.log(payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -53,12 +56,7 @@ export const __updateDetailComment = createAsyncThunk(
 );
 
 const initialState = {
-  comments: [
-    {
-      commentId: 0,
-      comment: "",
-    },
-  ],
+  comments: [],
   isLoading: false,
   error: null,
 };
@@ -73,7 +71,9 @@ const detailSlice = createSlice({
     },
     [__postDetailComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments.push(action.payload);
+      state.comments.push(action.payload.comment);
+      console.log("나의댓글", action.payload.comment);
+      console.log("안들어갔어??", state.comments);
     },
     [__postDetailComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -85,7 +85,8 @@ const detailSlice = createSlice({
     },
     [__getDetailComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments = action.payload;
+      console.log(action.payload);
+      state.comments = action.payload.data;
     },
     [__getDetailComment.rejected]: (state, action) => {
       state.isLoading = false;

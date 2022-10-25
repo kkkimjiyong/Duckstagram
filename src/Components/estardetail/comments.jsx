@@ -16,10 +16,10 @@ const Comment = ({ comment }) => {
     comment: "",
   });
   //   게시물별 댓글 삭제 버튼 Delete
-  const commentDeleteHandler = (id) => {
+  const commentDeleteHandler = (delComId) => {
     const result = window.confirm("정말 삭제 하시겠습니까?");
     if (result) {
-      dispatch(__deleteDetailComment(id));
+      dispatch(__deleteDetailComment(delComId));
     } else {
       return;
     }
@@ -75,7 +75,7 @@ const Comment = ({ comment }) => {
           {!isEditMode && (
             <>
               <button onClick={() => setIsEditMode(true)}>✏️</button>
-              <button onClick={() => commentDeleteHandler(comment.id)}>
+              <button onClick={() => commentDeleteHandler(comment.commentId)}>
                 ❌
               </button>
             </>

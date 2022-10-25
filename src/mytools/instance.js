@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import axios from "axios";
 import { getCookie } from "../Components/estarlogin/cookiehook";
 
@@ -33,12 +34,43 @@ export const imageApi = {
 
 // E스타그램 Detail페이지 댓글
 export const detailApi = {
-  getDetail: () => instance.get("/api/star/comments"), //GET
-  postDetail: (comment) => instance.post("/api/star/comments", comment), //POST
-  deleteDetail: (commentID) =>
-    instance.delete(`/api/star/comments/${commentID}`), //DELET
+  getDetail: (postId) =>
+    instance.get(`/api/star/comments/${postId}`, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+    }), //GET
+  postDetail: (payload) =>
+    // console.log(comment),
+    instance.post(
+      `/api/star/comments/${payload.id}`,
+      { comment: payload.comment },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+      }
+    ), //POST
+  deleteDetail: (delComId) =>
+    instance.delete(`/api/star/comments/${delComId}`, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+    }), //DELET
   patchDetail: (commentID, edit) =>
-    instance.patch(`/api/star/comments/${commentID}`, { comment: edit }), //PATCH
+    instance.patch(
+      `/api/star/comments/${commentID}`,
+      { comment: edit },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+      }
+    ), //PATCH
   // getDetail: () => instance.get("/comments"), //GET ---> 댓글을 가져옴
   // postDetail: (comment) => instance.post("/comments", comment), //POST
   // deleteDetail: (commentID) => instance.delete(`/comments/${commentID}`), //DELET

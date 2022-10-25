@@ -7,7 +7,7 @@ export const __getLists = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await imageApi.getImages(payload);
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -32,6 +32,7 @@ export const __getList = createAsyncThunk(
 export const __deleteEstar = createAsyncThunk(
   "estar/deleteestar",
   async (payload, thunkAPI) => {
+    console.log("뭘가져오니", payload);
     try {
       const { data } = await imageApi.deletePost(payload);
       console.log(data);
@@ -82,7 +83,7 @@ const listSlice = createSlice({
     [__getLists.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
-      console.log("fulfilled 상태", action.payload);
+      // console.log("fulfilled 상태", action.payload);
     },
     [__getLists.rejected]: (state, action) => {
       state.isLoading = false;

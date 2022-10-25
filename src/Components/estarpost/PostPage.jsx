@@ -62,6 +62,7 @@ const PostPage = () => {
   };
 
   const onSubmit = (e) => {
+    e.preventDefault();
     if (comment.trim() === "" || title.trim() === "")
       // else if (img === null) return alert("사진을 업로드 해주세요");
       return alert("내용을 입력해주세요");

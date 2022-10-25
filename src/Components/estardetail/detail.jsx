@@ -98,8 +98,13 @@ const Detail = () => {
         >
           Back
         </BackButton>
-
-        <Card key={globalposts.postId}>
+        <DeleteButton
+          key={globalposts.PostId}
+          onClick={() => deletepostHandler(globalposts.PostId)}
+        >
+          ❌
+        </DeleteButton>
+        <Card key={globalposts.PostId}>
           <Photo>
             <div>
               <img src={globalposts.imgUrl}></img>
@@ -149,11 +154,11 @@ const Detail = () => {
               />
               <button>저장</button>
             </form>
-            {/* <div>
-                    {newglobalposts?.map((comment) => (
-                      <Comment comment={comment} />
-                    ))}
-                  </div> */}
+            <div>
+              {newglobalposts?.map((comment) => (
+                <Comment comment={comment} />
+              ))}
+            </div>
           </MoreComments>
         </Card>
       </BigCard>

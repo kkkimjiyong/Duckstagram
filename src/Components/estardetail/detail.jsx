@@ -20,7 +20,7 @@ const Detail = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [newContent, setNewContent] = useState({ content: "" });
   // 설렉터
-  const globalposts = useSelector((state) => state.posts.posts.data); //포스트 리스트 가져오기
+  const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
   console.log(globalposts);
   const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
   console.log(comments);

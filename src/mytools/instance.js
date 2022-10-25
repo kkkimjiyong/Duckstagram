@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "../Components/estarlogin/cookiehook";
 
 const instance = axios.create({
   // baseURL: "http://13.124.143.112/",
@@ -10,9 +11,18 @@ const instance = axios.create({
 export const imageApi = {
   getImages: () => instance.get("/api/star/posts/"),
   getImage: (id) => instance.get(`/api/star/posts/${id}`),
-  deletePost: (postID) => instance.delete(`api/star/posts/${postID}`), //DELET
+  deletePost: (postID) =>
+    instance.delete(`api/star/posts/${postID}`, {
+      headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+    }), //DELET
   putPost: (Editpost) =>
-    instance.put(`api/star/posts/${Editpost.PostId}`, Editpost), //PATCH
+    instance.put(`api/star/posts/${Editpost.PostId}`, Editpost, {
+      headers: {
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+    }), //PATCH
 
   // getImages: () => instance.get("/posts"), //GET---> 전체 포스트들을 가져옴
   // getImage: (id) => instance.get(`/posts?id=${id}`), //GET---> 디테일페이지에 알맞은 포스트를 가져옴

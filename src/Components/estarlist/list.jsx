@@ -14,38 +14,9 @@ const List = () => {
   const navigate = useNavigate();
   const globalposts = useSelector((state) => state.posts.posts);
 
-  // //무한스크롤구현
-  // const [posts, Setposts] = useState([]);
-  // const [hasNextPage, setHasNextPage] = useState(true);
-  // const page = useRef(1);
-
-  // //json에서 5개씩 끊어서 가져오기
-  // const fetch = useCallback(async () => {
-  //   try {
-  //     const { data } = await axios.get("http://3.90.29.60/api/star/posts");
-  //     Setposts((prevPosts) => [...prevPosts, ...data]);
-  //     setHasNextPage(data.length == 5);
-  //     if (data.length) {
-  //       page.current += 1;
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }, []);
-
-  // //ref를 타겟으로 지정하고, 타겟이 뷰에 보이면 inView의 값이 True로
-  // const [ref, inView] = useInView();
-
-  // useEffect(() => {
-  //   if (inView && hasNextPage) {
-  //     fetch();
-  //     console.log(posts);
-  //   }
-  // }, [fetch, hasNextPage, inView]);
-
   useEffect(() => {
     dispatch(__getLists());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -63,10 +34,12 @@ const List = () => {
               </Image>
               <Words>
                 <div>
-                  제목: {post.title}
-                  {/* <p>내용: {post.content}</p> */}
-                </div>
-                <div>
+                  <div>
+                    제목: {post.title}
+                    <br></br>
+                    내용: {post.content}
+                  </div>
+
                   <LikeApp />
                 </div>
               </Words>
@@ -80,41 +53,45 @@ const List = () => {
 
 export default List;
 
+const MovePage = styled.div`
+  float: right;
+  margin-top: 10px;
+  margin-right: 50px;
+  font-size: x-large;
+
+  button {
+    margin: 10px;
+    &:hover {
+      font-size: larger;
+    }
+  }
+`;
+
 const Boxes = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 20px;
   flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50px;
 `;
 
 const BoxMemo = styled.div`
   width: 300px;
-  height: 300px;
-  padding: 30px;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0px 3px 3px 0px gray;
-  position: relative;
-  /* max-width: 500px; */
-`;
-const Image = styled.div`
-  height: 180px;
-  background-color: aliceblue;
-  box-shadow: 0px 3px 3px 0px gray;
+  padding: 10px;
   border-radius: 10px;
 `;
-const Words = styled.div`
-  padding: 10px;
-  top: 150px;
-  bottom: 10px;
-  /* border-top: 1px solid gray; */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 25%;
+const Image = styled(BoxMemo)`
+  border: 1px solid black;
+  height: 300px;
+  box-shadow: 0 0 0.5em 0 gray;
 `;
+const Words = styled(BoxMemo)`
+  border: 1px solid black;
+  box-shadow: 0 0 0.5em 0 gray;
 
-const MainImg = styled.div`
-  width: 100%;
-  height: 500px;
-  background-color: aliceblue;
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
 `;

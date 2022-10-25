@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
-import { __postDetailComment } from "../../redux/modules/DetailSlice";
+import {
+  __getDetailComment,
+  __postDetailComment,
+} from "../../redux/modules/DetailSlice";
 import { __getList, __getLists } from "../../redux/modules/ListSlice";
 import { __deleteEstar, __updateEstar } from "../../redux/modules/ListSlice";
 import Comment from "./comments";
@@ -23,28 +26,31 @@ const Detail = () => {
   // 설렉터
   const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
   console.log(globalposts);
-  const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
-  console.log(comments);
+  const globalComments = useSelector((state) => state.comments.comments);
+  // state.comments); // 댓글 리스트 가져오기
+  console.log(globalComments);
   // 댓글 리스트들 중 파람아이디에 일치하는 것만 필더해주기
-  const newglobalposts = comments.filter((comment) => {
-    return comment.commentId === parseInt(id);
+  const newglobalposts = globalComments.filter((comment) => {
+    return comment.postId === parseInt(id);
   });
   console.log(newglobalposts);
 
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
+  console.log(comment);
   const saveCommentHandler = () => {
-    if (comment.comment.trim() === "") return;
-
-    dispatch(__postDetailComment({ comment, commentId: parseInt(id) })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
-    setComment({
-      commentId: 0,
-      comment: "",
-    });
+    if (comment.trim() === "") return;
+    dispatch(__postDetailComment({ comment, id })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
+    console.log(id);
+    // setComment({
+    //   commentId: 0,
+    //   comment: "",
+    // });
   };
   // 게시물에 달린 댓글 가져오기 GET
   useEffect(() => {
     dispatch(__getLists());
-    // dispatch(__getDetailComment());
+    // dispatch(__getList(id));
+    dispatch(__getDetailComment(id));
     // navigate("/estarlist");
   }, []);
 
@@ -149,7 +155,7 @@ const Detail = () => {
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
-                        saveCommentHandler(comment);
+                        saveCommentHandler(comment.comment);
                       }}
                     >
                       <input

@@ -27,12 +27,14 @@ const Detail = () => {
   });
   // 설렉터
   const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
+  console.log(globalposts);
   const { comments } = useSelector((state) => state.comments); // 댓글 리스트 가져오기
+  console.log(comments);
   // 댓글 리스트들 중 파람아이디에 일치하는 것만 필더해주기
   const newglobalposts = comments.filter((comment) => {
     return comment.commentId === parseInt(id);
   });
-  // console.log(newglobalposts);
+  console.log(newglobalposts);
 
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
   const saveCommentHandler = () => {
@@ -46,7 +48,7 @@ const Detail = () => {
   // 게시물에 달린 댓글 가져오기 GET
   useEffect(() => {
     dispatch(__getList(id));
-    dispatch(__getDetailComment());
+    // dispatch(__getDetailComment());
     // navigate("/estarlist");
   }, [dispatch, id]);
 
@@ -97,8 +99,8 @@ const Detail = () => {
         {globalposts?.map((post) => {
           return (
             <DeleteButton
-              key={post.id}
-              onClick={() => deletepostHandler(post.id)}
+              key={globalposts.postId}
+              onClick={() => deletepostHandler(globalposts.postId)}
             >
               ❌
             </DeleteButton>

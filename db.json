@@ -9,41 +9,60 @@
       "dislike": "",
       "id": 2
     },
+
     {
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "바로수정꿋",
+      "content": "123423",
       "like": "",
       "dislike": "",
-      "id": 3
+      "id": 7
     },
     {
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "ㄴㄴ",
+      "content": "123423",
       "like": "",
       "dislike": "",
-      "id": 4
+      "id": 8
     },
     {
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "테스트",
+      "content": "123423",
       "like": "",
       "dislike": "",
-      "id": 5
+      "id": 9
     },
     {
       "postId": 1,
       "title": "",
       "images": "",
-      "content": "ㅊㅌㅍㅌㅊㅍ",
+      "content": "123423",
       "like": "",
       "dislike": "",
-      "id": 6
+      "id": 10
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 11
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "123423",
+      "like": "",
+      "dislike": "",
+      "id": 12
     }
   ],
   "comments": [

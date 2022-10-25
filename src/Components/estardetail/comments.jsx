@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import LikeApp from "../../mytools/likeApp";
 import {
   __deleteDetailComment,
   __updateDetailComment,

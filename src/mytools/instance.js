@@ -8,9 +8,7 @@ const instance = axios.create({
 });
 
 export const imageApi = {
-  // E스타그램 첫 페이지 (전체리스트 가져오기 - GET)
-  getImages: () => instance.get("/api/star/posts/"),
-  //  각페이지의 게시글 알맞게 가져오기
+  getImages: () => instance.get("/api/star/posts/"), ///api/star/posts/
   getImage: (id) => instance.get(`/api/star/posts/${id}`),
   // 각페이지의 게시글 지우기
   deletePost: (postID) =>
@@ -58,5 +56,11 @@ export const detailApi = {
 
 //  E스타그램 Post 페이지
 export const postApi = {
-  postPost: (post) => instance.post("/api/star/posts", post),
+  postPost: (post) =>
+    instance.post("/api/star/posts/", post, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        withCredentials: true,
+      },
+    }), ///api/star/posts/
 };

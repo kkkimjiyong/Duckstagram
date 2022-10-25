@@ -105,7 +105,7 @@ const Detail = () => {
           return (
             <DeleteButton
               key={globalposts.postId}
-              onClick={() => deletepostHandler(post.id)}
+              onClick={() => deletepostHandler(globalposts.postId)}
             >
               ❌
             </DeleteButton>

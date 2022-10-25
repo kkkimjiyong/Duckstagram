@@ -58,8 +58,8 @@ const estarSlice = createSlice({
     },
     [__addEstar.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
-      state.error = "아아";
+      console.log("오류낫슈", action.payload);
+      state.error = action.payload;
     },
   },
 });

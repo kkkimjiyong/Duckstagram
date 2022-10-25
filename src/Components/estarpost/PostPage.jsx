@@ -9,7 +9,7 @@ import { __addEstar } from "../../redux/modules/PostSlice";
 const PostPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.estar);
+  const { error, posts } = useSelector((state) => state.estar);
   // const [value, onChange] = usePost();
   console.log(error);
   const [preview, setPreview] = useState([]);
@@ -149,6 +149,7 @@ const PostPage = () => {
         <Half>
           <Info>프로필사진 + 닉네임 Get 하기</Info>
           <Write
+            enctype="application/x-www-form-urlencoded"
             name="content"
             value={comment}
             placeholder="텍스트를 적는 공간"

@@ -9,44 +9,7 @@
       "dislike": "",
       "id": 2
     },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "바로수정꿋",
-      "like": "",
-      "dislike": "",
-      "id": 3
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "ㄴㄴ",
-      "like": "",
-      "dislike": "",
-      "id": 4
-<<<<<<< HEAD
-=======
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "agasdg",
-      "like": "",
-      "dislike": "",
-      "id": 5
-    },
-    {
-      "postId": 1,
-      "title": "",
-      "images": "",
-      "content": "안뇽\n",
-      "like": "",
-      "dislike": "",
-      "id": 6
-    },
+
     {
       "postId": 1,
       "title": "",
@@ -100,7 +63,6 @@
       "like": "",
       "dislike": "",
       "id": 12
->>>>>>> main2
     }
   ],
   "comments": [
@@ -115,7 +77,7 @@
       "id": 2
     },
     {
-      "comment": "남기기",
+      "comment": "ㅇㄴㅇ",
       "commentId": 2,
       "id": 5
     },
@@ -188,6 +150,11 @@
       "comment": "헤",
       "commentId": 4,
       "id": 26
+    },
+    {
+      "comment": "ㅌㄾㅊ",
+      "commentId": 2,
+      "id": 27
     }
   ],
   "profile": {

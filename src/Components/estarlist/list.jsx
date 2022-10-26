@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
-import { __getLists } from "../../redux/modules/ListSlice";
 import { useRef, useCallback } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { IntersectionOptions } from "react-intersection-observer";
 
 const List = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const globalposts = useSelector((state) => state.posts.posts);
 
   const [showButton, setShowButton] = useState(false);
 
@@ -54,9 +49,9 @@ const List = () => {
       const { data } = await axios.get(
         `http://3.90.29.60/api/star/posts?page=${page.current}&pagesize=6`
       );
-      console.log(data.data.length);
+      // console.log(data.data.length);
       Setposts((prevPosts) => [...prevPosts, ...data.data]);
-      setHasNextPage(data.data.length == 6);
+      setHasNextPage(data.data.length === 6);
       if (data.data.length) {
         page.current += 1;
       }
@@ -64,9 +59,9 @@ const List = () => {
       console.error(err);
     }
   }, []);
-  console.log(page);
-  console.log(posts);
-  console.log(hasNextPage);
+  // console.log(page);
+  // console.log(posts);
+  // console.log(hasNextPage);
 
   // ref를 타겟으로 지정하고, 타겟이 뷰에 보이면 inView의 값이 True로
   const [ref, inView] = useInView({
@@ -76,7 +71,7 @@ const List = () => {
 
   useEffect(() => {
     if (inView) {
-      console.log(1);
+      // console.log(1);
       fetch();
     }
   }, [fetch, hasNextPage, inView]);
@@ -104,9 +99,13 @@ const List = () => {
 
               <BoxBtm>
                 <Words>
-                  <div>내용: {post.content}</div>
-
-                  {/* <LikeApp post={post}/> */}
+                  <LikeApp post={post} />
+                  <button
+                    onClick={() => navigate(`/estardetail/${post.PostId}`)}
+                  >
+                    💬
+                  </button>
+                  내용: {post.content}
                 </Words>
               </BoxBtm>
             </BoxMemo>
@@ -187,6 +186,9 @@ const BoxBtm = styled.div`
 const Words = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  flex-direction: row;
+  margin: auto 10px;
 `;
 const ScrollBtn = styled.button`
   font-weight: bold;

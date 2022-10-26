@@ -5,8 +5,8 @@ import { useCookies } from "react-cookie";
 
 const Header = () => {
   const navigate = useNavigate();
-
-  const [removeCookie] = useCookies();
+  const [cookies, setCookies, removeCookie] = useCookies();
+  // const [removeCookie] = useCookies();
   return (
     <>
       <MainImg>

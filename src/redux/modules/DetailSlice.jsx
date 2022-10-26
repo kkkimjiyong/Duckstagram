@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 import { detailApi } from "../../mytools/instance";
 
 // 게시물별 댓글 post
@@ -82,6 +83,7 @@ const detailSlice = createSlice({
     [__postDetailComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      Swal.fire(state.error.response.data.errorMessage);
     },
     // 게시물별 댓글 get
     [__getDetailComment.pending]: (state) => {
@@ -110,6 +112,8 @@ const detailSlice = createSlice({
     [__deleteDetailComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      console.log("요게바로에러!", state.error);
+      Swal.fire(state.error.response.data.errorMessage);
     },
     // PATCH 게시물별 댓글!!! 게시물별 댓글 수정하기!!!
     [__updateDetailComment.pending]: (state) => {
@@ -129,6 +133,7 @@ const detailSlice = createSlice({
     [__updateDetailComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      Swal.fire(state.error.response.data.errorMessage);
     },
   },
 });

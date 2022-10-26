@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 // import usePost from "../hooks/usePost";
 import { __addEstar } from "../../redux/modules/PostSlice";
@@ -81,7 +81,15 @@ const PostPage = () => {
     //Post dispatch
     dispatch(__addEstar(sendFD));
 
-    window.confirm("게시글이 작성되었습니다 !");
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your work has been saved",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    // window.confirm("게시글이 작성되었습니다 !");
     // window.location.replace("/estarlist");
   };
 

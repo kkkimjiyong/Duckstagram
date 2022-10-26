@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import LikeApp from "../../mytools/likeApp";
 import {
   __getDetailComment,
@@ -42,6 +43,27 @@ const Detail = () => {
   const saveCommentHandler = () => {
     if (comment.trim() === "") return;
     dispatch(__postDetailComment({ comment, id })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-right",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      iconColor: "#48792c",
+      title: "댓글 저장 완료",
+      color: "#48792c",
+      background: "#aedd93c8",
+    }).then(function () {
+      window.location.reload();
+    });
     setComment({
       comment: "",
     });
@@ -52,28 +74,74 @@ const Detail = () => {
     // dispatch(__getList(id));
     dispatch(__getDetailComment(id));
     // navigate("/estarlist");
-  }, []);
+  }, [dispatch, id]);
 
   // 게시물 삭제 Delete!!
   const deletepostHandler = async (id) => {
-    const result = window.confirm("정말 삭제 하시겠습니까?");
-    if (result) {
-      await dispatch(__deleteEstar(id));
-      // window.location.replace("/estarlist");
-    } else {
-      return;
-    }
+    Swal.fire({
+      title: "정말 삭제 하시겠습니다까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5496d3",
+      cancelButtonColor: "#da5959",
+      confirmButtonText: "삭제",
+    })
+      // const result = window.confirm("정말 삭제 하시겠습니까?");
+      .then((result) => {
+        if (result.isConfirmed) {
+          dispatch(__deleteEstar(id));
+          // 댓글삭제 알럿창(토스트)
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: "success",
+            iconColor: "#da5c5c",
+            title: "댓글 삭제 완료",
+            color: "#da5c5c",
+            background: "#dd9393c7",
+          });
+        } else {
+          return;
+        }
+      });
   };
   // 게시물 수정 patch!!
   const updatePostHandler = () => {
     dispatch(__updateEstar(newContent));
 
     setIsEditMode(false);
-    // setNewContent({
-    //   content: "",
-    // });
+    setNewContent({
+      content: "",
+    });
+    // 댓글수정 알럿창(토스트)
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-right",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      iconColor: "#6e5d0f",
+      title: "댓글 수정 완료",
+      color: "#6e5d0f",
+      background: "#f3d653c5",
+    });
   };
-  console.log(newContent);
   return (
     <>
       <BigCard>

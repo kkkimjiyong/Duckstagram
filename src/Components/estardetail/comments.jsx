@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import {
   __deleteDetailComment,
   __updateDetailComment,
@@ -17,12 +18,41 @@ const Comment = ({ comment }) => {
   });
   //   게시물별 댓글 삭제 버튼 Delete
   const commentDeleteHandler = (commentId) => {
-    const result = window.confirm("정말 삭제 하시겠습니까?");
-    if (result) {
-      dispatch(__deleteDetailComment(commentId));
-    } else {
-      return;
-    }
+    Swal.fire({
+      title: "정말 삭제 하시겠습니다까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5496d3",
+      cancelButtonColor: "#da5959",
+      confirmButtonText: "삭제",
+    })
+      // const result = window.confirm("정말 삭제 하시겠습니까?");
+      .then((result) => {
+        if (result.isConfirmed) {
+          dispatch(__deleteDetailComment(commentId));
+          // 댓글삭제 알럿창(토스트)
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: "success",
+            iconColor: "#da5c5c",
+            title: "댓글 삭제 완료",
+            color: "#da5c5c",
+            background: "#dd9393c7",
+          });
+        } else {
+          return;
+        }
+      });
   };
   // 게시물마다 댓글 수정 저장하기 변경하여 저장 patch
   const onClickUpdateHandler = (commentId) => {
@@ -30,6 +60,25 @@ const Comment = ({ comment }) => {
     setIsEditMode(false);
     setNewComment({
       comment: "",
+    });
+    // 댓글수정 알럿창(토스트)
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-right",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      iconColor: "#6e5d0f",
+      title: "댓글 수정 완료",
+      color: "#6e5d0f",
+      background: "#f3d653c5",
     });
   };
 

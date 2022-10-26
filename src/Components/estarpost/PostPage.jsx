@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 // import usePost from "../hooks/usePost";
 import { __addEstar } from "../../redux/modules/PostSlice";
@@ -80,15 +80,15 @@ const PostPage = () => {
     }
 
     //Post dispatch
-    const result = swal("게시글이 작성되었습니다 !");
-    if (result) {
-      await dispatch(__addEstar(sendFD));
-      window.location.replace("/estarlist");
-    } else {
-      return;
-    }
-    // swal("게시글이 작성되었습니다 !");
-    // window.location.replace("/estarlist");
+    dispatch(__addEstar(sendFD));
+
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your work has been saved",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   console.log("preview출력", preview);

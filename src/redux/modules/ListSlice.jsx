@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 import { imageApi } from "../../mytools/instance";
 
 // E스타그램 첫 페이지에 전체 게시물 (이미지들) 가져오기
@@ -111,10 +112,12 @@ const listSlice = createSlice({
       state.posts = state.posts.filter(
         (post) => action.payload !== post.PostId
       );
+      window.location.replace("/estarlist");
     },
     [__deleteEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      Swal.fire(state.error.response.data.errorMessage);
     },
     // PATCH 게시물 수정하기!!!
     [__updateEstar.pending]: (state) => {
@@ -128,6 +131,7 @@ const listSlice = createSlice({
     [__updateEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      Swal.fire(state.error.response.data.errorMessage);
     },
   },
 });

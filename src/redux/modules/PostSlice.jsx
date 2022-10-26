@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { getCookie } from "../../Components/estarlogin/cookiehook";
 
 const initialState = {
@@ -61,6 +62,7 @@ const estarSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
       state.error = "아아";
+      Swal.fire(state.error.response.data.errorMessage);
     },
   },
 });

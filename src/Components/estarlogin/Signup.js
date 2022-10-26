@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
 import useInput from "../hooks/useInput";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.
@@ -44,6 +45,21 @@ const Signup = () => {
     if (isEdit) {
       dispatch(__postUserid(Signup));
       SetSignup(initialstate);
+      // 회원가입성공 알럿창
+      Swal.fire({
+        title: "회원가입 성공!",
+        width: 400,
+        padding: "3em",
+        color: "#716add",
+        background: "#fff url(넣고싶은이미지-박스안)",
+        backdrop: `
+          rgba(0,0,123,0.4)
+          url("고싶은이미지-전체배경(움직이는거가능)")
+          left top
+          no-repeat
+        `,
+      });
+
       SetisEdit(!isEdit);
     } else {
       //로그인화면
@@ -62,12 +78,26 @@ const Signup = () => {
   if (isLoading) {
     <div>로딩중입니당</div>;
   } else if (error) {
-    if (window.confirm("아이디와 비밀번호를 확인해주세요"))
-      window.location.replace("/estarlogin");
+    // if (
+    Swal.fire({
+      icon: "error",
+      title: "아이디와 비밀번호를 확인해주세요",
+      showConfirmButton: false,
+      footer: '<a href="">로그인 화면으로 돌아가기</a>',
+    });
+    // )
+    // (window.confirm("아이디와 비밀번호를 확인해주세요"))
+    // window.location.replace("/estarlogin");
   } else {
     if (login) {
-      window.confirm("로그인 성공! 메인으로 돌아갑니다.");
-      window.location.replace("/estarlist");
+      Swal.fire({
+        icon: "success",
+        title: "로그인 성공😊",
+        showConfirmButton: true,
+        confirmButtonText: '<a href="/estarlist">  Estagram 바로가기</a>',
+        // : '<a href="/">메인으로 돌아가기',
+        footer: '<a href="/">메인으로 돌아가기</a>',
+      });
     } else {
       return (
         <>

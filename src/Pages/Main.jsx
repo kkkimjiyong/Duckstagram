@@ -13,9 +13,11 @@ const Main = () => {
           navigate("/estarlogin");
         }}
       >
-        Login
+        Login{" "}
       </Signup>
+
       <Button
+        id="estarbtn"
         onClick={() => {
           navigate("/estarlist");
         }}
@@ -59,7 +61,7 @@ const Signup = styled.button`
   color: #fff;
   text-align: center;
   transform: skew(0deg, -10deg);
-  filter: blur(8px);
+  filter: blur(4px);
   transition: all 0.5s;
   :hover {
     filter: blur(0px);
@@ -70,7 +72,6 @@ const Signup = styled.button`
 
 const Button = styled.button`
   cursor: pointer;
-  filter: blur(8px);
   width: 100vh;
   height: 30vh;
   background-color: #ffa06d;
@@ -79,7 +80,7 @@ const Button = styled.button`
   font-size: 50px;
   font-weight: 1000;
   transform: skew(0deg, -10deg);
-  filter: blur(8px);
+  filter: blur(4px);
   :hover {
     filter: blur(0px);
   }

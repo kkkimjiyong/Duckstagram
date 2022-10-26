@@ -153,7 +153,7 @@ const AddTodoCtn = styled.div`
   margin: 50px auto 0 auto;
   max-width: 500px;
   max-height: 800px;
-  height: calc(100vh - 60px);
+  /* height: calc(100vh - 60px); */
   box-sizing: border-box;
   padding: 20px;
   display: flex;
@@ -174,8 +174,8 @@ const AddTodoCtnArea = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-sizing: border-box;
-  height: 100%;
+  /* box-sizing: border-box; */
+  /* height: 100%; */
 `;
 const AddTodoBox = styled.div`
   display: flex;
@@ -207,6 +207,8 @@ const AddTodoTextarea = styled.input`
 const BtnSet = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 30px;
+  margin-bottom: 10px;
 `;
 
 const PostBtn = styled.button`

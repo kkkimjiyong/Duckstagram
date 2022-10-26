@@ -81,7 +81,8 @@ const PostPage = () => {
     //Post dispatch
     dispatch(__addEstar(sendFD));
 
-    alert("게시글이 작성되었습니다 !");
+    window.confirm("게시글이 작성되었습니다 !");
+    // window.location.replace("/estarlist");
   };
 
   console.log("preview출력", preview);

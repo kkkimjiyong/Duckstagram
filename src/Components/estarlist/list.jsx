@@ -84,13 +84,13 @@ const List = () => {
   return (
     <BoxCtn>
       <Boxes>
-        <MainImg href="https://imgbb.com/">
+        {/* <MainImg href="https://imgbb.com/">
           <img
             src="https://i.ibb.co/KWzZrpg/Estargram-Logo-removebg-preview.png"
             alt="Estargram-Logo-removebg-preview"
             border="0"
           />
-        </MainImg>
+        </MainImg> */}
         {posts?.map((post) => {
           return (
             <BoxMemo key={post.PostId}>

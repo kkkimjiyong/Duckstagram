@@ -77,7 +77,7 @@ const Detail = () => {
   return (
     <>
       <BigCard>
-        {!isEditMode && (
+        {/* {!isEditMode && (
           <PostButton onClick={() => setIsEditMode(true)}>✏️</PostButton>
         )}
         {isEditMode && (
@@ -90,7 +90,7 @@ const Detail = () => {
               🔙
             </PostButton>
           </>
-        )}
+        )} */}
         <BackButton
           onClick={() => {
             navigate("/estarlist");
@@ -119,6 +119,7 @@ const Detail = () => {
                         내가쓴글: {post.content}
                         <LikeApp />
                       </div> */}
+                <PostButton onClick={() => setIsEditMode(true)}>✏️</PostButton>
               </Info>
             )}
             {isEditMode && (
@@ -130,6 +131,17 @@ const Detail = () => {
                     setNewContent({ ...globalposts, content: e.target.value })
                   }
                 />
+                {/* {isEditMode && ( */}
+
+                <PostButton
+                  onClick={() => {
+                    setIsEditMode(false);
+                  }}
+                >
+                  🔙
+                </PostButton>
+
+                {/* )} */}
                 <button onClick={() => updatePostHandler(globalposts.PostId)}>
                   🔒
                 </button>
@@ -176,7 +188,6 @@ const BigCard = styled.div`
   box-shadow: 5px 5px gray;
   border-radius: 20px;
   margin: 100px auto;
-
   position: relative;
 `;
 
@@ -192,12 +203,7 @@ const BackButton = styled.button`
     font-size: x-large;
   }
 `;
-const PostButton = styled(BackButton)`
-  background-color: transparent;
-  font-size: larger;
-  width: 50px;
-  left: 5%;
-`;
+
 const DeleteButton = styled(BackButton)`
   width: 50px;
   background-color: transparent;
@@ -227,12 +233,6 @@ const Photo = styled.div`
     height: auto;
     object-fit: cover;
   }
-
-  /* img:hover {
-    scale: 1.3;
-    width: 100%;
-    height: auto;
-  } */
 `;
 
 const Half = styled.div`
@@ -254,6 +254,7 @@ const Info = styled.div`
     position: absolute;
     right: 20px;
     bottom: 20px;
+    width: 50px;
   }
 
   input {
@@ -282,6 +283,14 @@ const Info = styled.div`
     height: 70%;
     text-align: left;
   }
+`;
+const PostButton = styled(BackButton)`
+  background-color: transparent;
+  font-size: larger;
+  position: absolute;
+  right: 50px;
+  bottom: 20px;
+  width: 50px;
 `;
 
 const MoreComments = styled.div`

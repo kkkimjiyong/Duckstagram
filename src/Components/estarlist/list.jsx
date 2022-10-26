@@ -77,15 +77,28 @@ const List = () => {
   // ref를 타겟으로 지정하고, 타겟이 뷰에 보이면 inView의 값이 True로
   const [ref, inView] = useInView({
     // 라이브러리 옵션
-    threshold: 0.5,
+    threshold: 1,
+    rootMargin: "350px",
   });
 
+  // useEffect(() => {
+  //   if (inView) {
+  //     // console.log(1);
+  //     fetch();
+  //   }
+  // }, [fetch, hasNextPage, inView]);
+
   useEffect(() => {
-    if (inView) {
-      // console.log(1);
-      fetch();
-    }
-  }, [fetch, hasNextPage, inView]);
+    const handleScroll = () => {
+      const { scrollTop, offsetHeight } = document.documentElement;
+      if (window.innerHeight + scrollTop >= offsetHeight / 2) {
+        fetch();
+      }
+    };
+    fetch();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <BoxCtn>
@@ -118,6 +131,7 @@ const List = () => {
         <p
           ref={ref}
           style={{
+            width: "100%",
             position: "relative",
             bottom: "0px",
             margin: "0",

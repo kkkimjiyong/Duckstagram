@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 import socketIOClient from "socket.io-client";
 import useInput from "../hooks/useInput";
 import Header from "../estarlogin/Header";
+import { useRef } from "react";
 
 const socket = io(
   "ws://hi-prac.shop:5000"
@@ -18,11 +19,17 @@ const Chatroom = () => {
   //닉네임은 전에 작성됫던 밸류로 고정
 
   const Number = 0;
-  const initialState = { nickname: "", message: "" };
+  const initialState = { nickname: "", message: "", from: false };
   const [chatArr, setChatArr] = useState([]);
   const [message, Setmessage, onChange] = useInput(initialState);
-  const SubmitHandler = async () => {
-    await socket.emit("chatting", message);
+  const [name, Setname] = useState("");
+  const SubmitHandler = () => {
+    console.log(name);
+    socket.emit("chatting", {
+      nickname: name,
+      message: message.message,
+      from: false,
+    });
     Setmessage(initialState);
     // Number++;
   };
@@ -31,14 +38,28 @@ const Chatroom = () => {
   //   message.i
   // }
 
+  //채팅 칠수록 스크롤 아래로 향하게
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, []);
+
+  // const scrollToBottom = () => {
+  //   const { scrollHeight, clientHeight } = ref.current;
+  //   ref.current.scrollTop = scrollHeight - clientHeight;
+  // };
+
   useEffect(() => {
     return () => socket.disconnect();
   }, []);
 
   useEffect(() => {
-    socket.on("receive", (message) => {
+    socket.on("receive", (message, from) => {
       console.log(message);
-      setChatArr((chatArr) => chatArr.concat(message));
+      setChatArr((chatArr) => [
+        ...chatArr,
+        { nickname: message.nickname, message: message.message, from: from },
+      ]);
+      console.log(name);
     }); //receive message이벤트에 대한 콜백을 등록해줌
   }, []);
 
@@ -50,10 +71,13 @@ const Chatroom = () => {
       <Chatbox>
         <ChatInput>
           <NicknameInput
-            value={message.nickname}
+            value={name}
             name="nickname"
             placeholder="닉네임(5자이내)"
-            onChange={onChange}
+            onChange={(e) => {
+              console.log(name);
+              Setname(e.target.value);
+            }}
           />
           <MessageInput
             value={message.message}
@@ -63,13 +87,21 @@ const Chatroom = () => {
           />
         </ChatInput>
         <SendBtn onClick={() => SubmitHandler()}>Send</SendBtn>
-        {chatArr?.map((chat) => (
-          <MessageBox>
-            <div>닉네임={chat.nickname}</div>
-            <div>메세지={chat.message}</div>
-            {/* <SendBtn onClick={() => DeletHandler(chat)}>Send</SendBtn> */}
-          </MessageBox>
-        ))}
+        {chatArr?.map((chat) =>
+          chat.from ? (
+            <FromBox>
+              <Words>닉네임={chat.nickname}</Words>
+              <div>메세지={chat.message}</div>
+              {/* <SendBtn onClick={() => DeletHandler(chat)}>Send</SendBtn> */}
+            </FromBox>
+          ) : (
+            <MessageBox>
+              <Words>닉네임:{chat.nickname}</Words>
+              <Words>메세지:{chat.message}</Words>
+              {/* <SendBtn onClick={() => DeletHandler(chat)}>Send</SendBtn> */}
+            </MessageBox>
+          )
+        )}
       </Chatbox>
     </>
   );
@@ -111,22 +143,58 @@ const NicknameInput = styled.input`
 `;
 
 const Chatbox = styled.div`
+  overflow: scroll;
   margin: 200px auto 0 auto;
   position: relative;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 20px;
   display: flex;
   width: 70vh;
   height: 70vh;
   border: 2px solid black;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-end;
 `;
 
 const MessageBox = styled.div`
-  border: 2px solid black;
+  margin-top: 10px;
+  left: 300px;
+  bottom: 90px;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0px 3px 3px 0px gray;
   width: 300px;
-  height: 200px;
+  padding: 20px;
+  overflow: hidden;
+  background-color: white;
+  text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
+  :hover {
+    z-index: 999;
+    transform: scale(1.05);
+    box-shadow: 0px 3px 3px 2px gray;
+  }
+`;
+
+const FromBox = styled.div`
+  margin-top: 10px;
+  right: 300px;
+  bottom: 90px;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0px 3px 3px 0px gray;
+  width: 300px;
+  height: 100px;
+  padding: 20px;
+  overflow: hidden;
+  background-color: red;
+  text-overflow: ellipsis;
+  :hover {
+    z-index: 999;
+    transform: scale(1.05);
+    box-shadow: 0px 3px 3px 2px gray;
+  }
 `;
 
 const SendBtn = styled.button`
@@ -134,6 +202,7 @@ const SendBtn = styled.button`
   border: none;
   box-shadow: 0px 3px 3px 0px gray;
   bottom: 20px;
+  right: 20px;
   position: absolute;
   width: 50px;
   height: 50px;
@@ -142,4 +211,6 @@ const SendBtn = styled.button`
     box-shadow: 0px 3px 3px 2px gray;
   }
 `;
+
+const Words = styled.div``;
 export default Chatroom;

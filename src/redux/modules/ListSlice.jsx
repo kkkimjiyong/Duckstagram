@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 import { imageApi } from "../../mytools/instance";
 
 // E스타그램 첫 페이지에 전체 게시물 (이미지들) 가져오기
@@ -7,8 +8,7 @@ export const __getLists = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await imageApi.getImages(payload);
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data.data); //API에서는 data.data
+      return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -21,7 +21,35 @@ export const __getList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await imageApi.getImage(payload);
-      return thunkAPI.fulfillWithValue(data.data); //API에서는 data.data
+      return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 게시물 삭제 DELET
+export const __deleteEstar = createAsyncThunk(
+  "estar/deleteestar",
+  async (payload, thunkAPI) => {
+    console.log("뭘가져오니", payload);
+    try {
+      const { data } = await imageApi.deletePost(payload);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 게시물 수정 patch
+export const __updateEstar = createAsyncThunk(
+  "estar/updateeestar",
+  async (payload, thunkAPI) => {
+    try {
+      await imageApi.putPost(payload); // 서버한테 보낸상태
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -30,15 +58,16 @@ export const __getList = createAsyncThunk(
 
 const initialState = {
   posts: [
-    {
-      postId: 1,
-      title: "제목",
-      images: "이미지",
-      content: "나의글",
-      like: "👍",
-      dislike: "👎",
-    },
+    // {
+    //   postId: 1,
+    //   title: "제목",
+    //   images: "이미지",
+    //   content: "나의글",
+    //   like: "👍",
+    //   dislike: "👎",
+    // },
   ],
+  postlist: [],
   isLoading: false,
   error: null,
 };
@@ -55,7 +84,7 @@ const listSlice = createSlice({
     [__getLists.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
-      console.log("fulfilled 상태", action.payload);
+      console.log("getLists fulfilled 상태", action.payload);
     },
     [__getLists.rejected]: (state, action) => {
       state.isLoading = false;
@@ -67,11 +96,44 @@ const listSlice = createSlice({
     },
     [__getList.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      console.log(action.payload);
+      state.postlist = action.payload;
     },
     [__getList.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    // 게시물 delete
+    [__deleteEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteEstar.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.posts = state.posts.filter(
+        (post) => action.payload !== post.PostId
+      );
+      window.location.replace("/estarlist");
+    },
+    [__deleteEstar.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      Swal.fire(state.error.response.data.errorMessage);
+      Swal.fire(state.error.response.data.message);
+    },
+    // PATCH 게시물 수정하기!!!
+    [__updateEstar.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateEstar.fulfilled]: (state, action) => {
+      state.posts = action.payload;
+      // state.posts = newNewContent;
+      state.isLoading = false;
+    },
+    [__updateEstar.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      Swal.fire(state.error.response.data.errorMessage);
+      Swal.fire(state.error.response.data.message);
     },
   },
 });

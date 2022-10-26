@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const usePost = () => {
   //value 는 state 관리!

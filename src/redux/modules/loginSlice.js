@@ -2,13 +2,13 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getCookiem, setCookie } from "../../Components/estarlogin/cookiehook";
+import { setCookie } from "../../Components/estarlogin/cookiehook";
 
 export const __postUserid = createAsyncThunk(
   "login/postuserid",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://3.90.29.60/api/users", payload);
+      const data = await axios.post("https://hi-prac.shop/api/users ", payload); //http://3.90.29.60/api/users
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -21,7 +21,7 @@ export const __postLoginid = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(
-        "http://3.90.29.60/api/users/login",
+        "https://hi-prac.shop/api/users/login",
         payload
       );
 

@@ -2,139 +2,396 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
+import LikeApp from "../../mytools/likeApp";
 import {
-  __postDetailComment,
   __getDetailComment,
+  __postDetailComment,
 } from "../../redux/modules/DetailSlice";
 import { __getList } from "../../redux/modules/ListSlice";
+import { __deleteEstar, __updateEstar } from "../../redux/modules/ListSlice";
+import Comment from "./comments";
 
 const Detail = () => {
   // hooks
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log(id);
+  // 인풋박스 훅
   const [comment, setComment] = useState({
     commentId: 0,
     comment: "",
   });
-  const { comments } = useSelector((state) => state.comments);
-  console.log(comments);
-  const globalposts = useSelector((state) => state.posts.posts);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [newContent, setNewContent] = useState({ content: "" });
+
+  // 설렉터
+  const globalposts = useSelector((state) => state.posts.postlist); //포스트 리스트 가져오기
+
+  const globalComments = useSelector((state) => state.comments.comments); // 댓글 리스트 가져오기
+  console.log(globalComments);
+
+  // 댓글 리스트들 중 파람아이디에 일치하는 것만 필더해주기
+  const newglobalposts = globalComments.filter((comment) => {
+    return comment.postId === parseInt(id);
+  });
+  console.log(newglobalposts);
 
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
+  console.log(comment);
   const saveCommentHandler = () => {
     if (comment.trim() === "") return;
-    dispatch(__postDetailComment({ comment }));
+    dispatch(__postDetailComment({ comment, id })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-right",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      iconColor: "#48792c",
+      title: "댓글 저장",
+      color: "#48792c",
+      background: "#aedd93c8",
+    }).then(function () {
+      window.location.reload();
+    });
     setComment({
-      commentId: 0,
       comment: "",
     });
   };
   // 게시물에 달린 댓글 가져오기 GET
   useEffect(() => {
     dispatch(__getList(id));
-    dispatch(__getDetailComment());
+    // dispatch(__getList(id));
+    dispatch(__getDetailComment(id));
+    // navigate("/estarlist");
   }, [dispatch, id]);
+
+  // 게시물 삭제 Delete!!
+  const deletepostHandler = async (id) => {
+    Swal.fire({
+      title: "정말 삭제 하시겠습니다까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5496d3",
+      cancelButtonColor: "#da5959",
+      confirmButtonText: "삭제",
+    })
+      // const result = window.confirm("정말 삭제 하시겠습니까?");
+      .then((result) => {
+        if (result.isConfirmed) {
+          dispatch(__deleteEstar(id));
+          // 댓글삭제 알럿창(토스트)
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: "success",
+            iconColor: "#da5c5c",
+            title: "게시물 삭제",
+            color: "#da5c5c",
+            background: "#dd9393c7",
+          });
+        } else {
+          return;
+        }
+      });
+  };
+  // 게시물 수정 patch!!
+  const updatePostHandler = () => {
+    dispatch(__updateEstar(newContent));
+
+    setIsEditMode(false);
+    setNewContent({
+      content: "",
+    });
+    // 댓글수정 알럿창(토스트)
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-right",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      iconColor: "#6e5d0f",
+      title: "게시물 수정",
+      color: "#6e5d0f",
+      background: "#f3d653c5",
+    });
+  };
   return (
     <>
-      <div>E스타그램</div>
-      디테일 페이지입니당!!!
-      <MovePage>
-        <button
+      <BigCard>
+        {/* {!isEditMode && (
+          <PostButton onClick={() => setIsEditMode(true)}>✏️</PostButton>
+        )}
+        {isEditMode && (
+          <>
+            <PostButton
+              onClick={() => {
+                setIsEditMode(false);
+              }}
+            >
+              🔙
+            </PostButton>
+          </>
+        )} */}
+        <BackButton
           onClick={() => {
-            navigate("/estarpost");
+            navigate("/estarlist");
           }}
         >
-          ✏️
-        </button>
-        <button>🔙익명게시판</button>
-      </MovePage>
-      {globalposts.map((post) => {
-        return (
-          <DetailBox>
-            <DetailPic>
-              게시글 이미지 불러오기❤️
-              <p>{post.images}</p>
-            </DetailPic>
-            <DetailComment>
-              사진옆쪽 박스
-              <Profile>
-                프로필 이미지{post.title}/ 이름/ ~시간전{post.like}
-                {post.dislike}{" "}
-              </Profile>
-              <Mymemo>내가 게시물에 쓴글{post.content}</Mymemo>
-              <MoreComments>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    saveCommentHandler(comment);
+          Back
+        </BackButton>
+        <DeleteButton
+          key={globalposts.PostId}
+          onClick={() => deletepostHandler(globalposts.PostId)}
+        >
+          ❌
+        </DeleteButton>
+        <Card key={globalposts.PostId}>
+          <Photo>
+            <div>
+              <img src={globalposts.imgUrl}></img>
+            </div>
+          </Photo>
+          <Half>
+            {!isEditMode && (
+              <Info>
+                <Title>{globalposts.title}</Title>
+                <Content>{globalposts.content}</Content>
+                {/* <div>
+                        내가쓴글: {post.content}
+                        <LikeApp />
+                      </div> */}
+                <PostButton onClick={() => setIsEditMode(true)}>✏️</PostButton>
+              </Info>
+            )}
+            {isEditMode && (
+              <Info>
+                <Title>{globalposts.title}</Title>
+                <textarea
+                  value={globalposts.content}
+                  onChange={(e) =>
+                    setNewContent({ ...globalposts, content: e.target.value })
+                  }
+                />
+                {/* {isEditMode && ( */}
+
+                <PostButton
+                  onClick={() => {
+                    setIsEditMode(false);
                   }}
                 >
-                  <input
-                    type="text"
-                    placeholder="댓글을 달아주세요"
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                  <button>저장</button>
-                </form>
-              </MoreComments>
-            </DetailComment>
-          </DetailBox>
-        );
-      })}
+                  🔙
+                </PostButton>
+
+                {/* )} */}
+                <button onClick={() => updatePostHandler(globalposts.PostId)}>
+                  🔒
+                </button>
+              </Info>
+            )}
+          </Half>
+          <MoreComments>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                saveCommentHandler(comment);
+              }}
+            >
+              <input
+                type="text"
+                required
+                maxLength="15"
+                title="15자 이하로만 입력 가능합니다."
+                placeholder="댓글을 달아주세요"
+                value={comment.comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <button>저장</button>
+            </form>
+            <div>
+              {newglobalposts?.map((comment) => (
+                <Comment comment={comment} />
+              ))}
+            </div>
+          </MoreComments>
+        </Card>
+      </BigCard>
     </>
   );
 };
 
 export default Detail;
 
-const MovePage = styled.div`
-  float: right;
-  margin-right: 40px;
-  font-size: x-large;
-  button {
-    margin-left: 10px;
-    background-color: #dde7f0;
+const BigCard = styled.div`
+  width: 90%;
+  min-height: 500px;
+  background-color: lightgray;
+  border: 1px solid black;
+  box-shadow: 5px 5px gray;
+  border-radius: 20px;
+  margin: 100px auto;
+  position: relative;
+`;
+
+const BackButton = styled.button`
+  width: 120px;
+  height: 34px;
+  text-align: center;
+  background-color: white;
+  position: absolute;
+  top: 16px;
+  right: 5%;
+  &:hover {
+    font-size: x-large;
   }
 `;
-const DetailBox = styled.div`
-  height: 600px;
-  width: 1000px;
-  border: 1px solid black;
-  margin: 50px auto;
 
+const DeleteButton = styled(BackButton)`
+  width: 50px;
+  background-color: transparent;
+  right: 0%;
+`;
+
+const Card = styled.div`
+  width: 90%;
+  margin: 60px auto 20px auto;
+  text-align: center;
+  background-color: white;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+  position: relative;
+  padding: 10px;
 `;
-const DetailPic = styled.div`
-  height: 550px;
-  width: 450px;
-  border: 1px solid black;
+const Photo = styled.div`
+  background-color: lightcoral;
+  width: 48%;
+  height: 100%;
+  margin-right: 10px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
 `;
-const DetailComment = styled(DetailPic)``;
-const Profile = styled.div`
-  height: 100px;
-  width: 410px;
-  border: 1px solid black;
-  margin: auto;
+
+const Half = styled.div`
+  width: 48%;
+  background-color: lightblue;
 `;
-const Mymemo = styled(Profile)`
-  margin-top: 10px;
+
+const Title = styled.div``;
+const Content = styled.div``;
+const Info = styled.div`
+  background-color: #8bb6db;
+  width: 100%;
+  height: 100%;
+  word-break: break-all;
+  padding: 10px;
+  position: relative;
+
+  button {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 50px;
+  }
+
+  input {
+    width: 100%;
+    height: 30%;
+  }
+
+  textarea {
+    width: 100%;
+    height: 70%;
+    vertical-align: top;
+    padding: 10px;
+    resize: none;
+    background-color: #afcae0;
+  }
+
+  ${Title} {
+    height: 30%;
+    padding: 44px 10px;
+    background-color: gray;
+    text-align: left;
+  }
+
+  ${Content} {
+    padding: 10px;
+    height: 70%;
+    text-align: left;
+  }
 `;
-const MoreComments = styled(Mymemo)`
-  height: 280px;
+const PostButton = styled(BackButton)`
+  background-color: transparent;
+  font-size: larger;
+  position: absolute;
+  right: 50px;
+  bottom: 20px;
+  width: 50px;
+`;
+
+const MoreComments = styled.div`
+  margin-top: 30px;
+  background-color: pink;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  resize: none;
+
   form {
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    /* margin: 10px; */
     input {
-      border: 1px solid black;
+      background-color: #fcd6dc;
+      width: 85%;
+      padding: 5px;
     }
     button {
-      border: 1px solid black;
+      width: 10%;
+      border: 3px solid #8f5053;
+      border-radius: 20px;
+      padding: 5px;
+      color: white;
+      background-color: #da777c;
+      &:hover {
+        font-weight: 700;
+        background-color: #8f5053;
+      }
+    }
+    div {
+      overflow-y: scroll;
     }
   }
 `;

@@ -5,7 +5,7 @@ import { __postLoginid, __postUserid } from "../../redux/modules/loginSlice";
 import useInput from "../hooks/useInput";
 import Swal from "sweetalert2";
 
-const Signup = () => {
+const Profile = () => {
   //랜덤닉네임 api 근데 두개식 묶여서 나온다.
   // const word = RandomApi();
   const dispatch = useDispatch();
@@ -44,7 +44,6 @@ const Signup = () => {
     //회원가입화면
     if (isEdit) {
       dispatch(__postUserid(Signup));
-      SetSignup(initialstate);
       // 회원가입성공 알럿창
       Swal.fire({
         title: "회원가입 성공!",
@@ -59,7 +58,7 @@ const Signup = () => {
           no-repeat
         `,
       });
-
+      SetSignup(initialstate);
       SetisEdit(!isEdit);
     } else {
       //로그인화면
@@ -78,16 +77,8 @@ const Signup = () => {
   if (isLoading) {
     <div>로딩중입니당</div>;
   } else if (error) {
-    // if (
-    Swal.fire({
-      icon: "error",
-      title: "아이디와 비밀번호를 확인해주세요",
-      showConfirmButton: false,
-      footer: '<a href="">로그인 화면으로 돌아가기</a>',
-    });
-    // )
-    // (window.confirm("아이디와 비밀번호를 확인해주세요"))
-    // window.location.replace("/estarlogin");
+    if (window.confirm("아이디와 비밀번호를 확인해주세요"))
+      window.location.replace("/estarlogin");
   } else {
     if (login) {
       Swal.fire({
@@ -104,7 +95,7 @@ const Signup = () => {
           <AddTodoCtn>
             <AddTodoCtnArea>
               <AddTodoBox>
-                <AddTodoTitle>아이디</AddTodoTitle>
+                <AddTodoTitle>닉네임</AddTodoTitle>
                 <AddTodoTextarea
                   value={Signup.loginId}
                   name="loginId"
@@ -126,7 +117,6 @@ const Signup = () => {
               <AddTodoBox>
                 <AddTodoTitle>비밀번호</AddTodoTitle>
                 <AddTodoTextarea
-                  type="password"
                   value={Signup.password}
                   name="password"
                   onChange={onChangehandler}
@@ -181,10 +171,10 @@ const Signup = () => {
 };
 
 const AddTodoCtn = styled.div`
-  margin: 200px auto 0 auto;
+  margin: 50px auto 0 auto;
   max-width: 500px;
   max-height: 800px;
-  /* height: calc(100vh - 60px); */
+  height: calc(100vh - 60px);
   box-sizing: border-box;
   padding: 20px;
   display: flex;
@@ -205,8 +195,8 @@ const AddTodoCtnArea = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* box-sizing: border-box; */
-  /* height: 100%; */
+  box-sizing: border-box;
+  height: 100%;
 `;
 const AddTodoBox = styled.div`
   display: flex;
@@ -238,8 +228,6 @@ const AddTodoTextarea = styled.input`
 const BtnSet = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
-  margin-bottom: 10px;
 `;
 
 const PostBtn = styled.button`
@@ -264,4 +252,4 @@ const PostBtn = styled.button`
 //   z-index: -1;
 // `;
 
-export default Signup;
+export default Profile;

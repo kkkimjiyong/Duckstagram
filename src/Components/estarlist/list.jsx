@@ -11,7 +11,6 @@ import { useCookies } from "react-cookie";
 
 const List = () => {
   const navigate = useNavigate();
-
   const [showButton, setShowButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -96,37 +95,38 @@ const List = () => {
       <Boxes>
         {posts?.map((post) => {
           return (
-            <BoxMemo
-              key={post.PostId}
-              onClick={() => {
-                navigate(`/estardetail/${post.PostId}`);
-              }}
-            >
-              <Image>
+            <BoxMemo>
+              <Image
+                key={post.PostId}
+                onClick={() => {
+                  navigate(`/estardetail/${post.PostId}`);
+                }}
+              >
                 <img src={post.imgUrl}></img>
               </Image>
 
               <BoxBtm>
                 <Words>
                   <div>{JSON.parse(post.title)}</div>
-                  <div>{JSON.parse(post.content)}</div>
-
-                  {/* <LikeApp post={post}/> */}
+                  <LikeApp post={post} />
+                  {/* <div>{JSON.parse(post.content)}</div> */}
                 </Words>
               </BoxBtm>
             </BoxMemo>
           );
         })}
-        <div
+        <p
           ref={ref}
           style={{
             position: "relative",
             bottom: "0px",
-
+            margin: "0",
+            color: "white",
             //아놔 여백 와이리 안없어지노
-            display: "flex",
           }}
-        />
+        >
+          어딧니??
+        </p>
       </Boxes>
       {showButton && (
         <ScrollBtn
@@ -143,6 +143,7 @@ const List = () => {
 
 export default List;
 const BoxCtn = styled.div`
+  margin-top: 250px;
   width: 95%;
 `;
 
@@ -159,7 +160,7 @@ const BoxMemo = styled.div`
   width: 350px;
   height: 350px;
   margin: auto;
-  cursor: pointer;
+  /* cursor: pointer; */
   box-shadow: 3px 3px 6px 0px gray;
   :hover {
     transform: scale(1.05);
@@ -172,6 +173,7 @@ const Image = styled.div`
   box-shadow: 3px 3px 3px 0px gray;
   border-radius: 10px;
   img {
+    cursor: pointer;
     object-fit: cover;
     width: 330px;
     height: 250px;
@@ -186,10 +188,15 @@ const BoxBtm = styled.div`
 `;
 const Words = styled.div`
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  flex-direction: row;
   margin: auto 10px;
+  display: flex;
+  justify-content: space-between;
+  div {
+    font-size: 18px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    margin: 5px;
+  }
 `;
 const ScrollBtn = styled.button`
   background-color: white;

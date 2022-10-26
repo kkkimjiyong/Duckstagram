@@ -25,7 +25,8 @@ export const __addEstar = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        "http://3.90.29.60/api/star/posts",
+        // "http://3.90.29.60/api/star/posts",
+        "https://hi-prac.shop/api/star/posts",
         payload,
         //헤더에 쿠키를 붙여서 보내준다. (Bearer 앞에 붙여주고)
         {
@@ -63,6 +64,7 @@ const estarSlice = createSlice({
       console.log(action.payload);
       state.error = "아아";
       Swal.fire(state.error.response.data.errorMessage);
+      Swal.fire(state.error.response.data.message);
     },
   },
 });

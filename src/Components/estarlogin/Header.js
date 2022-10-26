@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
+import PostModal from "../modal/postmodal";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -10,6 +11,15 @@ const Header = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   const [isPost, setIsPost] = useState(false);
+  const [postOpen, setPostOpen] = useState();
+
+  const openModal = () => {
+    setPostOpen(true);
+  };
+
+  const closeModal = () => {
+    setPostOpen(false);
+  };
 
   useEffect(() => {
     console.log("cookies콘솔", cookies);
@@ -30,7 +40,7 @@ const Header = () => {
             navigate("/estarlist");
           }}
         >
-          <div>Estagram</div>
+          <div>Duckstagram</div>
           <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNDYyLjA1IDIzMC43NmgtMTcyLjA5Yy0xNS42OTUgMC4wMTk1MzItMzAuNzQyIDYuMjYxNy00MS44NCAxNy4zNTktMTEuMDk4IDExLjA5OC0xNy4zNCAyNi4xNDUtMTcuMzU5IDQxLjg0djE3Mi4wOWMwLjAxOTUzMiAxNS42OTUgNi4yNjE3IDMwLjczOCAxNy4zNTkgNDEuODQgMTEuMDk4IDExLjA5OCAyNi4xNDUgMTcuMzQgNDEuODQgMTcuMzU1aDE3Mi4wOWMxNS42OTUtMC4wMTU2MjYgMzAuNzM4LTYuMjU3OCA0MS44NC0xNy4zNTUgMTEuMDk4LTExLjEwMiAxNy4zNC0yNi4xNDUgMTcuMzU1LTQxLjg0di0xNzIuMDljLTAuMDE1NjI2LTE1LjY5NS02LjI1NzgtMzAuNzQyLTE3LjM1NS00MS44NC0xMS4xMDItMTEuMDk4LTI2LjE0NS0xNy4zNC00MS44NC0xNy4zNTl6bS0xNzIuMDkgMjMuNjhoMTcyLjA5YzkuNDE4IDAuMDExNzE5IDE4LjQ0NSAzLjc1NzggMjUuMTAyIDEwLjQxNCA2LjY2MDIgNi42NjAyIDEwLjQwNiAxNS42ODggMTAuNDE4IDI1LjEwNXY3NC4yMDNoLTU0LjIxMWMtMy42ODc1LTIxLjMzNi0xNy4yNjYtMzkuNjY4LTM2LjYwOS00OS40MDYtMTkuMzQtOS43NDIyLTQyLjE1Mi05Ljc0MjItNjEuNDkyIDAtMTkuMzQgOS43MzgzLTMyLjkyMiAyOC4wNy0zNi42MDkgNDkuNDA2aC01NC4yMDd2LTc0LjIwM2MwLjAxMTcxOS05LjQxOCAzLjc1NzgtMTguNDQ1IDEwLjQxNC0yNS4xMDUgNi42NjAyLTYuNjU2MiAxNS42ODgtMTAuNDAyIDI1LjEwNS0xMC40MTR6bTEzMC45MiAxMjEuNTZjMCAxMS45MDItNC43MzA1IDIzLjMxNi0xMy4xNDUgMzEuNzMtOC40MTQxIDguNDE0MS0xOS44MjggMTMuMTQ1LTMxLjczIDEzLjE0NS0xMS44OTggMC0yMy4zMTItNC43MzA1LTMxLjcyNy0xMy4xNDUtOC40MTgtOC40MTQxLTEzLjE0NS0xOS44MjgtMTMuMTQ1LTMxLjczIDAtMTEuODk4IDQuNzI2Ni0yMy4zMTIgMTMuMTQ1LTMxLjcyNyA4LjQxNDEtOC40MTggMTkuODI4LTEzLjE0NSAzMS43MjctMTMuMTQ1IDExLjg5OCAwLjAxNTYyNSAyMy4zMDUgNC43NDYxIDMxLjcxNSAxMy4xNiA4LjQxNDEgOC40MTAyIDEzLjE0NSAxOS44MTYgMTMuMTYgMzEuNzExem00MS4xNzIgMTIxLjU2LTE3Mi4wOSAwLjAwMzkwNmMtOS40MTgtMC4wMTE3MTgtMTguNDQ1LTMuNzU3OC0yNS4xMDUtMTAuNDE4LTYuNjU2Mi02LjY1NjItMTAuNDAyLTE1LjY4NC0xMC40MTQtMjUuMTAydi03NC4yMDdoNTQuMjExYzMuNjgzNiAyMS4zNCAxNy4yNjYgMzkuNjY4IDM2LjYwNSA0OS40MSAxOS4zNDQgOS43NDIyIDQyLjE1MiA5Ljc0MjIgNjEuNDk2IDAgMTkuMzQtOS43NDIyIDMyLjkxOC0yOC4wNyAzNi42MDUtNDkuNDFoNTQuMjA3djc0LjIwN2gwLjAwMzkwNmMtMC4wMTE3MTggOS40MTgtMy43NTc4IDE4LjQ0NS0xMC40MTQgMjUuMTA1LTYuNjYwMiA2LjY1NjItMTUuNjg4IDEwLjQwMi0yNS4xMDUgMTAuNDE0em0tMjcuODk4LTIxMS44MmMtMC4wMDM5MDctMy4xNDA2IDEuMjQyMi02LjE1NjIgMy40NjQ4LTguMzc1IDIuMjE4OC0yLjIyMjcgNS4yMzQ0LTMuNDY4OCA4LjM3NS0zLjQ2NDhoMTUuNjA5LTAuMDAzOTA2YzYuNTM5MSAwIDExLjg0IDUuMzAwOCAxMS44NCAxMS44NCAwIDYuNTM5MS01LjMwMDggMTEuODQtMTEuODQgMTEuODRoLTE1LjYwOSAwLjAwMzkwNmMtMy4xNDA2IDAtNi4xNTYyLTEuMjQ2MS04LjM3NS0zLjQ2ODgtMi4yMjI3LTIuMjE4OC0zLjQ2ODgtNS4yMzA1LTMuNDY0OC04LjM3MTF6IiBmaWxsPSIjZmY4MTRhIi8+Cjwvc3ZnPgo=" />
         </EstagramTag>
       </MainImg>
@@ -47,7 +57,7 @@ const Header = () => {
         <PostBtn
           onClick={() => {
             if (isPost) {
-              navigate("/estarpost");
+              openModal();
             } else {
               Swal.fire({ title: "로그인후 이용해주세요" });
             }
@@ -83,6 +93,13 @@ const Header = () => {
           </PostBtn>
         )}
       </TopCtn>
+
+      <PostModal
+        open={postOpen}
+        close={closeModal}
+        header="포스트"
+        style={{ zIndex: "-9999999" }}
+      ></PostModal>
     </>
   );
 };
@@ -96,10 +113,10 @@ const MainImg = styled.div`
   position: fixed;
   top: 0;
   z-index: 9999;
-
+  background-color: white;
   ${EstagramTag} {
     display: inline-flex;
-    width: 220px;
+    width: 300px;
 
     div {
       margin-top: 10px;
@@ -115,12 +132,15 @@ const MainImg = styled.div`
   }
 `;
 const TopCtn = styled.div`
-  /* background-color: #ff6e40; */
+  width: 100vw;
+
   position: fixed;
-  padding-top: 80px;
-  padding-bottom: 40px;
-  top: 0px;
-  width: 100%;
+  padding: 80px 30px 40px 0;
+  top: 0;
+  left: 0;
+  gap: 120px;
+  /* margin-left: -400px; */
+  /* width: 800px; */
   z-index: 999;
   display: flex;
   justify-content: space-evenly;

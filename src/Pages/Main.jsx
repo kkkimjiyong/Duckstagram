@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "../Components/estarlogin/Layout";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ const Main = () => {
           navigate("/estarlist");
         }}
       >
-        Estargram
+        Duckstargram
       </Button>
 
       <Button
@@ -30,11 +29,20 @@ const Main = () => {
           navigate("/realchat");
         }}
       >
-        Chat
+        Duck-Chat
       </Button>
     </Layout>
   );
 };
+
+const Layout = styled.div`
+  max-width: 1200px;
+  min-width: 100vw;
+  width: 100%;
+  height: 101%;
+  margin: 0 auto;
+  overflow: hidden;
+`;
 
 // const Mainctn = styled.div`
 //   background: linear-gradient(

@@ -181,7 +181,7 @@ const Signup = () => {
 };
 
 const AddTodoCtn = styled.div`
-  margin: 50px auto 0 auto;
+  margin: 200px auto 0 auto;
   max-width: 500px;
   max-height: 800px;
   /* height: calc(100vh - 60px); */

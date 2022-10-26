@@ -58,7 +58,7 @@ const Detail = () => {
     Toast.fire({
       icon: "success",
       iconColor: "#48792c",
-      title: "댓글 저장 완료",
+      title: "댓글 저장",
       color: "#48792c",
       background: "#aedd93c8",
     }).then(function () {
@@ -105,7 +105,7 @@ const Detail = () => {
           Toast.fire({
             icon: "success",
             iconColor: "#da5c5c",
-            title: "댓글 삭제 완료",
+            title: "게시물 삭제",
             color: "#da5c5c",
             background: "#dd9393c7",
           });
@@ -137,7 +137,7 @@ const Detail = () => {
     Toast.fire({
       icon: "success",
       iconColor: "#6e5d0f",
-      title: "댓글 수정 완료",
+      title: "게시물 수정",
       color: "#6e5d0f",
       background: "#f3d653c5",
     });
@@ -170,7 +170,7 @@ const Detail = () => {
           key={globalposts.PostId}
           onClick={() => deletepostHandler(globalposts.PostId)}
         >
-          ❌🗑
+          ❌
         </DeleteButton>
         <Card key={globalposts.PostId}>
           <Photo>

@@ -118,6 +118,7 @@ const listSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       Swal.fire(state.error.response.data.errorMessage);
+      Swal.fire(state.error.response.data.message);
     },
     // PATCH 게시물 수정하기!!!
     [__updateEstar.pending]: (state) => {
@@ -132,6 +133,7 @@ const listSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       Swal.fire(state.error.response.data.errorMessage);
+      Swal.fire(state.error.response.data.message);
     },
   },
 });

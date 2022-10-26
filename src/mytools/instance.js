@@ -5,7 +5,8 @@ import { getCookie } from "../Components/estarlogin/cookiehook";
 const instance = axios.create({
   // baseURL: "http://13.124.143.112/",
   // baseURL: "http://localhost:3001/",
-  baseURL: "http://3.90.29.60/",
+  // baseURL: "http://3.90.29.60/",
+  baseURL: "https://hi-prac.shop",
 });
 
 // E스타그램 첫 페이지 (전체리스트 가져오기 - GET)

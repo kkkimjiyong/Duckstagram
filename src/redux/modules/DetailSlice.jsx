@@ -83,6 +83,7 @@ const detailSlice = createSlice({
     [__postDetailComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      console.log("포스트될때의에러?", state.error);
       Swal.fire(state.error.response.data.errorMessage);
     },
     // 게시물별 댓글 get
@@ -114,6 +115,7 @@ const detailSlice = createSlice({
       state.error = action.payload;
       console.log("요게바로에러!", state.error);
       Swal.fire(state.error.response.data.errorMessage);
+      Swal.fire(state.error.response.data.message);
     },
     // PATCH 게시물별 댓글!!! 게시물별 댓글 수정하기!!!
     [__updateDetailComment.pending]: (state) => {
@@ -134,6 +136,7 @@ const detailSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       Swal.fire(state.error.response.data.errorMessage);
+      Swal.fire(state.error.response.data.message);
     },
   },
 });

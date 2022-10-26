@@ -53,7 +53,7 @@ const List = () => {
         Setposts((prevPosts) => [...prevPosts, ...data.data]);
       }, 2000);
       const { data } = await axios.get(
-        `http://3.90.29.60/api/star/posts?page=${page.current}&pagesize=6`
+        `https://hi-prac.shop/posts?page=${page.current}&pagesize=6`
       );
       console.log(data.data.length);
       // Setposts((prevPosts) => [...prevPosts, ...data.data]);
@@ -88,6 +88,7 @@ const List = () => {
   //   }
   // }, [fetch, hasNextPage, inView]);
 
+  //뭔가 이상한데 일단 이게낫나?
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, offsetHeight } = document.documentElement;

@@ -24,18 +24,18 @@ export const __addEstar = createAsyncThunk(
   "estar",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await postApi.postPost(payload);
-      // axios.post(
-      //   "http://3.90.29.60/api/star/posts",
-      //   payload,
-      //   //헤더에 쿠키를 붙여서 보내준다. (Bearer 앞에 붙여주고)
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       Authorization: `Bearer ${getCookie("token")}`,
-      //     },
-      //   }
-      // );
+      const { data } = await // postApi.postPost(payload);
+      axios.post(
+        "http://3.90.29.60/api/star/posts",
+        payload,
+        //헤더에 쿠키를 붙여서 보내준다. (Bearer 앞에 붙여주고)
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${getCookie("token")}`,
+          },
+        }
+      );
       console.log(payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

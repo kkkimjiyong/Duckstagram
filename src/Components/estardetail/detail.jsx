@@ -21,9 +21,7 @@ const Detail = () => {
     comment: "",
   });
   const [isEditMode, setIsEditMode] = useState(false);
-  const [newContent, setNewContent] = useState({
-    content: "",
-  });
+  const [newContent, setNewContent] = useState({ content: "" });
   // 설렉터
   const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
   console.log(globalposts);
@@ -58,10 +56,10 @@ const Detail = () => {
   }, [dispatch, id]);
 
   // 게시물 삭제 Delete!!
-  const deletepostHandler = (id) => {
+  const deletepostHandler = async (id) => {
     const result = window.confirm("정말 삭제 하시겠습니까?");
     if (result) {
-      dispatch(__deleteEstar(id));
+      await dispatch(__deleteEstar(id));
       window.location.replace("/estarlist");
     } else {
       return;
@@ -69,13 +67,13 @@ const Detail = () => {
   };
   // 게시물 수정 patch!!
   const updatePostHandler = (postID) => {
-    dispatch(__updateEstar({ postID, newContent }));
+    dispatch(__updateEstar(newContent));
     setIsEditMode(false);
     setNewContent({
       content: "",
     });
   };
-
+  console.log(newContent);
   return (
     <>
       <BigCard>
@@ -113,68 +111,73 @@ const Detail = () => {
         })}
 
         {globalposts?.map((post) => {
-          return (
-            <Card key={post.id}>
-              <Photo>
-                게시글 이미지 불러오기
-                <p>{post.images}</p>
-                {!isEditMode && (
-                  <Info>
-                    <div>
-                      내가쓴글: {post.content}
-                      <LikeApp />
-                    </div>
-                  </Info>
-                )}
-                {isEditMode && (
-                  <>
+          if (post.PostId === +id)
+            return (
+              <Card key={post.id}>
+                <Photo>
+                  게시글 이미지 불러오기
+                  <p>{post.images}</p>
+                  {!isEditMode && (
                     <Info>
                       <div>
-                        이아이는 제목
-                        <button onClick={() => updatePostHandler(post.id)}>
-                          🔒
-                        </button>
+                        내가쓴글: {post.content}
+                        <LikeApp />
                       </div>
+                    </Info>
+                  )}
+                  {isEditMode && (
+                    <>
+                      <Info>
+                        <div>
+                          이아이는 제목
+                          <button
+                            onClick={() => updatePostHandler(post.PostId)}
+                          >
+                            🔒
+                          </button>
+                        </div>
+                        <input
+                          type="text"
+                          required
+                          placeholder={post.content}
+                          value={newContent.content}
+                          onChange={(e) =>
+                            setNewContent({ ...post, content: e.target.value })
+                          }
+                        />
+                      </Info>
+                    </>
+                  )}
+                </Photo>
+
+                <Half>
+                  <MoreComments>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        saveCommentHandler(comment);
+                      }}
+                    >
                       <input
                         type="text"
                         required
-                        placeholder={post.content}
-                        value={post.newContent}
-                        onChange={(e) => setNewContent(e.target.value)}
+                        maxLength="15"
+                        title="15자 이하로만 입력 가능합니다."
+                        placeholder="댓글을 달아주세요"
+                        value={comment.comment}
+                        onChange={(e) => setComment(e.target.value)}
                       />
-                    </Info>
-                  </>
-                )}
-              </Photo>
-
-              <Half>
-                <MoreComments>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      saveCommentHandler(comment);
-                    }}
-                  >
-                    <input
-                      type="text"
-                      required
-                      maxLength="15"
-                      title="15자 이하로만 입력 가능합니다."
-                      placeholder="댓글을 달아주세요"
-                      value={comment.comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    />
-                    <button>저장</button>
-                  </form>
-                  {/* <div>
+                      <button>저장</button>
+                    </form>
+                    {/* <div>
                     {newglobalposts?.map((comment) => (
                       <Comment comment={comment} />
                     ))}
                   </div> */}
-                </MoreComments>
-              </Half>
-            </Card>
-          );
+                  </MoreComments>
+                </Half>
+              </Card>
+            );
         })}
       </BigCard>
     </>

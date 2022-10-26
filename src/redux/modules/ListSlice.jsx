@@ -8,7 +8,7 @@ export const __getLists = createAsyncThunk(
     try {
       const { data } = await imageApi.getImages(payload);
       console.log(data);
-      return thunkAPI.fulfillWithValue(data); //실제서버돌릴때는 data.data로 변경하기!!
+      return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -47,8 +47,7 @@ export const __updateEstar = createAsyncThunk(
   "estar/updateeestar",
   async (payload, thunkAPI) => {
     try {
-      const { newContent, postID } = payload;
-      await imageApi.patchPost(postID, newContent); // 서버한테 보낸상태
+      await imageApi.putPost(payload); // 서버한테 보낸상태
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -108,8 +107,10 @@ const listSlice = createSlice({
     },
     [__deleteEstar.fulfilled]: (state, action) => {
       state.isLoading = false;
-      let delpost = state.posts.filter((post) => action.payload !== post.id);
-      state.posts = delpost;
+      console.log(action.payload);
+      state.posts = state.posts.filter(
+        (post) => action.payload !== post.PostId
+      );
     },
     [__deleteEstar.rejected]: (state, action) => {
       state.isLoading = false;
@@ -121,7 +122,7 @@ const listSlice = createSlice({
     },
     [__updateEstar.fulfilled]: (state, action) => {
       state.posts = state.posts.map((post) => {
-        if (post.id !== action.payload.postID) {
+        if (post.id !== action.payload.PostId) {
           return post;
         } else {
           console.log(post);

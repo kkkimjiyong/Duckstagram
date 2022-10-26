@@ -9,7 +9,46 @@
       "dislike": "",
       "id": 2
     },
+<<<<<<< HEAD
 
+=======
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "바로수정꿋",
+      "like": "",
+      "dislike": "",
+      "id": 3
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "ㄴㄴ",
+      "like": "",
+      "dislike": "",
+      "id": 4
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "agasdg",
+      "like": "",
+      "dislike": "",
+      "id": 5
+    },
+    {
+      "postId": 1,
+      "title": "",
+      "images": "",
+      "content": "안뇽\n",
+      "like": "",
+      "dislike": "",
+      "id": 6
+    },
+>>>>>>> newsooyeon
     {
       "postId": 1,
       "title": "",

@@ -7,7 +7,6 @@ export const __getLists = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await imageApi.getImages(payload);
-      console.log(data);
       return thunkAPI.fulfillWithValue(data.data); //실제서버돌릴때는 data.data로 변경하기!!
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -32,6 +31,7 @@ export const __getList = createAsyncThunk(
 export const __deleteEstar = createAsyncThunk(
   "estar/deleteestar",
   async (payload, thunkAPI) => {
+    console.log("뭘가져오니", payload);
     try {
       const { data } = await imageApi.deletePost(payload);
       console.log(data);
@@ -66,6 +66,7 @@ const initialState = {
     //   dislike: "👎",
     // },
   ],
+  postlist: [],
   isLoading: false,
   error: null,
 };
@@ -82,7 +83,7 @@ const listSlice = createSlice({
     [__getLists.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
-      console.log("fulfilled 상태", action.payload);
+      console.log("getLists fulfilled 상태", action.payload);
     },
     [__getLists.rejected]: (state, action) => {
       state.isLoading = false;
@@ -94,8 +95,8 @@ const listSlice = createSlice({
     },
     [__getList.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts.push(action.payload);
       console.log(action.payload);
+      state.postlist = action.payload;
     },
     [__getList.rejected]: (state, action) => {
       state.isLoading = false;
@@ -107,7 +108,6 @@ const listSlice = createSlice({
     },
     [__deleteEstar.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
       state.posts = state.posts.filter(
         (post) => action.payload !== post.PostId
       );
@@ -121,14 +121,7 @@ const listSlice = createSlice({
       state.isLoading = true;
     },
     [__updateEstar.fulfilled]: (state, action) => {
-      state.posts = state.posts.map((post) => {
-        if (post.id !== action.payload.PostId) {
-          return post;
-        } else {
-          console.log(post);
-          return { ...post, content: action.payload.newContent };
-        }
-      });
+      state.posts = action.payload;
       // state.posts = newNewContent;
       state.isLoading = false;
     },

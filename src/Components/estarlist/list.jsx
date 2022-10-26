@@ -4,35 +4,58 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LikeApp from "../../mytools/likeApp";
 import { __getLists } from "../../redux/modules/ListSlice";
+import Detail from "../estardetail/detail";
 
 const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const globalposts = useSelector((state) => state.posts.posts.data);
-  const sendFD = new FormData();
 
-  sendFD.get("images");
-
-  for (let a of sendFD.entries()) {
-    console.log("sendFD출력", a);
-  }
+  const globalposts = useSelector((state) => state.posts.posts);
 
   useEffect(() => {
     dispatch(__getLists());
   }, [dispatch]);
 
+  // //무한스크롤구현
+  // const [posts, Setposts] = useState([]);
+  // const [hasNextPage, setHasNextPage] = useState(true);
+  // const page = useRef(1);
+
+  // //json에서 5개씩 끊어서 가져오기
+  // const fetch = useCallback(async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `http://3.90.29.60/api/star/posts?page=${page.current}&pageSize=6`
+  //     );
+  //     Setposts((prevPosts) => [...prevPosts, ...data]);
+  //     setHasNextPage(data.length == 6);
+  //     if (data.length) {
+  //       page.current += 1;
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
+
+  // //ref를 타겟으로 지정하고, 타겟이 뷰에 보이면 inView의 값이 True로
+  // const [ref, inView] = useInView();
+
+  // useEffect(() => {
+  //   if (inView && hasNextPage) {
+  //     fetch();
+  //   }
+  // }, [fetch, hasNextPage, inView]);
+
   return (
-    <>
-      <MovePage>
-        <button
-          onClick={() => {
-            navigate("/estarpost");
-          }}
-        >
-          ✏️
-        </button>
-      </MovePage>
+    <BoxCtn>
       <Boxes>
+        <MainImg href="https://imgbb.com/">
+          <img
+            src="https://i.ibb.co/KWzZrpg/Estargram-Logo-removebg-preview.png"
+            alt="Estargram-Logo-removebg-preview"
+            border="0"
+          />
+        </MainImg>
         {globalposts?.map((post) => {
           return (
             <BoxMemo key={post.PostId}>
@@ -41,67 +64,74 @@ const List = () => {
                   navigate(`/estardetail/${post.PostId}`);
                 }}
               >
-                <img alt="" src="{post.images}" />
+                <img src={post.imgUrl}></img>
               </Image>
-              <Words>
-                <div>
-                  <div>
-                    제목: {post.title}
-                    <br></br>
-                    내용: {post.content}
-                  </div>
 
-                  <LikeApp />
-                </div>
-              </Words>
+              <BoxBtm>
+                <Words>
+                  <div>내용: {post.content}</div>
+
+                  {/* <LikeApp post={post}/> */}
+                </Words>
+              </BoxBtm>
             </BoxMemo>
           );
         })}
       </Boxes>
-    </>
+      {/* <div ref={ref} style={{ position: "absolute", bottom: "0px" }} /> */}
+    </BoxCtn>
   );
 };
 
 export default List;
+const BoxCtn = styled.div``;
 
-const MovePage = styled.div`
-  float: right;
-  margin-top: 10px;
-  margin-right: 50px;
-  font-size: x-large;
-
-  button {
-    margin: 10px;
-    &:hover {
-      font-size: larger;
-    }
-  }
+const MainImg = styled.div`
+  width: 100%;
+  height: 300px;
+  object-fit: scale-down;
+  display: flex;
+  justify-content: center;
 `;
 
 const Boxes = styled.div`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin: 50px;
+  gap: 20px;
 `;
-const BoxMemo = styled.div`
-  width: 300px;
-  padding: 10px;
-  border-radius: 10px;
-`;
-const Image = styled(BoxMemo)`
-  border: 1px solid black;
-  height: 300px;
-  box-shadow: 0 0 0.5em 0 gray;
-`;
-const Words = styled(BoxMemo)`
-  border: 1px solid black;
-  box-shadow: 0 0 0.5em 0 gray;
 
-  div {
-    display: flex;
-    justify-content: space-between;
+const BoxMemo = styled.div`
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  width: 350px;
+  height: 350px;
+  margin: auto;
+  box-shadow: 0px 3px 3px 0px gray;
+  :hover {
+    transform: scale(1.05);
   }
+`;
+const Image = styled.div`
+  width: 330px;
+  height: 250px;
+  background-color: antiquewhite;
+  box-shadow: 0px 3px 3px 0px gray;
+  border-radius: 10px;
+  img {
+    object-fit: cover;
+    width: 330px;
+    height: 250px;
+    border-radius: 10px;
+  }
+`;
+
+const BoxBtm = styled.div`
+  width: 330px;
+  height: 60px;
+  margin-top: 15px;
+`;
+const Words = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

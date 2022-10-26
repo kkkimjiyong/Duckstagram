@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Layout from "../Components/estarlogin/Layout";
 
 const Main = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <Layout>
       <Signup
         onClick={() => {
           navigate("/estarlogin");
@@ -29,7 +30,7 @@ const Main = () => {
       >
         Chat
       </Button>
-    </>
+    </Layout>
   );
 };
 
@@ -51,7 +52,8 @@ const Signup = styled.button`
   width: 100vh;
   height: 30vh;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 50px;
+  font-weight: 1000;
   color: white;
   background: #ff6e40;
   color: #fff;
@@ -74,7 +76,8 @@ const Button = styled.button`
   background-color: #ffa06d;
   transition: all 0.5s;
   margin: 0 auto;
-  font-size: 30px;
+  font-size: 50px;
+  font-weight: 1000;
   transform: skew(0deg, -10deg);
   filter: blur(8px);
   :hover {

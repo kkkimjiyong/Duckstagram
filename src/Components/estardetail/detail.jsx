@@ -9,9 +9,11 @@ import {
 } from "../../redux/modules/DetailSlice";
 import { __getList } from "../../redux/modules/ListSlice";
 import { __deleteEstar, __updateEstar } from "../../redux/modules/ListSlice";
+import Comment from "./comments";
 
 const Detail = () => {
   // hooks
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -22,35 +24,32 @@ const Detail = () => {
   });
   const [isEditMode, setIsEditMode] = useState(false);
   const [newContent, setNewContent] = useState({ content: "" });
+
   // 설렉터
-  const globalposts = useSelector((state) => state.posts.posts); //포스트 리스트 가져오기
-  console.log(globalposts);
-  // const myglobalposts = globalposts.filter(
-  //   (globalpost) => globalpost.PostId === parseInt(id)
-  // );
-  // console.log(myglobalposts);
-  //  console.log(state.posts));
-  const globalComments = useSelector((state) => console.log(state.comments));
-  // state.comments.comments); // 댓글 리스트 가져오기
-  // console.log(globalComments);
+  const globalposts = useSelector((state) => state.posts.postlist); //포스트 리스트 가져오기
+
+  const globalComments = useSelector((state) => state.comments.comments); // 댓글 리스트 가져오기
+  console.log(globalComments);
+
   // 댓글 리스트들 중 파람아이디에 일치하는 것만 필더해주기
   const newglobalposts = globalComments.filter((comment) => {
-    return comment.commentId === globalposts.PostId;
+    return comment.postId === parseInt(id);
   });
   console.log(newglobalposts);
 
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
+  console.log(comment);
   const saveCommentHandler = () => {
     if (comment.trim() === "") return;
-    dispatch(__postDetailComment({ comment, commentId: parseInt(id) })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
+    dispatch(__postDetailComment({ comment, id })); //피림 아이디를 추가로 줌으로써 어떤 게시글에 달린 글인지 알수있게해줌
     setComment({
-      commentId: 0,
       comment: "",
     });
   };
   // 게시물에 달린 댓글 가져오기 GET
   useEffect(() => {
     dispatch(__getList(id));
+    // dispatch(__getList(id));
     dispatch(__getDetailComment(id));
     // navigate("/estarlist");
   }, [dispatch, id]);
@@ -66,12 +65,13 @@ const Detail = () => {
     }
   };
   // 게시물 수정 patch!!
-  const updatePostHandler = (postID) => {
+  const updatePostHandler = () => {
     dispatch(__updateEstar(newContent));
+
     setIsEditMode(false);
-    setNewContent({
-      content: "",
-    });
+    // setNewContent({
+    //   content: "",
+    // });
   };
   console.log(newContent);
   return (
@@ -91,7 +91,6 @@ const Detail = () => {
             </PostButton>
           </>
         )}
-
         <BackButton
           onClick={() => {
             navigate("/estarlist");
@@ -99,86 +98,69 @@ const Detail = () => {
         >
           Back
         </BackButton>
-        {globalposts?.map((post) => {
-          return (
-            <DeleteButton
-              key={globalposts.postId}
-              onClick={() => deletepostHandler(globalposts.postId)}
-            >
-              ❌
-            </DeleteButton>
-          );
-        })}
-
-        {globalposts?.map((post) => {
-          if (post.PostId === +id)
-            return (
-              <Card key={post.id}>
-                <Photo>
-                  게시글 이미지 불러오기
-                  <p>{post.images}</p>
-                  {!isEditMode && (
-                    <Info>
-                      <div>
+        <DeleteButton
+          key={globalposts.PostId}
+          onClick={() => deletepostHandler(globalposts.PostId)}
+        >
+          ❌
+        </DeleteButton>
+        <Card key={globalposts.PostId}>
+          <Photo>
+            <div>
+              <img src={globalposts.imgUrl}></img>
+            </div>
+          </Photo>
+          <Half>
+            {!isEditMode && (
+              <Info>
+                <Title>{globalposts.title}</Title>
+                <Content>{globalposts.content}</Content>
+                {/* <div>
                         내가쓴글: {post.content}
                         <LikeApp />
-                      </div>
-                    </Info>
-                  )}
-                  {isEditMode && (
-                    <>
-                      <Info>
-                        <div>
-                          이아이는 제목
-                          <button
-                            onClick={() => updatePostHandler(post.PostId)}
-                          >
-                            🔒
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          required
-                          placeholder={post.content}
-                          value={newContent.content}
-                          onChange={(e) =>
-                            setNewContent({ ...post, content: e.target.value })
-                          }
-                        />
-                      </Info>
-                    </>
-                  )}
-                </Photo>
-
-                <Half>
-                  <MoreComments>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        saveCommentHandler(comment);
-                      }}
-                    >
-                      <input
-                        type="text"
-                        required
-                        maxLength="15"
-                        title="15자 이하로만 입력 가능합니다."
-                        placeholder="댓글을 달아주세요"
-                        value={comment.comment}
-                        onChange={(e) => setComment(e.target.value)}
-                      />
-                      <button>저장</button>
-                    </form>
-                    {/* <div>
-                    {newglobalposts?.map((comment) => (
-                      <Comment comment={comment} />
-                    ))}
-                  </div> */}
-                  </MoreComments>
-                </Half>
-              </Card>
-            );
-        })}
+                      </div> */}
+              </Info>
+            )}
+            {isEditMode && (
+              <Info>
+                <Title>{globalposts.title}</Title>
+                <textarea
+                  value={globalposts.content}
+                  onChange={(e) =>
+                    setNewContent({ ...globalposts, content: e.target.value })
+                  }
+                />
+                <button onClick={() => updatePostHandler(globalposts.PostId)}>
+                  🔒
+                </button>
+              </Info>
+            )}
+          </Half>
+          <MoreComments>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                saveCommentHandler(comment);
+              }}
+            >
+              <input
+                type="text"
+                required
+                maxLength="15"
+                title="15자 이하로만 입력 가능합니다."
+                placeholder="댓글을 달아주세요"
+                value={comment.comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <button>저장</button>
+            </form>
+            <div>
+              {newglobalposts?.map((comment) => (
+                <Comment comment={comment} />
+              ))}
+            </div>
+          </MoreComments>
+        </Card>
       </BigCard>
     </>
   );
@@ -188,12 +170,13 @@ export default Detail;
 
 const BigCard = styled.div`
   width: 90%;
-  height: 500px;
+  min-height: 500px;
   background-color: lightgray;
   border: 1px solid black;
   box-shadow: 5px 5px gray;
   border-radius: 20px;
   margin: 100px auto;
+
   position: relative;
 `;
 
@@ -223,58 +206,92 @@ const DeleteButton = styled(BackButton)`
 
 const Card = styled.div`
   width: 90%;
-  height: 80%;
   margin: 60px auto 20px auto;
   text-align: center;
   background-color: white;
   display: flex;
   justify-content: space-between;
+
+  flex-wrap: wrap;
   position: relative;
   padding: 10px;
 `;
 const Photo = styled.div`
   background-color: lightcoral;
-  width: 49%;
+  width: 48%;
   height: 100%;
+  margin-right: 10px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  /* img:hover {
+    scale: 1.3;
+    width: 100%;
+    height: auto;
+  } */
 `;
 
 const Half = styled.div`
-  width: 49%;
+  width: 48%;
   background-color: lightblue;
 `;
+
+const Title = styled.div``;
+const Content = styled.div``;
 const Info = styled.div`
   background-color: #8bb6db;
   width: 100%;
-  height: 30%;
-  line-height: 50px;
-  position: sticky;
-  top: 70%;
+  height: 100%;
   word-break: break-all;
-  line-height: normal;
   padding: 10px;
-  div {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 20px;
+  position: relative;
+
+  button {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
   }
 
   input {
-    width: 90%;
-    height: 30px;
+    width: 100%;
+    height: 30%;
+  }
+
+  textarea {
+    width: 100%;
+    height: 70%;
     vertical-align: top;
     padding: 10px;
-
+    resize: none;
     background-color: #afcae0;
+  }
+
+  ${Title} {
+    height: 30%;
+    padding: 44px 10px;
+    background-color: gray;
+    text-align: left;
+  }
+
+  ${Content} {
+    padding: 10px;
+    height: 70%;
+    text-align: left;
   }
 `;
 
 const MoreComments = styled.div`
+  margin-top: 30px;
   background-color: pink;
   width: 100%;
   height: 100%;
   padding: 16px;
   resize: none;
-  overflow-y: scroll;
+
   form {
     display: flex;
     justify-content: space-between;
@@ -293,8 +310,11 @@ const MoreComments = styled.div`
       background-color: #da777c;
       &:hover {
         font-weight: 700;
-        border: 5px solid #8f5053;
+        background-color: #8f5053;
       }
+    }
+    div {
+      overflow-y: scroll;
     }
   }
 `;

@@ -7,7 +7,7 @@ export const __postDetailComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("댓글저장으로 넘겨준값", payload);
     try {
-      const { data } = await detailApi.postDetail(payload);
+      await detailApi.postDetail(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

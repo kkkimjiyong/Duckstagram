@@ -52,7 +52,7 @@ const Detail = () => {
     // dispatch(__getList(id));
     dispatch(__getDetailComment(id));
     // navigate("/estarlist");
-  }, []);
+  }, [dispatch, id]);
 
   // 게시물 삭제 Delete!!
   const deletepostHandler = async (id) => {

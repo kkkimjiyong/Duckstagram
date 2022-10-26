@@ -7,7 +7,6 @@ import { __getLists } from "../../redux/modules/ListSlice";
 import { useRef, useCallback } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import { IntersectionOptions } from "react-intersection-observer";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -75,7 +74,7 @@ const List = () => {
   });
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       console.log(1);
       fetch();
     }
@@ -112,16 +111,6 @@ const List = () => {
             </BoxMemo>
           );
         })}
-        <div
-          ref={ref}
-          style={{
-            position: "relative",
-            bottom: "0px",
-
-            //아놔 여백 와이리 안없어지노
-            display: "flex",
-          }}
-        />
       </Boxes>
       {showButton && (
         <ScrollBtn
@@ -132,12 +121,27 @@ const List = () => {
           🡹
         </ScrollBtn>
       )}
+      <div
+        ref={ref}
+        style={{
+          position: "relative",
+          bottom: "0px",
+
+          //아놔 여백 와이리 안없어지노
+          display: "flex",
+        }}
+      >
+        어딨니?????
+      </div>
     </BoxCtn>
   );
 };
 
 export default List;
-const BoxCtn = styled.div``;
+const BoxCtn = styled.div`
+  /* margin: auto;
+  width: 800px; */
+`;
 
 const MainImg = styled.div`
   width: 100%;
@@ -158,7 +162,7 @@ const BoxMemo = styled.div`
   padding: 10px;
   border-radius: 20px;
   width: 350px;
-  height: 350px;
+  height: 380px;
   margin: auto;
   box-shadow: 0px 3px 3px 0px gray;
   :hover {

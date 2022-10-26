@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 // import usePost from "../hooks/usePost";
 import { __addEstar } from "../../redux/modules/PostSlice";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 const PostPage = () => {
   const navigate = useNavigate();
@@ -89,6 +89,9 @@ const PostPage = () => {
       showConfirmButton: false,
       timer: 1500,
     });
+
+    // window.confirm("게시글이 작성되었습니다 !");
+    // window.location.replace("/estarlist");
   };
 
   console.log("preview출력", preview);

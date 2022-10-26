@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useCookies } from "react-cookie";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Header = () => {
             if (isPost) {
               navigate("/estarpost");
             } else {
-              swal("로그인후 이용해주세요");
+              Swal.fire({ title: "로그인후 이용해주세요" });
             }
           }}
         >
@@ -59,7 +59,7 @@ const Header = () => {
         {isLogin ? (
           <PostBtn
             onClick={() => {
-              swal("로그아웃하시겠습니까?!?!?!?!").then(() =>
+              Swal.fire({ title: "로그아웃하시겠습니까?!?!?!?!" }).then(() =>
                 removeCookie("token")
               );
             }}
@@ -70,10 +70,12 @@ const Header = () => {
         ) : (
           <PostBtn
             onClick={() => {
-              swal({
+              Swal.fire({
                 title: "로그인하시겠습니까?",
-                buttons: ["페이지에 머물기", "로그인하기"],
-              }).then((result) => result && navigate("/estarlogin"));
+                showCancelButton: true,
+                cancelButtonText: "페이지에 머물기",
+                confirmButtonText: "로그인하기",
+              }).then((result) => result.value && navigate("/estarlogin"));
             }}
           >
             {/* Login */}

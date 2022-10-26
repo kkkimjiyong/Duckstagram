@@ -7,7 +7,9 @@ import { __getLists } from "../../redux/modules/ListSlice";
 import { useRef, useCallback } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import { IntersectionOptions } from "react-intersection-observer";
+import { getCookie } from "../estarlogin/cookiehook";
+import Loader from "./loading";
+import { useCookies } from "react-cookie";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,9 @@ const List = () => {
 
   const globalposts = useSelector((state) => state.posts.posts);
 
+  const [cookies, setCookies, removeCookie] = useCookies();
   const [showButton, setShowButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -51,18 +55,27 @@ const List = () => {
   // json에서 5개씩 끊어서 가져오기
   const fetch = useCallback(async () => {
     try {
+      setTimeout(() => {
+        setIsLoading(false);
+        Setposts((prevPosts) => [...prevPosts, ...data.data]);
+      }, 2000);
       const { data } = await axios.get(
         `http://3.90.29.60/api/star/posts?page=${page.current}&pagesize=6`
       );
       console.log(data.data.length);
-      Setposts((prevPosts) => [...prevPosts, ...data.data]);
+      // Setposts((prevPosts) => [...prevPosts, ...data.data]);
       setHasNextPage(data.data.length == 6);
       if (data.data.length) {
         page.current += 1;
       }
+
+      //로드되면 로딩화면 아웃
     } catch (err) {
       console.error(err);
     }
+    // finally {
+    //   setIsLoading(false);
+    // }
   }, []);
   console.log(page);
   console.log(posts);
@@ -83,28 +96,26 @@ const List = () => {
 
   return (
     <BoxCtn>
+      {/* 로딩화면 */}
+      {isLoading ? <Loader /> : null}
+
       <Boxes>
-        {/* <MainImg href="https://imgbb.com/">
-          <img
-            src="https://i.ibb.co/KWzZrpg/Estargram-Logo-removebg-preview.png"
-            alt="Estargram-Logo-removebg-preview"
-            border="0"
-          />
-        </MainImg> */}
         {posts?.map((post) => {
           return (
-            <BoxMemo key={post.PostId}>
-              <Image
-                onClick={() => {
-                  navigate(`/estardetail/${post.PostId}`);
-                }}
-              >
+            <BoxMemo
+              key={post.PostId}
+              onClick={() => {
+                navigate(`/estardetail/${post.PostId}`);
+              }}
+            >
+              <Image>
                 <img src={post.imgUrl}></img>
               </Image>
 
               <BoxBtm>
                 <Words>
-                  <div>내용: {post.content}</div>
+                  <div>{JSON.parse(post.title)}</div>
+                  <div>{JSON.parse(post.content)}</div>
 
                   {/* <LikeApp post={post}/> */}
                 </Words>
@@ -137,14 +148,8 @@ const List = () => {
 };
 
 export default List;
-const BoxCtn = styled.div``;
-
-const MainImg = styled.div`
-  width: 100%;
-  height: 300px;
-  object-fit: scale-down;
-  display: flex;
-  justify-content: center;
+const BoxCtn = styled.div`
+  width: 95%;
 `;
 
 const Boxes = styled.div`
@@ -155,12 +160,13 @@ const Boxes = styled.div`
 
 const BoxMemo = styled.div`
   border: none;
-  padding: 10px;
+  padding: 14px 10px;
   border-radius: 20px;
   width: 350px;
   height: 350px;
   margin: auto;
-  box-shadow: 0px 3px 3px 0px gray;
+  cursor: pointer;
+  box-shadow: 3px 3px 6px 0px gray;
   :hover {
     transform: scale(1.05);
   }
@@ -169,7 +175,7 @@ const Image = styled.div`
   width: 330px;
   height: 250px;
   background-color: antiquewhite;
-  box-shadow: 0px 3px 3px 0px gray;
+  box-shadow: 3px 3px 3px 0px gray;
   border-radius: 10px;
   img {
     object-fit: cover;
@@ -189,6 +195,7 @@ const Words = styled.div`
   text-overflow: ellipsis;
 `;
 const ScrollBtn = styled.button`
+  background-color: white;
   font-weight: bold;
   font-size: 15px;
   padding: 15px 20px;

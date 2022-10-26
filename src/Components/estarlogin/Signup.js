@@ -67,7 +67,7 @@ const Signup = () => {
   } else {
     if (login) {
       window.confirm("로그인 성공! 메인으로 돌아갑니다.");
-      window.location.replace("/");
+      window.location.replace("/estarlist");
     } else {
       return (
         <>
@@ -96,6 +96,7 @@ const Signup = () => {
               <AddTodoBox>
                 <AddTodoTitle>비밀번호</AddTodoTitle>
                 <AddTodoTextarea
+                  type="password"
                   value={Signup.password}
                   name="password"
                   onChange={onChangehandler}

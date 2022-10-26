@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import usePost from "../hooks/usePost";
 import { __addEstar } from "../../redux/modules/PostSlice";
+import swal from "sweetalert";
 
 const PostPage = () => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const PostPage = () => {
     setTitle("");
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (comment.trim() === "" || title.trim() === "")
       // else if (img === null) return alert("사진을 업로드 해주세요");
@@ -79,9 +80,14 @@ const PostPage = () => {
     }
 
     //Post dispatch
-    dispatch(__addEstar(sendFD));
-
-    window.confirm("게시글이 작성되었습니다 !");
+    const result = swal("게시글이 작성되었습니다 !");
+    if (result) {
+      await dispatch(__addEstar(sendFD));
+      window.location.replace("/estarlist");
+    } else {
+      return;
+    }
+    // swal("게시글이 작성되었습니다 !");
     // window.location.replace("/estarlist");
   };
 

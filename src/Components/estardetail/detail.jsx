@@ -102,7 +102,7 @@ const Detail = () => {
           key={globalposts.PostId}
           onClick={() => deletepostHandler(globalposts.PostId)}
         >
-          ❌
+          ❌🗑
         </DeleteButton>
         <Card key={globalposts.PostId}>
           <Photo>

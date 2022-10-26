@@ -8,13 +8,13 @@ const Main = () => {
 
   return (
     <Layout>
-      <Signup
+      {/* <Signup
         onClick={() => {
           navigate("/estarlogin");
         }}
       >
         Login{" "}
-      </Signup>
+      </Signup> */}
 
       <Button
         id="estarbtn"
@@ -48,35 +48,37 @@ const Main = () => {
 //   height: 100vh;
 // `;
 
-const Signup = styled.button`
-  text-align: center;
-  border: 2px solid black;
-  width: 100vh;
-  height: 30vh;
-  cursor: pointer;
-  font-size: 50px;
-  font-weight: 1000;
-  color: white;
-  background: #ff6e40;
-  color: #fff;
-  text-align: center;
-  transform: skew(0deg, -10deg);
-  filter: blur(4px);
-  transition: all 0.5s;
-  :hover {
-    filter: blur(0px);
-  }
-  animation: glow 1.5s ease-in-out infinite;
-  -webkit-animation: glow 1.5s ease-in-out infinite;
-`;
+// const Signup = styled.button`
+//   text-align: center;
+//   border: 2px solid black;
+//   width: 100vh;
+//   height: 30vh;
+//   cursor: pointer;
+//   font-size: 50px;
+//   font-weight: 1000;
+//   color: white;
+//   background: #ff6e40;
+//   color: #fff;
+//   text-align: center;
+//   transform: skew(0deg, -10deg);
+//   filter: blur(4px);
+//   transition: all 0.5s;
+//   :hover {
+//     filter: blur(0px);
+//   }
+//   animation: glow 1.5s ease-in-out infinite;
+//   -webkit-animation: glow 1.5s ease-in-out infinite;
+// `;
 
 const Button = styled.button`
   cursor: pointer;
-  width: 100vh;
-  height: 30vh;
-  background-color: #ffa06d;
-  transition: all 0.5s;
-  margin: 0 auto;
+  width: 150%;
+  height: 50vh;
+  background-color: #f7efea;
+  color: #ed5f33;
+  transition: filter 0.5s;
+  margin-left: -25vw;
+  padding: 0;
   font-size: 50px;
   font-weight: 1000;
   transform: skew(0deg, -10deg);
@@ -85,7 +87,7 @@ const Button = styled.button`
     filter: blur(0px);
   }
   &:last-child {
-    background-color: #c53d13;
+    background-color: #ed5f33;
     color: white;
   }
 `;

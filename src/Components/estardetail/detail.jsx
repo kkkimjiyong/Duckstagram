@@ -164,7 +164,7 @@ const Detail = () => {
             navigate("/estarlist");
           }}
         >
-          Back
+          🔙
         </BackButton>
         <DeleteButton
           key={globalposts.PostId}
@@ -255,20 +255,21 @@ const BigCard = styled.div`
   border: 1px solid black;
   box-shadow: 5px 5px gray;
   border-radius: 20px;
-  margin: 100px auto;
+  margin: 250px auto;
   position: relative;
 `;
 
 const BackButton = styled.button`
-  width: 120px;
+  width: 110px;
   height: 34px;
   text-align: center;
-  background-color: white;
+  font-size: 30px;
+  font-weight: 1000;
   position: absolute;
   top: 16px;
-  right: 5%;
+  right: 1%;
   &:hover {
-    font-size: x-large;
+    font-size: xx-large;
   }
 `;
 
@@ -276,6 +277,7 @@ const DeleteButton = styled(BackButton)`
   width: 50px;
   background-color: transparent;
   right: 0%;
+  font-size: 20px;
 `;
 
 const Card = styled.div`

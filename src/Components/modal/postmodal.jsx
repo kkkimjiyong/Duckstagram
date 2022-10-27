@@ -10,9 +10,8 @@ import Swal from "sweetalert2";
 const PostModal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const { open, close, header } = props;
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, posts } = useSelector((state) => state.estar);
+  const { error } = useSelector((state) => state.estar);
   // const [value, onChange] = usePost();
   console.log("에러메세지", error);
   const [preview, setPreview] = useState([]);
@@ -102,14 +101,14 @@ const PostModal = (props) => {
 
     //Post dispatch
     dispatch(__addEstar(sendFD));
-
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "게시글 작성! 😎",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    // 알럿이 모달창 밑에 뜸
+    // Swal.fire({
+    //   position: "top-left",
+    //   icon: "success",
+    //   title: "게시글 작성! 😎",
+    //   showConfirmButton: false,
+    //   timer: 1500,
+    // });
   };
 
   return (

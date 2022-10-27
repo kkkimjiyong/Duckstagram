@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 const PostPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, posts } = useSelector((state) => state.estar);
+  const { error } = useSelector((state) => state.estar);
   // const [value, onChange] = usePost();
   console.log("에러메세지", error);
   const [preview, setPreview] = useState([]);

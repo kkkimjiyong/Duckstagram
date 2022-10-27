@@ -116,8 +116,9 @@ const detailSlice = createSlice({
       state.error = action.payload;
       console.log("요게바로에러!", state.error);
       Swal.fire(state.error.response.data.errorMessage);
-      Swal.fire(state.error.response.data.message);
-      Swal.fire("로그인 후 이용해주세요");
+      //====> 로그인 안했을때 jwt malted? 라는 에러메세지로 뜨는게 문제
+      // Swal.fire(state.error.response.data.message);
+      // Swal.fire("로그인 후 이용해주세요");
     },
     // PATCH 게시물별 댓글!!! 게시물별 댓글 수정하기!!!
     [__updateDetailComment.pending]: (state) => {
@@ -138,7 +139,8 @@ const detailSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       Swal.fire(state.error.response.data.errorMessage);
-      Swal.fire(state.error.response.data.message);
+      //====> 로그인 안했을때 jwt malted? 라는 에러메세지로 뜨는게 문제
+      // Swal.fire(state.error.response.data.message);
     },
   },
 });

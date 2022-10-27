@@ -68,7 +68,7 @@ const PostPage = () => {
       return;
     const Toast = Swal.mixin({
       toast: true,
-      position: "center-center",
+      position: "top-right",
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,

@@ -70,7 +70,7 @@ const PostModal = (props) => {
       return;
     const Toast = Swal.mixin({
       toast: true,
-      position: "center-center",
+      position: "top-right",
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
@@ -237,18 +237,14 @@ const Card = styled.form`
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     text-decoration: none;
     transition: 0.25s;
-    /* 
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-        background-size: 400% 400%;
-    animation: gradient1 5s ease infinite;
-     */
-    background: #fad264;
-    color: #6c757d;
+    background: #ffae7b;
+    color: white;
+    font-size: 18px;
     font-weight: bold;
 
     :hover {
-      background: lightgray;
-      color: #6c757d;
+      background: #ef6c00;
+      color: white;
       font-weight: bold;
       box-shadow: 1px 1px 3px 0 gray;
       letter-spacing: 2px;
@@ -267,7 +263,7 @@ const Photo = styled.div`
   width: 45%;
 
   ${Preview} {
-    border: 1px solid black;
+    border: 1px solid #f7efea;
     height: 300px;
     width: 100%;
     margin-bottom: 20px;
@@ -302,24 +298,25 @@ const Upload = styled.div`
   ${UploadInputDesign} {
     display: inline-block;
     width: 130px;
-    height: 30px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
     vertical-align: middle;
-    background-color: lightgray;
+    background-color: #f7efea;
     border-radius: 10px;
     margin-right: 10px;
+    cursor: pointer;
     :hover {
-      background: gray;
+      background: #ffae7b;
     }
   }
 
   ${PhotoResetButton} {
     width: 130px;
-    height: 30px;
-    background-color: lightgray;
+    height: 40px;
+    background-color: #f7efea;
     border-radius: 10px;
     :hover {
-      background: gray;
+      background: #ffae7b;
     }
   }
 `;
@@ -329,19 +326,24 @@ const Write = styled.textarea``;
 const Half = styled.div`
   width: 45%;
   height: 300px;
-  background-color: lightblue;
+  background-color: #f7efea;
+  border: 1px solid #f7efea;
+  border-radius: 20px;
+  padding: 10px;
   ${Title} {
+    border-radius: 20px 20px 0 0;
     width: 100%;
-    height: 100px;
+    height: 70px;
     padding: 15px;
     line-height: 100px;
     vertical-align: middle;
   }
 
   ${Write} {
-    background-color: pink;
+    border-radius: 0 0 20px 20px;
+    background-color: #f7efea;
     width: 100%;
-    height: 200px;
+    height: 205px;
     padding: 16px;
     resize: none;
   }

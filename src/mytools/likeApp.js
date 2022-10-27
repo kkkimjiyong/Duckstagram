@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Like from "./like";
 
-const LikeApp = () => {
+const LikeApp = ({ post }) => {
   const [likeList, setLikeList] = useState([
     {
       isLike: false,
@@ -22,7 +22,12 @@ const LikeApp = () => {
   return (
     <div>
       {likeList.map((item, index) => (
-        <Like isLike={item.isLike} index={index} changeLike={changeLike} />
+        <Like
+          isLike={item.isLike}
+          index={index}
+          changeLike={changeLike}
+          post={post}
+        />
       ))}
     </div>
   );

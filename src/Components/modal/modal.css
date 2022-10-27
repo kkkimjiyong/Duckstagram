@@ -25,8 +25,8 @@
 }
 .modal > section > header {
   position: relative;
-  padding: 16px 64px 16px 16px;
-  background-color: #f1f1f1;
+  padding: 16px 64px 16px 26px;
+  background-color: #ffae7b;
   font-size: 20px;
   font-weight: 700;
 }

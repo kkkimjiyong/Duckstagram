@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 import PostModal from "../modal/postmodal";
+import { getCookie } from "./cookiehook";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Header = () => {
   });
 
   return (
-    <>
+    <Cover>
       <MainImg>
         <EstagramTag
           onClick={() => {
@@ -41,8 +42,10 @@ const Header = () => {
           }}
         >
           <div>Duckstagram</div>
-          <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNDYyLjA1IDIzMC43NmgtMTcyLjA5Yy0xNS42OTUgMC4wMTk1MzItMzAuNzQyIDYuMjYxNy00MS44NCAxNy4zNTktMTEuMDk4IDExLjA5OC0xNy4zNCAyNi4xNDUtMTcuMzU5IDQxLjg0djE3Mi4wOWMwLjAxOTUzMiAxNS42OTUgNi4yNjE3IDMwLjczOCAxNy4zNTkgNDEuODQgMTEuMDk4IDExLjA5OCAyNi4xNDUgMTcuMzQgNDEuODQgMTcuMzU1aDE3Mi4wOWMxNS42OTUtMC4wMTU2MjYgMzAuNzM4LTYuMjU3OCA0MS44NC0xNy4zNTUgMTEuMDk4LTExLjEwMiAxNy4zNC0yNi4xNDUgMTcuMzU1LTQxLjg0di0xNzIuMDljLTAuMDE1NjI2LTE1LjY5NS02LjI1NzgtMzAuNzQyLTE3LjM1NS00MS44NC0xMS4xMDItMTEuMDk4LTI2LjE0NS0xNy4zNC00MS44NC0xNy4zNTl6bS0xNzIuMDkgMjMuNjhoMTcyLjA5YzkuNDE4IDAuMDExNzE5IDE4LjQ0NSAzLjc1NzggMjUuMTAyIDEwLjQxNCA2LjY2MDIgNi42NjAyIDEwLjQwNiAxNS42ODggMTAuNDE4IDI1LjEwNXY3NC4yMDNoLTU0LjIxMWMtMy42ODc1LTIxLjMzNi0xNy4yNjYtMzkuNjY4LTM2LjYwOS00OS40MDYtMTkuMzQtOS43NDIyLTQyLjE1Mi05Ljc0MjItNjEuNDkyIDAtMTkuMzQgOS43MzgzLTMyLjkyMiAyOC4wNy0zNi42MDkgNDkuNDA2aC01NC4yMDd2LTc0LjIwM2MwLjAxMTcxOS05LjQxOCAzLjc1NzgtMTguNDQ1IDEwLjQxNC0yNS4xMDUgNi42NjAyLTYuNjU2MiAxNS42ODgtMTAuNDAyIDI1LjEwNS0xMC40MTR6bTEzMC45MiAxMjEuNTZjMCAxMS45MDItNC43MzA1IDIzLjMxNi0xMy4xNDUgMzEuNzMtOC40MTQxIDguNDE0MS0xOS44MjggMTMuMTQ1LTMxLjczIDEzLjE0NS0xMS44OTggMC0yMy4zMTItNC43MzA1LTMxLjcyNy0xMy4xNDUtOC40MTgtOC40MTQxLTEzLjE0NS0xOS44MjgtMTMuMTQ1LTMxLjczIDAtMTEuODk4IDQuNzI2Ni0yMy4zMTIgMTMuMTQ1LTMxLjcyNyA4LjQxNDEtOC40MTggMTkuODI4LTEzLjE0NSAzMS43MjctMTMuMTQ1IDExLjg5OCAwLjAxNTYyNSAyMy4zMDUgNC43NDYxIDMxLjcxNSAxMy4xNiA4LjQxNDEgOC40MTAyIDEzLjE0NSAxOS44MTYgMTMuMTYgMzEuNzExem00MS4xNzIgMTIxLjU2LTE3Mi4wOSAwLjAwMzkwNmMtOS40MTgtMC4wMTE3MTgtMTguNDQ1LTMuNzU3OC0yNS4xMDUtMTAuNDE4LTYuNjU2Mi02LjY1NjItMTAuNDAyLTE1LjY4NC0xMC40MTQtMjUuMTAydi03NC4yMDdoNTQuMjExYzMuNjgzNiAyMS4zNCAxNy4yNjYgMzkuNjY4IDM2LjYwNSA0OS40MSAxOS4zNDQgOS43NDIyIDQyLjE1MiA5Ljc0MjIgNjEuNDk2IDAgMTkuMzQtOS43NDIyIDMyLjkxOC0yOC4wNyAzNi42MDUtNDkuNDFoNTQuMjA3djc0LjIwN2gwLjAwMzkwNmMtMC4wMTE3MTggOS40MTgtMy43NTc4IDE4LjQ0NS0xMC40MTQgMjUuMTA1LTYuNjYwMiA2LjY1NjItMTUuNjg4IDEwLjQwMi0yNS4xMDUgMTAuNDE0em0tMjcuODk4LTIxMS44MmMtMC4wMDM5MDctMy4xNDA2IDEuMjQyMi02LjE1NjIgMy40NjQ4LTguMzc1IDIuMjE4OC0yLjIyMjcgNS4yMzQ0LTMuNDY4OCA4LjM3NS0zLjQ2NDhoMTUuNjA5LTAuMDAzOTA2YzYuNTM5MSAwIDExLjg0IDUuMzAwOCAxMS44NCAxMS44NCAwIDYuNTM5MS01LjMwMDggMTEuODQtMTEuODQgMTEuODRoLTE1LjYwOSAwLjAwMzkwNmMtMy4xNDA2IDAtNi4xNTYyLTEuMjQ2MS04LjM3NS0zLjQ2ODgtMi4yMjI3LTIuMjE4OC0zLjQ2ODgtNS4yMzA1LTMuNDY0OC04LjM3MTF6IiBmaWxsPSIjZmY4MTRhIi8+Cjwvc3ZnPgo=" />
+          <img src="https://user-images.githubusercontent.com/111853363/198197818-d1b3f9df-c9b7-4c10-ae5e-afdd96cddee6.gif" />
         </EstagramTag>
+        {/* 여기 닉네임 안떠용 ㅠ ㅠ.ㅠ ㅠ ㅠ ㅠㅠ 경로 바꿔야하는거인가요,,흑흑*/}
+        <Nicknamebox>{getCookie("Nickname")}님 환영합니다.</Nicknamebox>
       </MainImg>
       <TopCtn>
         <PostBtn
@@ -66,11 +69,24 @@ const Header = () => {
           {/* Post */}
           <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImEiPgogICA8cGF0aCBkPSJtMzUwIDEzOS4yMWgyNjIuNzl2MjYyLjc5aC0yNjIuNzl6Ii8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KIDxwYXRoIGQ9Im0yNTcuNjEgMTk4LjM5Yy0zMi40NTMgMC01OS4xOTkgMjYuNzQyLTU5LjE5OSA1OS4xOTl2MjM2Ljc5YzAgMzIuNDUzIDI2Ljc0MiA1OS4xOTkgNTkuMTk5IDU5LjE5OWgyMzYuNzljMzIuNDUzIDAgNTkuMTk5LTI2Ljc0MiA1OS4xOTktNTkuMTk5di0xMzguMTNoLTM5LjQ2NXYxMzguMTNjMCAxMS4yNzMtOC40NjA5IDE5LjczNC0xOS43MzQgMTkuNzM0aC0yMzYuNzljLTExLjI3MyAwLTE5LjczNC04LjQ2MDktMTkuNzM0LTE5LjczNHYtMjM2Ljc5YzAtMTEuMjczIDguNDYwOS0xOS43MzQgMTkuNzM0LTE5LjczNGgxMzguMTN2LTM5LjQ2NXoiIGZpbGw9IiNmZmYiLz4KIDxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEzLjk1MyAxMy45NTMgLTEzLjk1MyAxMy45NTMgNjM2Ljk1IDI2OC41NCkiIGQ9Im0tNy4wMDAxIDFjLTAuNTU0MDQgMC0xIDAuNDQ1OTctMSAxdjEzbDIuNSA0IDIuNS00di0xM2MwLTAuNTU0MDQtMC40NDU5Ny0xLTEtMXptMCAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiA8ZyBjbGlwLXBhdGg9InVybCgjYSkiPgogIDxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEzLjk1MyAxMy45NTMgLTEzLjk1MyAxMy45NTMgMTQ5ODYgLTE0MDgwKSIgZD0ibS04LjAwMDEgMTAzMi45aDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIvPgogPC9nPgogPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMTMuOTUzIDEzLjk1MyAtMTMuOTUzIDEzLjk1MyAxNDk4NiAtMTQwODApIiBkPSJtLTggMTA0Mi45aDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIvPgo8L3N2Zz4K"></img>
         </PostBtn>
+
         {isLogin ? (
           <PostBtn
             onClick={() => {
-              Swal.fire({ title: "로그아웃하시겠습니까?!?!?!?!" }).then(() =>
-                removeCookie("token")
+              Swal.fire({ title: "로그아웃하시겠습니까?!?!?!?!" }).then(
+                (result) => {
+                  if (result.isConfirmed) {
+                    Swal.fire({
+                      position: "top-end",
+                      icon: "success",
+                      title: "로그아웃 완료!",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    })
+                      .then(() => removeCookie("token"))
+                      .then(() => removeCookie("Nickname"));
+                  }
+                }
               );
             }}
           >
@@ -97,23 +113,49 @@ const Header = () => {
       <PostModal
         open={postOpen}
         close={closeModal}
-        header="포스트"
-        style={{ zIndex: "-9999999" }}
+        header="Duckstagram"
+        style={{ zIndex: "-9999" }}
       ></PostModal>
-    </>
+    </Cover>
   );
 };
 
+const Cover = styled.div`
+  min-width: 500px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  height: 180px;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 66%,
+    rgba(255, 109, 0, 0) 100%
+  );
+`;
+
+const Nicknamebox = styled.div``;
 const EstagramTag = styled.button``;
 const MainImg = styled.div`
-  width: 100%;
+  min-width: 500px;
+  width: 100vw;
   height: auto;
   object-fit: scale-down;
+  padding-top: 20px;
   margin: auto;
+  margin-left: -50%;
+  display: flex;
+  justify-content: space-between;
   position: fixed;
-  top: 0;
+  top: 0px;
+  left: 50%;
+
   z-index: 9999;
-  background-color: white;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 66%,
+    rgba(255, 109, 0, 0) 100%
+  );
   ${EstagramTag} {
     display: inline-flex;
     width: 300px;
@@ -130,12 +172,20 @@ const MainImg = styled.div`
       height: 70px;
     }
   }
+
+  ${Nicknamebox} {
+    padding: 12px 30px 10px 40px;
+    border-radius: 10px;
+    background-color: #f7efea;
+    margin-top: 20px;
+    margin-right: 5%;
+  }
 `;
 const TopCtn = styled.div`
-  width: 100vw;
-
+  width: 100%;
+  min-width: 500px;
   position: fixed;
-  padding: 80px 30px 40px 0;
+  padding: 130px 30px 40px 0;
   top: 0;
   left: 0;
   gap: 120px;
@@ -144,7 +194,12 @@ const TopCtn = styled.div`
   z-index: 999;
   display: flex;
   justify-content: space-evenly;
-  background-color: white;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 66%,
+    rgba(255, 109, 0, 0) 100%
+  );
 `;
 // const Homebtn = styled.button`
 //   box-shadow: 0px 3px 3px 0px black;
@@ -165,7 +220,7 @@ const PostBtn = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 10px;
-  background-color: #ff8f00;
+  background-color: #ffae7b;
   :hover {
     background-color: #ef6c00;
     color: white;

@@ -77,98 +77,96 @@ const Profile = () => {
   if (isLoading) {
     <div>로딩중입니당</div>;
   } else if (error) {
-    if (window.confirm("아이디와 비밀번호를 확인해주세요"))
-      window.location.replace("/estarlogin");
+    //   if (window.confirm("아이디와 비밀번호를 확인해주세요"))
+    //     window.location.replace("/estarlogin");
+    // } else {
+    //   if (login) {
+    //     Swal.fire({
+    //       icon: "success",
+    //       title: "로그인 성공😊",
+    //       showConfirmButton: true,
+    //       confirmButtonText: '<a href="/estarlist">  Estagram 바로가기</a>',
+    //       // : '<a href="/">메인으로 돌아가기',
+    //       footer: '<a href="/">메인으로 돌아가기</a>',
+    //     });
   } else {
-    if (login) {
-      Swal.fire({
-        icon: "success",
-        title: "로그인 성공😊",
-        showConfirmButton: true,
-        confirmButtonText: '<a href="/estarlist">  Estagram 바로가기</a>',
-        // : '<a href="/">메인으로 돌아가기',
-        footer: '<a href="/">메인으로 돌아가기</a>',
-      });
-    } else {
-      return (
-        <>
-          <AddTodoCtn>
-            <AddTodoCtnArea>
-              <AddTodoBox>
-                <AddTodoTitle>닉네임</AddTodoTitle>
-                <AddTodoTextarea
-                  value={Signup.loginId}
-                  name="loginId"
-                  onChange={onChangehandler}
-                />
-              </AddTodoBox>
-              <AddTodoBox>
-                {isEdit && (
-                  <>
-                    <AddTodoTitle>닉네임</AddTodoTitle>
-                    <AddTodoInput
-                      value={Signup.nickname}
-                      name="nickname"
-                      onChange={onChangehandler}
-                    />
-                  </>
-                )}
-              </AddTodoBox>
-              <AddTodoBox>
-                <AddTodoTitle>비밀번호</AddTodoTitle>
-                <AddTodoTextarea
-                  value={Signup.password}
-                  name="password"
-                  onChange={onChangehandler}
-                  placeholder="8자리이상, 특수문자 1개이상"
-                />
-              </AddTodoBox>
-              <AddTodoBox>
-                {isEdit && (
-                  <>
-                    <AddTodoTitle>비밀번호 재확인</AddTodoTitle>
-                    <AddTodoTextarea
-                      value={Signup.confirm}
-                      name="confirm"
-                      onChange={onChangehandler}
-                    />
-                  </>
-                )}
-              </AddTodoBox>
-            </AddTodoCtnArea>
-            <BtnSet>
-              <PostBtn
-                // disabled={
-                //   !isValidPassword || !isValidloginId ? "disabled" : false
-                // }
-                type="submit"
-                style={{ margin: "auto" }}
-                onClick={() => {
-                  onSubmithandler();
-                }}
-              >
-                {isEdit ? "DONE" : "SIGN IN"}
-              </PostBtn>
-              <PostBtn
-                disabled={
-                  isValidPassword || isValidloginId ? "disabled" : false
-                }
-                style={{ margin: "auto" }}
-                onClick={() => {
-                  SetisEdit(!isEdit);
-                  SetSignup(initialstate);
-                }}
-              >
-                {isEdit ? "RETRUN" : "SIGN UP"}
-              </PostBtn>
-            </BtnSet>
-          </AddTodoCtn>
-          {/* <Line></Line> */}
-        </>
-      );
-    }
+    return (
+      <>
+        <AddTodoCtn>
+          <AddTodoCtnArea>
+            <AddTodoBox>
+              <AddTodoTitle>닉네임</AddTodoTitle>
+              <AddTodoTextarea
+                value={Signup.loginId}
+                name="loginId"
+                onChange={onChangehandler}
+              />
+            </AddTodoBox>
+            <AddTodoBox>
+              {isEdit && (
+                <>
+                  <AddTodoTitle>닉네임</AddTodoTitle>
+                  <AddTodoInput
+                    value={Signup.nickname}
+                    name="nickname"
+                    onChange={onChangehandler}
+                  />
+                </>
+              )}
+            </AddTodoBox>
+            <AddTodoBox>
+              <AddTodoTitle>비밀번호</AddTodoTitle>
+              <AddTodoTextarea
+                value={Signup.password}
+                name="password"
+                onChange={onChangehandler}
+                placeholder="8자리이상, 특수문자 1개이상"
+              />
+            </AddTodoBox>
+            <AddTodoBox>
+              {isEdit && (
+                <>
+                  <AddTodoTitle>비밀번호 재확인</AddTodoTitle>
+                  <AddTodoTextarea
+                    value={Signup.confirm}
+                    name="confirm"
+                    onChange={onChangehandler}
+                  />
+                </>
+              )}
+            </AddTodoBox>
+          </AddTodoCtnArea>
+          <BtnSet>
+            <PostBtn
+              // disabled={
+              //   !isValidPassword || !isValidloginId ? "disabled" : false
+              // }
+              type="submit"
+              style={{ margin: "auto" }}
+              onClick={() => {
+                onSubmithandler();
+              }}
+            >
+              {isEdit ? "DONE" : "SIGN IN"}
+            </PostBtn>
+            <PostBtn
+              disabled={isValidPassword || isValidloginId ? "disabled" : false}
+              style={{ margin: "auto" }}
+              onClick={() => {
+                SetisEdit(!isEdit);
+                SetSignup(initialstate);
+              }}
+            >
+              {isEdit ? "RETRUN" : "SIGN UP"}
+            </PostBtn>
+          </BtnSet>
+        </AddTodoCtn>
+        {/* <Line></Line> */}
+      </>
+    );
   }
 };
+// };
 
 const AddTodoCtn = styled.div`
   margin: 50px auto 0 auto;

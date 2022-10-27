@@ -23,8 +23,6 @@ const Detail = () => {
     commentId: 0,
     comment: "",
   });
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [newContent, setNewContent] = useState({ content: "" });
 
   // 설렉터
   const globalposts = useSelector((state) => state.posts.postlist); //포스트 리스트 가져오기
@@ -37,7 +35,12 @@ const Detail = () => {
     return comment.postId === parseInt(id);
   });
   console.log(newglobalposts);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [newContent, setNewContent] = useState({
+    content: "",
+  });
 
+  console.log();
   // 게시물에 달린 댓글을 post해줌 -> (각 게시물에 달리도록 처리필요)
   console.log(comment);
   const saveCommentHandler = () => {
@@ -164,13 +167,14 @@ const Detail = () => {
             navigate("/estarlist");
           }}
         >
-          🔙
+          ❌
         </BackButton>
         <DeleteButton
           key={globalposts.PostId}
           onClick={() => deletepostHandler(globalposts.PostId)}
         >
-          ❌
+          {/* 휴지통 */}
+          <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8ZyBmaWxsPSIjNjc2NzY3Ij4KICA8cGF0aCBkPSJtNDIzLjM2IDI2Mi4zNHYtMTQuMjA3YzAtNS4yMjY2LTQuMjQyMi05LjQ3MjctOS40NzI3LTkuNDcyN2gtNzUuNzczYy01LjIyNjYgMC05LjQ3MjcgNC4yNDIyLTkuNDcyNyA5LjQ3Mjd2MTQuMjA3aC02MS41NjJjLTUuMjI2NiAwLTkuNDcyNyA0LjI0MjItOS40NzI3IDkuNDcyN3YyOC40MTRjMCA1LjIyNjYgNC4yNDIyIDkuNDcyNyA5LjQ3MjcgOS40NzI3aDIxNy44NWM1LjIyNjYgMCA5LjQ3MjctNC4yNDIyIDkuNDcyNy05LjQ3Mjd2LTI4LjQxNGMwLTUuMjI2Ni00LjI0MjItOS40NzI3LTkuNDcyNy05LjQ3Mjd6Ii8+CiAgPHBhdGggZD0ibTI4Ni4wMiAzMTkuMTdjLTIuNjI4OSAwLTUuMTMyOCAxLjA4OTgtNi45MjE5IDMuMDExNy0xLjc4OTEgMS45MjE5LTIuNzAzMSA0LjUtMi41MjM0IDcuMTE3MmwxOC45NDEgMjAzLjY0YzAuMzQ3NjYgNC45NjQ4IDQuNDcyNyA4LjgxMjUgOS40NDkyIDguODEyNWgxNDIuMDdjNC45NzY2IDAgOS4xMDE2LTMuODUxNiA5LjQ0OTItOC44MTI1bDIzLjY4LTIwMy42NGMwLjE4MzU5LTIuNjE3Mi0wLjczMDQ3LTUuMTk5Mi0yLjUxOTUtNy4xMTcyLTEuNzk2OS0xLjkyMTktNC4zMDA4LTMuMDExNy02LjkyOTctMy4wMTE3em01MS42MDkgMTc5LjkzYy0wLjI0NjA5IDAuMDE1NjI1LTAuNDk2MDkgMC4wMjczNDMtMC43MzQzOCAwLjAyNzM0My00LjkwNjIgMC05LjA1NDctMy43NzczLTkuNDMzNi04Ljc0NjFsLTkuMDYyNS0xMTguMjRjLTAuMzk4NDQtNS4yMTg4IDMuNTAzOS05Ljc2OTUgOC43MTg4LTEwLjE2OCA1LjE3OTctMC4zOTg0NCA5Ljc2NTYgMy41MDM5IDEwLjE2OCA4LjcxODhsOS4wNjI1IDExOC4yNGMwLjQwMjM0IDUuMjE4OC0zLjUgOS43Njk1LTguNzE4OCAxMC4xNjh6bTQ3Ljg0NC05LjU0M2MwIDUuMjI2Ni00LjI0MjIgOS40NzI3LTkuNDcyNyA5LjQ3MjctNS4yMjY2IDAtOS40NzI3LTQuMjQyMi05LjQ3MjctOS40NzI3bDAuMDAzOTA2LTExOC4zYzAtNS4yMjY2IDQuMjQyMi05LjQ3MjcgOS40NzI3LTkuNDcyNyA1LjIyNjYgMCA5LjQ3MjcgNC4yNDIyIDkuNDcyNyA5LjQ3Mjd6bTM3LjA0MyAwLjg4MjgxYy0wLjQ2MDk0IDQuOTA2Mi00LjU4OTggOC41ODU5LTkuNDE4IDguNTg1OS0wLjI5Njg4IDAtMC41OTM3NS0wLjAxNTYyNS0wLjg5MDYyLTAuMDQyOTY5LTUuMjEwOS0wLjQ4ODI4LTkuMDM1Mi01LjEwNTUtOC41NDY5LTEwLjMxNmwxMS4wNzQtMTE4LjA0YzAuNDg4MjgtNS4yMTA5IDUuMDk3Ny05LjAyNzMgMTAuMzE2LTguNTQzIDUuMjEwOSAwLjQ4ODI4IDkuMDM1MiA1LjEwNTUgOC41NDY5IDEwLjMxNnoiLz4KIDwvZz4KPC9zdmc+Cg==" />
         </DeleteButton>
         <Card key={globalposts.PostId}>
           <Photo>
@@ -192,10 +196,12 @@ const Detail = () => {
             )}
             {isEditMode && (
               <Info>
-                <Title>{globalposts.title}</Title>
+                <Title>{JSON.parse(globalposts.title)}</Title>
                 <textarea
-                  value={globalposts.content}
+                  Def
+                  value={newContent.content}
                   onChange={(e) =>
+                    // setReContent()
                     setNewContent({ ...globalposts, content: e.target.value })
                   }
                 />
@@ -249,35 +255,42 @@ const Detail = () => {
 export default Detail;
 
 const BigCard = styled.div`
-  width: 90%;
+  width: 60%;
+  min-width: 700px;
   min-height: 500px;
   background-color: #f8c37e;
   border: 1px solid orange;
   box-shadow: 5px 5px #fa9511;
   border-radius: 20px;
-  margin: 250px auto;
+  margin: 70px auto;
   position: relative;
 `;
 
 const BackButton = styled.button`
-  width: 110px;
-  height: 34px;
-  text-align: center;
+  /* width: 110px; */
+  height: 30px;
+  /* text-align: center; */
   font-size: 30px;
   font-weight: 1000;
   position: absolute;
   top: 16px;
   right: 1%;
   &:hover {
-    font-size: xx-large;
+    transform: scale(1.2);
   }
 `;
 
-const DeleteButton = styled(BackButton)`
-  width: 50px;
+const DeleteButton = styled.button`
+  position: absolute;
+  bottom: 16px;
+  right: -10px;
+  width: 70px;
   background-color: transparent;
-  right: 0%;
-  font-size: 20px;
+  /* font-size: 20px; */
+  z-index: 99999;
+  img {
+    /* width: 100%; */
+  }
 `;
 
 const Card = styled.div`

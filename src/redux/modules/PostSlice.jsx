@@ -63,8 +63,8 @@ const estarSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
       state.error = "아아";
-      Swal.fire(state.error.response.data.errorMessage);
-      Swal.fire(state.error.response.data.message);
+      // Swal.fire(state.error.response.data.errorMessage);
+      // Swal.fire(state.error.response.data.message);
     },
   },
 });

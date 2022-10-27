@@ -78,18 +78,18 @@ const listSlice = createSlice({
   // reducers: {},
   extraReducers: {
     // GET Lists!!! 첫 화면에 사진 리스트들(여러개!!) 보여주기!
-    [__getLists.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getLists.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.posts = action.payload;
-      console.log("getLists fulfilled 상태", action.payload);
-    },
-    [__getLists.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+    // [__getLists.pending]: (state) => {
+    //   state.isLoading = true;
+    // },
+    // [__getLists.fulfilled]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.posts = action.payload;
+    //   console.log("getLists fulfilled 상태", action.payload);
+    // },
+    // [__getLists.rejected]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    // },
     // GET List!!! 디데일 화면에 사진 리스트(알맞은 1개!!) 보여주기!
     [__getList.pending]: (state) => {
       state.isLoading = true;
@@ -117,8 +117,10 @@ const listSlice = createSlice({
     [__deleteEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-      Swal.fire(state.error.response.data.errorMessage);
-      Swal.fire(state.error.response.data.message);
+      console.log("게시물삭제오류", state.error);
+      Swal.fire("권한이 없습니다");
+      // Swal.fire(state.error.response.data.errorMessage);
+      // Swal.fire(state.error.response.data.message);
     },
     // PATCH 게시물 수정하기!!!
     [__updateEstar.pending]: (state) => {
@@ -132,8 +134,9 @@ const listSlice = createSlice({
     [__updateEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-      Swal.fire(state.error.response.data.errorMessage);
-      Swal.fire(state.error.response.data.message);
+      Swal.fire("권한이 없습니다");
+      // Swal.fire(state.error.response.data.errorMessage);
+      // Swal.fire(state.error.response.data.message);
     },
   },
 });

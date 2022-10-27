@@ -9,11 +9,17 @@ import Loader from "./loading";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Moment from "react-moment";
+import Likes from "./Likes";
+import { getCookie } from "../estarlogin/cookiehook";
+import { __getLists } from "../../redux/modules/ListSlice";
+import { useDispatch } from "react-redux";
 
 const List = () => {
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -49,13 +55,18 @@ const List = () => {
   // json에서 5개씩 끊어서 가져오기
   const fetch = useCallback(async () => {
     try {
+      const { data } = await axios.get(
+        `https://hi-prac.shop/api/star/posts?page=${page.current}&pagesize=6`,
+        {
+          headers: {
+            Authorization: `Bearer ${getCookie("token")}`,
+          },
+        }
+      );
       setTimeout(() => {
         setIsLoading(false);
         Setposts((prevPosts) => [...prevPosts, ...data.data]);
       }, 2000);
-      const { data } = await axios.get(
-        `https://hi-prac.shop/api/star/posts?page=${page.current}&pagesize=6`
-      );
       //배포용
       // `${process.env.REACT_APP_HOST}/api/star/posts?page=${page.current}&pagesize=6`
       console.log(data.data.length);
@@ -67,7 +78,7 @@ const List = () => {
 
       //로드되면 로딩화면 아웃
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
     // finally {
     //   setIsLoading(false);
@@ -77,7 +88,7 @@ const List = () => {
   // ref를 타겟으로 지정하고, 타겟이 뷰에 보이면 inView의 값이 True로
   const [ref, inView] = useInView({
     // 라이브러리 옵션
-    threshold: 0,
+    threshold: 1,
   });
 
   useEffect(() => {
@@ -99,6 +110,21 @@ const List = () => {
   //   return () => window.removeEventListener("scroll", handleScroll);
   // }, []);
 
+  //타임스탬프
+  const displayCreatedAt = (createdAt) => {
+    let startTime = new Date(createdAt);
+    let nowTime = Date.now();
+    if (parseInt(startTime - nowTime) > -60000) {
+      return <Moment format="방금 전">{startTime}</Moment>;
+    }
+    if (parseInt(startTime - nowTime) < -86400000) {
+      return <Moment format="MMM D일">{startTime}</Moment>;
+    }
+    if (parseInt(startTime - nowTime) > -86400000) {
+      return <Moment fromNow>{startTime}</Moment>;
+    }
+  };
+  const [like, Setlike] = useState();
   return (
     <BoxCtn>
       {/* 로딩화면 */}
@@ -119,28 +145,37 @@ const List = () => {
 
               <BoxBtm>
                 <Words>
+                  <Time>{displayCreatedAt(post.createdAt)}</Time>
+
                   <div>{JSON.parse(post.title)}</div>
-                  <LikeApp post={post} />
+                  <Likes post={post}>{post.likesum}</Likes>
+
+                  {/* <LikeApp post={post} /> */}
                   {/* <div>{JSON.parse(post.content)}</div> */}
                 </Words>
               </BoxBtm>
             </BoxMemo>
           );
         })}
+        <div style={{ width: "100%" }}>
+          <p
+            ref={ref}
+            style={{
+              width: "100%",
+              position: "relative",
 
-        <p
-          ref={ref}
-          style={{
-            width: "100%",
-            position: "relative",
-            bottom: "-10px",
-            margin: "0",
-            // color: "white",
-            //아놔 여백 와이리 안없어지노
-          }}
-        >
-          어딧니??
-        </p>
+              color: "white",
+              //아놔 여백 와이리 안없어지노
+            }}
+          >
+            {/* 오리 발자국같은거 gif */}
+            <img
+              ref={ref}
+              src="https://storymoves.com/wp-content/uploads/2020/06/dusty-the-duck-footprints.gif"
+              style={{ width: "200px", margin: "20px auto" }}
+            />
+          </p>
+        </div>
       </Boxes>
       {showButton && (
         <ScrollBtn
@@ -157,7 +192,7 @@ const List = () => {
 
 export default List;
 const BoxCtn = styled.div`
-  margin-top: 250px;
+  margin-top: 50px;
   width: 100%;
 `;
 
@@ -200,16 +235,30 @@ const BoxBtm = styled.div`
   height: 60px;
   margin-top: 15px;
 `;
+
+const Time = styled.div``;
 const Words = styled.div`
-  overflow: hidden;
+  height: 70px;
+  /* overflow: hidden; */
   margin: auto 10px;
-  display: flex;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
+  position: relative;
   div {
+    width: 300px;
+    overflow: hidden;
+    height: 24px;
     font-size: 18px;
     font-weight: 500;
-    text-overflow: ellipsis;
     margin: 5px;
+  }
+  ${Time} {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    color: gray;
+    font-weight: 300;
+    font-size: 12px;
   }
 `;
 const ScrollBtn = styled.button`

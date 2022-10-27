@@ -5,9 +5,10 @@ import LikeApp from "../../mytools/likeApp";
 import { useRef, useCallback } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import { getCookie } from "../estarlogin/cookiehook";
 import Loader from "./loading";
-import { useCookies } from "react-cookie";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const List = () => {
   const navigate = useNavigate();
@@ -53,8 +54,10 @@ const List = () => {
         Setposts((prevPosts) => [...prevPosts, ...data.data]);
       }, 2000);
       const { data } = await axios.get(
-        `https://hi-prac.shop/posts?page=${page.current}&pagesize=6`
+        `https://hi-prac.shop/api/star/posts?page=${page.current}&pagesize=6`
       );
+      //배포용
+      // `${process.env.REACT_APP_HOST}/api/star/posts?page=${page.current}&pagesize=6`
       console.log(data.data.length);
       // Setposts((prevPosts) => [...prevPosts, ...data.data]);
       setHasNextPage(data.data.length == 6);
@@ -70,36 +73,31 @@ const List = () => {
     //   setIsLoading(false);
     // }
   }, []);
-  // console.log(page);
-  // console.log(posts);
-  // console.log(hasNextPage);
 
   // ref를 타겟으로 지정하고, 타겟이 뷰에 보이면 inView의 값이 True로
   const [ref, inView] = useInView({
     // 라이브러리 옵션
-    threshold: 1,
-    rootMargin: "350px",
+    threshold: 0,
   });
 
-  // useEffect(() => {
-  //   if (inView) {
-  //     // console.log(1);
-  //     fetch();
-  //   }
-  // }, [fetch, hasNextPage, inView]);
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      // console.log(1);
+      fetch();
+    }
+  }, [fetch, hasNextPage, inView]);
 
   //뭔가 이상한데 일단 이게낫나?
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, offsetHeight } = document.documentElement;
-      if (window.innerHeight + scrollTop >= offsetHeight / 2) {
-        fetch();
-      }
-    };
-    fetch();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const { scrollTop, offsetHeight } = document.documentElement;
+  //     if (window.innerHeight + scrollTop + 400 >= offsetHeight) {
+  //       fetch();
+  //     }
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   return (
     <BoxCtn>
@@ -107,7 +105,7 @@ const List = () => {
       {isLoading ? <Loader /> : null}
 
       <Boxes>
-        {posts?.map((post) => {
+        {posts?.map((post, index) => {
           return (
             <BoxMemo>
               <Image
@@ -129,14 +127,15 @@ const List = () => {
             </BoxMemo>
           );
         })}
+
         <p
           ref={ref}
           style={{
             width: "100%",
             position: "relative",
-            bottom: "0px",
+            bottom: "-10px",
             margin: "0",
-            color: "white",
+            // color: "white",
             //아놔 여백 와이리 안없어지노
           }}
         >
@@ -159,7 +158,7 @@ const List = () => {
 export default List;
 const BoxCtn = styled.div`
   margin-top: 250px;
-  width: 95%;
+  width: 100%;
 `;
 
 const Boxes = styled.div`

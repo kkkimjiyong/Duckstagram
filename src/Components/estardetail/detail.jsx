@@ -46,7 +46,7 @@ const Detail = () => {
 
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-right",
+      position: "center-center",
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
@@ -93,7 +93,7 @@ const Detail = () => {
           // 댓글삭제 알럿창(토스트)
           const Toast = Swal.mixin({
             toast: true,
-            position: "top-right",
+            position: "center-center",
             showConfirmButton: false,
             timer: 2000,
             timerProgressBar: true,
@@ -125,7 +125,7 @@ const Detail = () => {
     // 댓글수정 알럿창(토스트)
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-right",
+      position: "center-center",
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
@@ -251,9 +251,9 @@ export default Detail;
 const BigCard = styled.div`
   width: 90%;
   min-height: 500px;
-  background-color: lightgray;
-  border: 1px solid black;
-  box-shadow: 5px 5px gray;
+  background-color: #f8c37e;
+  border: 1px solid orange;
+  box-shadow: 5px 5px #fa9511;
   border-radius: 20px;
   margin: 250px auto;
   position: relative;
@@ -287,39 +287,41 @@ const Card = styled.div`
   background-color: white;
   display: flex;
   justify-content: space-between;
+  border-radius: 10px;
 
   flex-wrap: wrap;
   position: relative;
   padding: 10px;
 `;
 const Photo = styled.div`
-  background-color: lightcoral;
+  /* background-color: lightcoral; */
   width: 48%;
   height: 100%;
   margin-right: 10px;
-
+  box-shadow: 0.5em 0.5em 0.5em 0 #fde4c4;
   img {
     max-width: 100%;
     height: auto;
     object-fit: cover;
+    border-radius: 10px;
   }
 `;
 
 const Half = styled.div`
   width: 48%;
-  background-color: lightblue;
+  /* background-color: lightblue; */
 `;
 
 const Title = styled.div``;
 const Content = styled.div``;
 const Info = styled.div`
-  background-color: #8bb6db;
+  background-color: #fddaab;
   width: 100%;
   height: 100%;
   word-break: break-all;
   padding: 10px;
   position: relative;
-
+  border-radius: 10px;
   button {
     position: absolute;
     right: 20px;
@@ -334,18 +336,23 @@ const Info = styled.div`
 
   textarea {
     width: 100%;
-    height: 70%;
+    height: 67%;
     vertical-align: top;
     padding: 10px;
     resize: none;
     background-color: #afcae0;
+    margin-top: 10px;
+    border-radius: 15px;
+    background-color: #ffc4768d;
   }
 
   ${Title} {
     height: 30%;
     padding: 44px 10px;
-    background-color: gray;
+    background-color: #ecb56c;
     text-align: left;
+    box-shadow: inset -1px -1px 10px #f8e5a7;
+    border-radius: 15px;
   }
 
   ${Content} {
@@ -365,31 +372,32 @@ const PostButton = styled(BackButton)`
 
 const MoreComments = styled.div`
   margin-top: 30px;
-  background-color: pink;
+  background-color: #fddaab;
   width: 100%;
   height: 100%;
   padding: 16px;
   resize: none;
-
+  border-radius: 10px;
   form {
     display: flex;
     justify-content: space-between;
     /* margin: 10px; */
     input {
-      background-color: #fcd6dc;
+      background-color: #ffc4768d;
       width: 85%;
       padding: 5px;
+      border-radius: 10px;
     }
     button {
       width: 10%;
-      border: 3px solid #8f5053;
+      border: 3px solid #fd950d;
       border-radius: 20px;
       padding: 5px;
-      color: white;
-      background-color: #da777c;
+      color: black;
+      background-color: #f8c37e;
       &:hover {
         font-weight: 700;
-        background-color: #8f5053;
+        background-color: #fd950d;
       }
     }
     div {

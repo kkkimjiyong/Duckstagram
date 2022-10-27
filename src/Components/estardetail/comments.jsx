@@ -33,7 +33,7 @@ const Comment = ({ comment }) => {
           // 댓글삭제 알럿창(토스트)
           const Toast = Swal.mixin({
             toast: true,
-            position: "top-right",
+            position: "center-center",
             showConfirmButton: false,
             timer: 2000,
             timerProgressBar: true,
@@ -64,7 +64,7 @@ const Comment = ({ comment }) => {
     // 댓글수정 알럿창(토스트)
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-right",
+      position: "center-center",
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
@@ -140,5 +140,12 @@ export default Comment;
 const LineComment = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 15px 5px;
+  margin-top: 15px;
+
+  input {
+    background-color: #ffc4768d;
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+  }
 `;

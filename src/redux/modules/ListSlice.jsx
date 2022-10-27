@@ -117,8 +117,9 @@ const listSlice = createSlice({
     [__deleteEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-      Swal.fire(state.error.response.data.errorMessage);
-      Swal.fire(state.error.response.data.message);
+      Swal.fire("권한이 없습니다");
+      // Swal.fire(state.error.response.data.errorMessage);
+      // Swal.fire(state.error.response.data.message);
     },
     // PATCH 게시물 수정하기!!!
     [__updateEstar.pending]: (state) => {
@@ -132,8 +133,9 @@ const listSlice = createSlice({
     [__updateEstar.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-      Swal.fire(state.error.response.data.errorMessage);
-      Swal.fire(state.error.response.data.message);
+      Swal.fire("권한이 없습니다");
+      // Swal.fire(state.error.response.data.errorMessage);
+      // Swal.fire(state.error.response.data.message);
     },
   },
 });

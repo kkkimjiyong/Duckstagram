@@ -1,46 +1,38 @@
-# DUCK-GRAM mini-project
-
-![--unscreen](https://user-images.githubusercontent.com/111853363/198197818-d1b3f9df-c9b7-4c10-ae5e-afdd96cddee6.gif)
+## 항해99에서 진행한 첫 협업 프로젝트
 
 
 
+위 프로젝트는 1주간  진행하였습니다.
+FE 3명/ BE3 명
 
-**##항해99 덕스타그램**
 
-소켓io를 이용한 실시간 익명채팅방구현
-오리를 모티브로 한 사진업로드가 가능한 소셜미디어서비스
+아래는 시연영상입니다.
 
-훌륭한 팀원들과 미니프로젝트로 진행되었습니다. 
+![title](https://user-images.githubusercontent.com/113953473/198820439-4994589f-7ff2-478d-9b82-db1f5a281cbf.gif)   
 
-**##Environment**
-윈도우 ,맥 가능
+![title](https://user-images.githubusercontent.com/113953473/198820442-ebcbf59d-4a32-4b03-9580-a09da3e3a0aa.gif)   
 
- 
 
-**##Prerequisite**
-package.json 참고
+---
+## 주제
+**덕스타그램**
 
-**##Files**
-원활한 협업을 위하여, 각자 맡은 컴포넌트를 각자 폴더에 넣어 관리하였습니다.
+- 게시글 작성
+- 게시글 삭제
+- 게시글 수정
+- 게시글 댓글작성
+- 게시글 댓글삭제
+- 게시글 댓글수정
 
- 
-**
-##Usage**
-작성한 코드들을 어떻게 실행해야 하는지 가이드라인 
 
-폴더 및 파일
+---
+### 추가기능
+- **무한스크롤구현** (useInview 훅과 react-intersection-observer 라이브러리 사용)
+- 실시간 채팅구현 (socket.io 라이브러리 사용)
 
-- Components
-  > estardetail
-  > estarlist
-  > estarlogin
-  > estarpost
-- hooks
-- mytools
-  > instance
-  > like
-  > likeApp
-  > RandomApi
-- Pages
-- redux
-- shared
+---
+   
+
+
+
+

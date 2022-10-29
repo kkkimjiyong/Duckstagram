@@ -27,8 +27,9 @@ FE 3명/ BE3 명
 
 ---
 ### 추가기능
+- **폼데이터**를 이용한 사진업로드(FormData 및 아마존 S3사용)
 - **무한스크롤구현** (useInview 훅과 react-intersection-observer 라이브러리 사용)
-- 실시간 채팅구현 (socket.io 라이브러리 사용)
+- **실시간 채팅구현** (socket.io 라이브러리 사용)
 
 ---
    

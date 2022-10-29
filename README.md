@@ -4,6 +4,31 @@
 
 ![diagram-export-2022. 10. 21. 오후 3_34_36.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/56cec6d8-e342-4556-9563-2a806f93de72/diagram-export-2022._10._21._%EC%98%A4%ED%9B%84_3_34_36.png)
 
+
+
+##항해99 덕스타그램
+
+소켓io를 이용한 실시간 익명채팅방구현
+오리를 모티브로 한 사진업로드가 가능한 소셜미디어서비스
+
+훌륭한 팀원들과 미니프로젝트로 진행되었습니다. 
+
+##Environment
+윈도우 ,맥 가능
+
+ 
+
+##Prerequisite
+package.json 참고
+
+##Files
+원활한 협업을 위하여, 각자 맡은 컴포넌트를 각자 폴더에 넣어 관리하였습니다.
+
+ 
+
+##Usage
+작성한 코드들을 어떻게 실행해야 하는지 가이드라인 
+
 폴더 및 파일
 
 - Components

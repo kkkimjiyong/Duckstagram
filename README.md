@@ -24,7 +24,7 @@
 
 ![title](https://user-images.githubusercontent.com/113953473/198820442-ebcbf59d-4a32-4b03-9580-a09da3e3a0aa.gif)   
 
-
+링크를 통하여, 보시려면 https://www.youtube.com/watch?v=rI0IXXLzirc
 ---
 ## 주제
 **덕스타그램**

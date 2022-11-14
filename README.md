@@ -6,6 +6,7 @@
 
 구성인원: FE 3명/ BE3 명
 
+백엔드주소:https://github.com/KJJDSA/MINIPROJECT_BACK
 **서로의 일상을 사진으로 공유하세요!
 우리의 Duckstagram은 언제나 당신을 따라다닙니다!!**
 
